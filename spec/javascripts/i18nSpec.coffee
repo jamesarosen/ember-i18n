@@ -71,3 +71,8 @@ describe 'SC.I18n', ->
         TestNamespace.set 'count', 4
       SC.run ->
         expect(view.$().text()).toEqual('All 4 Foos')
+
+    it 'obeys a custom tag name', ->
+      render '{{t foo.bar tagName="h2"}}'
+      SC.run ->
+        expect(view.$('h2').html()).toEqual('A Foobar')

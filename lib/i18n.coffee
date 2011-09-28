@@ -24,6 +24,8 @@ Handlebars.registerHelper 't', (key, options) ->
   context = this
   attrs = options.hash
   view = options.data.view
+  tagName = attrs.tagName || 'span'
+  delete attrs.tagName
 
   # Generate a unique id for this element. This will be added as a
   # data attribute to the element so it can be looked up when
@@ -65,4 +67,4 @@ Handlebars.registerHelper 't', (key, options) ->
 
       SC.addObserver context, bindPath, invoker
 
-  new Handlebars.SafeString "<span id='#{elementID}'>#{I18n.t key, attrs}</span>"
+  new Handlebars.SafeString "<#{tagName} id='#{elementID}'>#{I18n.t key, attrs}</#{tagName}>"
