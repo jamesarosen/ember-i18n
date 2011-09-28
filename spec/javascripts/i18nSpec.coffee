@@ -13,11 +13,13 @@ describe 'SC.I18n', ->
   it 'should exist', ->
     expect(SC.I18n).not.toBeUndefined()
 
-  it 'should translate simple strings', ->
-    expect(SC.I18n.t('foo.bar')).toEqual('A Foobar')
+  describe '.t', ->
 
-  it 'should interpolate', ->
-    expect(SC.I18n.t('foo.count', {count: 12 })).toEqual('All 12 Foos')
+    it 'should translate simple strings', ->
+      expect(SC.I18n.t('foo.bar')).toEqual('A Foobar')
 
-  it 'should warn about missing translations', ->
-    expect(SC.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
+    it 'should interpolate', ->
+      expect(SC.I18n.t('foo.count', {count: 12 })).toEqual('All 12 Foos')
+
+    it 'should warn about missing translations', ->
+      expect(SC.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
