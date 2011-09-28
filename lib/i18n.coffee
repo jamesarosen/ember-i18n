@@ -47,9 +47,6 @@ Handlebars.registerHelper 't', (key, options) ->
 
       observer = ()->
         newValue = SC.getPath context, bindPath
-
-        sc_assert "Attributes must be numbers, strings or booleans, not %@".fmt(newValue), !newValue? || typeof newValue == 'number' || typeof newValue == 'string' || typeof newValue == 'boolean'
-
         elem = view.$ "##{elementID}"
 
         # If we aren't able to find the element, it means the element
