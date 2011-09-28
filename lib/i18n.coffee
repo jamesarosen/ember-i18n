@@ -5,8 +5,7 @@ I18n = {
 
   template: (key) ->
     result = I18n.translations[key]
-    unless result?
-      result = I18n.translations[key] = I18n.compile "Missing translation: " + key
+    result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
     unless $.isFunction(result)
       result = I18n.translations[key] = I18n.compile result
     result
