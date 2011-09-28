@@ -62,3 +62,12 @@ describe 'SC.I18n', ->
       render '{{t foo.count countBinding="TestNamespace.count"}}'
       SC.run ->
         expect(view.$().text()).toEqual('All 3 Foos')
+
+    xit 'responds to updates on bound properties', ->
+      SC.run ->
+        TestNamespace.set 'count', 3
+      render '{{t foo.count countBinding="TestNamespace.count"}}'
+      SC.run ->
+        TestNamespace.set 'count', 4
+      SC.run ->
+        expect(view.$().text()).toEqual('All 4 Foos')
