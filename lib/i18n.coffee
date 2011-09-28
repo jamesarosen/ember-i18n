@@ -65,4 +65,5 @@ Handlebars.registerHelper 't', (key, options) ->
 
       SC.addObserver context, bindPath, invoker
 
-  new Handlebars.SafeString "<#{tagName} id='#{elementID}'>#{I18n.t key, attrs}</#{tagName}>"
+  result = '<%@ id="%@">%@</%@>'.fmt tagName, elementID, I18n.t(key, attrs), tagName
+  new Handlebars.SafeString result
