@@ -1,13 +1,22 @@
 describe 'SC.I18n', ->
 
   beforeEach ->
+    window.TestNamespace = SC.Object.create({
+      toString: "TestNamespace"
+
+      count: ((property, value)->
+        return value
+      ).property().cacheable()
+    })
+
     this.originalTranslations = SC.I18n.translations
     SC.I18n.translations = {
       'foo.bar': 'A Foobar'
       'foo.count': 'All {{count}} Foos'
     }
 
-  afterEach ->
+  afterEach ->  
+    delete window.TestNamespace;
     SC.I18n.translations = this.originalTranslations
 
   it 'should exist', ->
@@ -42,7 +51,14 @@ describe 'SC.I18n', ->
       SC.run ->
         expect(view.$().text()).toEqual('A Foobar')
 
-    it 'interpolates', ->
+    it 'interpolates values', ->
       render '{{t foo.count count="597"}}'
       SC.run ->
         expect(view.$().text()).toEqual('All 597 Foos')
+
+    it 'interpolates bindings', ->
+      SC.run ->
+        TestNamespace.set 'count', 3
+      render '{{t foo.count countBinding="TestNamespace.count"}}'
+      SC.run ->
+        expect(view.$().text()).toEqual('All 3 Foos')
