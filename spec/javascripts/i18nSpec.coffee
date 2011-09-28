@@ -39,5 +39,10 @@ describe 'SC.I18n', ->
 
     it 'outputs simple translated strings', ->
       render '{{t foo.bar}}'
-      SC.run =>
+      SC.run ->
         expect(view.$().text()).toEqual('A Foobar')
+
+    it 'interpolates', ->
+      render '{{t foo.count count="597"}}'
+      SC.run ->
+        expect(view.$().text()).toEqual('All 597 Foos')

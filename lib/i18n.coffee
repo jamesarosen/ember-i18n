@@ -18,5 +18,6 @@ I18n = {
 
 SC.I18n = I18n
 
-Handlebars.registerHelper 't', (key, options) ->
-  I18n.t key, this
+Handlebars.registerHelper 't', (key, options = {}) ->
+  options.hash ||= {}
+  I18n.t key, options.hash
