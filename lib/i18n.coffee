@@ -4,6 +4,7 @@ I18n = {
   translations: {}
 
   template: (key) ->
+    sc_assert "You must provide a translation key string, not %@".fmt(key), typeof key == 'string'
     result = I18n.translations[key]
     result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
     unless $.isFunction(result)
