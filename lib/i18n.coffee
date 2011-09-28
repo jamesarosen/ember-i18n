@@ -35,7 +35,7 @@ Handlebars.registerHelper 't', (key, options) ->
 
   SC.keys(attrs).forEach (property)->
     isBindingMatch = property.match(isBinding)
-    if isBindingMatch?
+    if isBindingMatch
       # Get the current values for any bound properties:
       propertyName = isBindingMatch[1]
       bindPath = attrs[property]
