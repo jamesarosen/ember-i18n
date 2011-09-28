@@ -14,12 +14,12 @@ task :clean do
 end
 
 task :compile do
-  coffee project_dir + '/lib/i18n.coffee'
+  coffee project_dir + '/lib/*.coffee'
 end
 
 namespace :spec do
   task :compile do
-    coffee project_dir + '/spec/javascripts/i18nSpec.coffee'
+    coffee project_dir + '/spec/javascripts/*.coffee'
   end
 end
 
