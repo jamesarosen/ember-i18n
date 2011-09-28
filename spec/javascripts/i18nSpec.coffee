@@ -23,3 +23,21 @@ describe 'SC.I18n', ->
 
     it 'should warn about missing translations', ->
       expect(SC.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
+
+  describe '{{t}}', ->
+
+    view = null
+
+    render = (template, options = {}) ->
+      options.template = SC.Handlebars.compile(template)
+      view = SC.View.create(options)
+      SC.run ->
+        view.append()
+
+    afterEach ->
+      view.destroy() if view?
+
+    it 'outputs simple translated strings', ->
+      render '{{t foo.bar}}'
+      SC.run =>
+        expect(view.$().text()).toEqual('A Foobar')

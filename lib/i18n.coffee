@@ -19,4 +19,4 @@ I18n = {
 SC.I18n = I18n
 
 Handlebars.registerHelper 't', (key, options) ->
-  # what goes here?
+  I18n.t key, this
