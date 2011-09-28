@@ -2,6 +2,11 @@
 
 Internationalization for Sproutcore 2.0
 
+### Warning
+
+This project is non-functional, though under active development. We'd love
+your help!
+
 ### Examples
 
 Given
