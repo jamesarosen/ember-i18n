@@ -1,3 +1,5 @@
+isTranslatedAttribute = /(.+)Translation$/
+
 I18n = {
   compile: Handlebars.compile
 
@@ -14,6 +16,22 @@ I18n = {
   t: (key, context) ->
     template = I18n.template key
     return template context
+
+  # A mixin for views that supports ___Translation="some.translation.key".
+  #
+  # Usage:
+  #
+  #     {{view ... titleTranslation="some.translation.key"}}
+  TranslateableAttributes: SC.Mixin.create
+    didInsertElement: ->
+      result = @_super.apply(this, arguments)
+      for key, path of this
+        isTranslatedAttributeMatch = key.match isTranslatedAttribute
+        if isTranslatedAttributeMatch
+          attribute = isTranslatedAttributeMatch[1]
+          translatedValue = I18n.t path
+          @$().attr attribute, translatedValue
+      result
 }
 
 SC.I18n = I18n

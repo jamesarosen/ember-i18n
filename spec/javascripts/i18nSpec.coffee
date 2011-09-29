@@ -1,5 +1,13 @@
 describe 'SC.I18n', ->
 
+  view = null
+
+  render = (template, options = {}) ->
+    options.template = SC.Handlebars.compile(template)
+    view = SC.View.create(options)
+    SC.run ->
+      view.append()
+
   beforeEach ->
     window.TestNamespace = SC.Object.create({
       toString: "TestNamespace"
@@ -15,7 +23,8 @@ describe 'SC.I18n', ->
       'foo.count': 'All {{count}} Foos'
     }
 
-  afterEach ->  
+  afterEach ->
+    view.destroy() if view?
     delete window.TestNamespace;
     SC.I18n.translations = this.originalTranslations
 
@@ -34,17 +43,6 @@ describe 'SC.I18n', ->
       expect(SC.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
 
   describe '{{t}}', ->
-
-    view = null
-
-    render = (template, options = {}) ->
-      options.template = SC.Handlebars.compile(template)
-      view = SC.View.create(options)
-      SC.run ->
-        view.append()
-
-    afterEach ->
-      view.destroy() if view?
 
     it 'outputs simple translated strings', ->
       render '{{t foo.bar}}'
@@ -76,3 +74,16 @@ describe 'SC.I18n', ->
       render '{{t foo.bar tagName="h2"}}'
       SC.run ->
         expect(view.$('h2').html()).toEqual('A Foobar')
+
+  describe 'TranslatableAttributes', ->
+
+    beforeEach ->
+      TestNamespace.TranslateableView = SC.View.extend(SC.I18n.TranslateableAttributes)
+
+    it 'exists', ->
+      expect(SC.I18n.TranslateableAttributes).not.toBeUndefined()
+
+    it 'translates ___Translation attributes', ->
+      render '{{view TestNamespace.TranslateableView titleTranslation="foo.bar"}}'
+      SC.run ->
+        expect(view.$().children().first().attr('title')).toEqual("A Foobar")
