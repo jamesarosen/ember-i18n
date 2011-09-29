@@ -85,3 +85,11 @@ Handlebars.registerHelper 't', (key, options) ->
 
   result = '<%@ id="%@">%@</%@>'.fmt tagName, elementID, I18n.t(key, attrs), tagName
   new Handlebars.SafeString result
+
+Handlebars.registerHelper 'translateAttr', (options) ->
+  attrs = options.hash
+  result = []
+  SC.keys(attrs).forEach (property) ->
+    translatedValue = I18n.t attrs[property]
+    result.push '%@="%@"'.fmt(property, translatedValue)
+  new Handlebars.SafeString result.join ' '

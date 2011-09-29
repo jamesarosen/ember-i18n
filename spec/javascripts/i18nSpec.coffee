@@ -20,7 +20,8 @@ describe 'SC.I18n', ->
     this.originalTranslations = SC.I18n.translations
     SC.I18n.translations = {
       'foo.bar': 'A Foobar'
-      'foo.count': 'All {{count}} Foos'
+      'foo.count': 'All {{count}} Foos',
+      'foo.save.disabled': 'Saving Foo...'
     }
 
   afterEach ->
@@ -74,6 +75,14 @@ describe 'SC.I18n', ->
       render '{{t foo.bar tagName="h2"}}'
       SC.run ->
         expect(view.$('h2').html()).toEqual('A Foobar')
+
+  describe '{{translateAttr}}', ->
+
+    it 'outputs translated attribute strings', ->
+      render '<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}'
+      SC.run ->
+        expect(view.$('a').attr('title')).toEqual 'A Foobar'
+        expect(view.$('a').attr('data-disable-with')).toEqual 'Saving Foo...'
 
   describe 'TranslatableAttributes', ->
 
