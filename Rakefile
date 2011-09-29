@@ -23,6 +23,14 @@ namespace :spec do
   end
 end
 
+directory project_dir + '/dist'
+
+task :build => [ :compile, project_dir + '/dist' ] do
+  version = File.read project_dir + '/VERSION'
+  cp project_dir + '/lib/i18n.js', project_dir + "/dist/sproutcore-i18n-#{version}.js"
+  puts "Copied i18n.js to dist/"
+end
+
 namespace :jasmine do
   task :require do
     require 'jasmine'
