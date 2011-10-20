@@ -76,6 +76,14 @@ describe 'SC.I18n', ->
       SC.run ->
         expect(view.$('h2').html()).toEqual('A Foobar')
 
+  describe '{{{t}}}', ->
+    it 'does not over-escape translations', ->
+      SC.I18n.translations['message.loading'] = '<span class="loading">Loading…</span>'
+      render '<div>{{{t "message.loading"}}}</div>'
+      SC.run ->
+        expect(view.$('.loading').length).toEqual(1)
+        expect(view.$('.loading').text()).toEqual('Loading…')
+
   describe '{{translateAttr}}', ->
 
     it 'outputs translated attribute strings', ->
