@@ -8,16 +8,19 @@ def coffee(file)
   puts "Compiled #{file}"
 end
 
+desc 'Clean up generated JS files'
 task :clean do
   rm_f project_dir + '/lib/*.js'
   rm_f project_dir + '/spec/javascripts/*.js'
 end
 
+desc 'Compile coffeescript -> JS'
 task :compile do
   coffee project_dir + '/lib/*.coffee'
 end
 
 namespace :spec do
+  desc 'Compile spec coffeescript -> JS'
   task :compile do
     coffee project_dir + '/spec/javascripts/*.coffee'
   end
