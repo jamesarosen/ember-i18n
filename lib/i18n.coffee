@@ -1,5 +1,11 @@
 isTranslatedAttribute = /(.+)Translation$/
 
+inflect = (key, quantity) ->
+  return key if not quantity?
+  # map between a quantity and a specific translation key
+  inflectionMap = 0: 'zero', 1: 'one', many: 'many'
+  key += ".#{inflectionMap[quantity] || inflectionMap['many']}"
+
 I18n = {
   compile: Handlebars.compile
 
@@ -13,9 +19,31 @@ I18n = {
       result = I18n.translations[key] = I18n.compile result
     result
 
-  t: (key, context) ->
-    template = I18n.template key
-    return template context
+  # Returns a string from the translations list
+  # Features
+  # - interpolation
+  #     {{count}} pancakes -> 4 pancakes
+  # - inflection (with interpolation)
+  #      adds '.zero', '.one', '.many' to translation key
+  #      en.crepe      = "Thin pancake"
+  #      en.thing.zero = "No things"
+  #      en.thing.one  = "One thing"
+  #      en.thing.many = "Many things"
+  #        OR MAYBE
+  #      en.thing.many = "{{count}} {{color}} things"
+  #
+  # Usage:
+  #
+  #      t('en.crepe') -> "Thin pancake"
+  #      t('en.thing', 0)  -> "No things"
+  #      t('en.thing', 1)  -> "One thing"
+  #      t('en.thing', { count: 12, color: "blue" }, 12) -> "12 blue things"
+  t: (key, context, inflection) ->
+    if context? and not isNaN(context)
+      inflection = context
+      context = null
+    template = I18n.template inflect(key, inflection)
+    template context
 
   # A mixin for views that supports ___Translation="some.translation.key".
   #
