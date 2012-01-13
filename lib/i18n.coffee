@@ -6,8 +6,9 @@ getPath = Ember.Handlebars.getPath || Ember.getPath
 
 inflect = (key, quantity) ->
   return key if not quantity?
-  map = 0: 'zero', 1: 'one'
-  key += ".#{map[quantity] || 'many'}"
+  # map between a quantity and a specific translation key
+  inflectionMap = 0: 'zero', 1: 'one', many: 'many'
+  key += ".#{inflectionMap[quantity] || inflectionMap['many']}"
 
 I18n = {
   compile: Handlebars.compile
