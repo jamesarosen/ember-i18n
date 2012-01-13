@@ -22,6 +22,10 @@ describe 'Em.I18n', ->
       'foo.bar': 'A Foobar'
       'foo.count': 'All {{count}} Foos',
       'foo.save.disabled': 'Saving Foo...'
+      'foo.inflect.zero': 'Zero Inflections',
+      'foo.inflect.one': 'One Inflection',
+      'foo.inflect.many': 'Many Inflections',
+      'foo.interpolate-and-inflect.many': '{{count}} Interpolated Inflections'
     }
 
   afterEach ->
@@ -38,7 +42,23 @@ describe 'Em.I18n', ->
       expect(Em.I18n.t('foo.bar')).toEqual('A Foobar')
 
     it 'should interpolate', ->
-      expect(Em.I18n.t('foo.count', {count: 12 })).toEqual('All 12 Foos')
+      expect(Em.I18n.t('foo.count', { count: 12 })).toEqual('All 12 Foos')
+
+    it 'should inflect with an empty quantity', ->
+      expect(Em.I18n.t('foo.inflect', 0)).toEqual('Zero Inflections')
+
+    it 'should inflect with a singlar quantity', ->
+      expect(Em.I18n.t('foo.inflect', 1)).toEqual('One Inflection')
+
+    it 'should inflect with a plural quantity', ->
+      expect(Em.I18n.t('foo.inflect', 12)).toEqual('Many Inflections')
+
+    it 'should interpolate and inflect', ->
+      quantity = 42
+      expect(Em.I18n.t('foo.interpolate-and-inflect', { count: quantity }, quantity)).toEqual("#{quantity} Interpolated Inflections")
+
+    it 'should still work when passing interpolation values to a translation WITHOUT interpolation fields', ->
+      expect(Em.I18n.t('foo.inflect', { count: 'Ignore Me' }, 0)).toEqual('Zero Inflections')
 
     it 'should warn about missing translations', ->
       expect(Em.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
