@@ -35,6 +35,8 @@ I18n = {
 }
 
 SC.I18n = I18n
+Em.I18n = I18n
+Ember.I18n = I18n
 
 isBinding = /(.+)Binding$/
 
