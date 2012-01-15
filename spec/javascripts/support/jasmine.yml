@@ -12,7 +12,7 @@
 #
 src_files:
   - vendor/jquery-1.6.js
-  - vendor/sproutcore.js
+  - vendor/ember.js
   - lib/i18n.js
 
 # stylesheets
