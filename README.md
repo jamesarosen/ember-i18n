@@ -1,6 +1,6 @@
-## Sproutcore.I18n
+## Ember.I18n
 
-Internationalization for Sproutcore 2.0
+Internationalization for Ember
 
 ### Examples
 
@@ -78,6 +78,6 @@ yields
  * There is no way to pass interpolations to attribute translations. I can't
    think of a syntax to support this. It *might* be possible to look up
    interpolations from the current context.
- * `SC.I18n.translations` **must** be fully populated before Sproutcore
+ * `SC.I18n.translations` **must** be fully populated before Ember
    renders any views. There are no bindings on the translations themselves,
-   so Sproutcore will not know to re-render views when translations change.
+   so Ember will not know to re-render views when translations change.
