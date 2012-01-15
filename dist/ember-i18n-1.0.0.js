@@ -1,6 +1,8 @@
 (function() {
   var I18n, isBinding, isTranslatedAttribute;
+
   isTranslatedAttribute = /(.+)Translation$/;
+
   I18n = {
     compile: Handlebars.compile,
     translations: {},
@@ -21,7 +23,7 @@
       template = I18n.template(key);
       return template(context);
     },
-    TranslateableAttributes: SC.Mixin.create({
+    TranslateableAttributes: Em.Mixin.create({
       didInsertElement: function() {
         var attribute, isTranslatedAttributeMatch, key, path, result, translatedValue;
         result = this._super.apply(this, arguments);
@@ -38,8 +40,15 @@
       }
     })
   };
+
   SC.I18n = I18n;
+
+  Em.I18n = I18n;
+
+  Ember.I18n = I18n;
+
   isBinding = /(.+)Binding$/;
+
   Handlebars.registerHelper('t', function(key, options) {
     var attrs, context, elementID, result, tagName, view;
     context = this;
@@ -48,44 +57,46 @@
     tagName = attrs.tagName || 'span';
     delete attrs.tagName;
     elementID = "i18n-" + (jQuery.uuid++);
-    SC.keys(attrs).forEach(function(property) {
+    Em.keys(attrs).forEach(function(property) {
       var bindPath, currentValue, invoker, isBindingMatch, observer, propertyName;
       isBindingMatch = property.match(isBinding);
       if (isBindingMatch) {
         propertyName = isBindingMatch[1];
         bindPath = attrs[property];
-        currentValue = SC.getPath(bindPath);
+        currentValue = Em.getPath(bindPath);
         attrs[propertyName] = currentValue;
         invoker = null;
         observer = function() {
           var elem, newValue;
-          newValue = SC.getPath(context, bindPath);
+          newValue = Em.getPath(context, bindPath);
           elem = view.$("#" + elementID);
           if (elem.length === 0) {
-            SC.removeObserver(context, bindPath, invoker);
+            Em.removeObserver(context, bindPath, invoker);
             return;
           }
           attrs[propertyName] = newValue;
           return elem.html(I18n.t(key, attrs));
         };
         invoker = function() {
-          return SC.run.once(observer);
+          return Em.run.once(observer);
         };
-        return SC.addObserver(context, bindPath, invoker);
+        return Em.addObserver(context, bindPath, invoker);
       }
     });
     result = '<%@ id="%@">%@</%@>'.fmt(tagName, elementID, I18n.t(key, attrs), tagName);
     return new Handlebars.SafeString(result);
   });
+
   Handlebars.registerHelper('translateAttr', function(options) {
     var attrs, result;
     attrs = options.hash;
     result = [];
-    SC.keys(attrs).forEach(function(property) {
+    Em.keys(attrs).forEach(function(property) {
       var translatedValue;
       translatedValue = I18n.t(attrs[property]);
       return result.push('%@="%@"'.fmt(property, translatedValue));
     });
     return new Handlebars.SafeString(result.join(' '));
   });
+
 }).call(this);
