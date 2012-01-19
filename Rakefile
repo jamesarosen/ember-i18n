@@ -4,6 +4,13 @@ Bundler.require
 project_dir = File.expand_path(File.dirname(__FILE__))
 
 def coffee(file)
+  if !system("which coffee")
+    $stderr.puts "You do not have a CoffeeScript compiler installed."
+    $stderr.puts "You can install one with the following command:"
+    $stderr.puts "    npm install -g coffee-script"
+    abort
+  end
+
   `coffee -c #{file}`
   puts "Compiled #{file}"
 end
