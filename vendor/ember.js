@@ -1,1 +1,1 @@
-ember-0.9.3.js
+ember-0.9.4.js
