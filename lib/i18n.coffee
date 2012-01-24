@@ -1,5 +1,9 @@
 isTranslatedAttribute = /(.+)Translation$/
 
+# If we're on Ember 0.9.4 or later, we need the Ember.Handlebars
+# version of getPath, which knows how to look up globals properly.
+getPath = Ember.Handlebars.getPath || Ember.getPath
+
 I18n = {
   compile: Handlebars.compile
 
@@ -61,14 +65,14 @@ Handlebars.registerHelper 't', (key, options) ->
       # Get the current values for any bound properties:
       propertyName = isBindingMatch[1]
       bindPath = attrs[property]
-      currentValue = Em.getPath bindPath
+      currentValue = getPath bindPath
       attrs[propertyName] = currentValue
 
       # Set up an observer for changes:
       invoker = null
 
       observer = ()->
-        newValue = Em.getPath context, bindPath
+        newValue = getPath context, bindPath
         elem = view.$ "##{elementID}"
 
         # If we aren't able to find the element, it means the element
