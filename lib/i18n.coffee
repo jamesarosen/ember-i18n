@@ -4,49 +4,52 @@ isTranslatedAttribute = /(.+)Translation$/
 # version of getPath, which knows how to look up globals properly.
 getPath = Ember.Handlebars.getPath || Ember.getPath
 
-inflect = (key, quantity) ->
-  return key if not quantity?
-  # map between a quantity and a specific translation key
-  inflectionMap = 0: 'zero', 1: 'one', many: 'many'
-  key += ".#{inflectionMap[quantity] || inflectionMap['many']}"
+pluralForm = CLDR.pluralForm if CLDR?
+
+ember_assert("Could not find CLDR.pluralForm. You can find it at https://github.com/jamesarosen/CLDR.js", pluralForm?)
+
+findTemplate = (key, setOnMissing) ->
+  ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key is 'string')
+  result = I18n.translations[key]
+  if setOnMissing
+    result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
+  if result? and not $.isFunction(result)
+    result = I18n.translations[key] = I18n.compile result
+  result
 
 I18n = {
   compile: Handlebars.compile
 
   translations: {}
 
-  template: (key) ->
-    sc_assert "You must provide a translation key string, not %@".fmt(key), typeof key == 'string'
-    result = I18n.translations[key]
-    result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
-    unless $.isFunction(result)
-      result = I18n.translations[key] = I18n.compile result
-    result
+  template: (key, count) ->
+    if count?
+      suffix = pluralForm count
+      interpolatedKey = "%@.%@".fmt key, suffix
+      result = findTemplate(interpolatedKey, false)
+    result ?= findTemplate(key, true)
 
   # Returns a string from the translations list
   # Features
   # - interpolation
   #     {{count}} pancakes -> 4 pancakes
   # - inflection (with interpolation)
-  #      adds '.zero', '.one', '.many' to translation key
+  #      adds '.zero', '.one', '.two', '.few', '.many', and '.other' to
+  #      translation key:
+  #
   #      en.crepe      = "Thin pancake"
   #      en.thing.zero = "No things"
-  #      en.thing.one  = "One thing"
-  #      en.thing.many = "Many things"
-  #        OR MAYBE
-  #      en.thing.many = "{{count}} {{color}} things"
+  #      en.thing.one  = "One {{color}} thing"
+  #      en.thing.other = "{{count}} {{color}} things"
   #
   # Usage:
   #
   #      t('en.crepe') -> "Thin pancake"
-  #      t('en.thing', 0)  -> "No things"
-  #      t('en.thing', 1)  -> "One thing"
-  #      t('en.thing', { count: 12, color: "blue" }, 12) -> "12 blue things"
-  t: (key, context, inflection) ->
-    if context? and not isNaN(context)
-      inflection = context
-      context = null
-    template = I18n.template inflect(key, inflection)
+  #      t('en.thing', { count: 0 })  -> "No things"
+  #      t('en.thing', { count: 1, color: "purple" })  -> "One purple thing"
+  #      t('en.thing', { count: 12, color: "blue" }) -> "12 blue things"
+  t: (key, context = {}) ->
+    template = I18n.template key, context.count
     template context
 
   # A mixin for views that supports ___Translation="some.translation.key".
