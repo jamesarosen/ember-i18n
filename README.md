@@ -4,13 +4,17 @@ Internationalization for Ember
 
 ### Requirements
 
-The [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js).
+Set `Em.I18n.translations` to an object containing your translation
+information. If you want to support inflection based on `count`, you will
+also need to include the
+[CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
+and set `CLDR.defaultLocale` to the current locale code (e.g. "de").
 
 ### Examples
 
 Given
 
-    I18n.translations = {
+    Em.I18n.translations = {
       'user.edit.title': 'Edit User',
       'user.followers.title.one': 'One Follower',
       'user.followers.title.other': 'All {{count}} Followers',

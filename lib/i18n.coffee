@@ -6,7 +6,7 @@ getPath = Ember.Handlebars.getPath || Ember.getPath
 
 pluralForm = CLDR.pluralForm if CLDR?
 
-ember_assert("Could not find CLDR.pluralForm. You can find it at https://github.com/jamesarosen/CLDR.js", pluralForm?)
+Ember.Logger.warn "CLDR.pluralForm not found. Em.I18n will not support count-based inflection." unless pluralForm?
 
 findTemplate = (key, setOnMissing) ->
   ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key is 'string')
@@ -23,7 +23,7 @@ I18n = {
   translations: {}
 
   template: (key, count) ->
-    if count?
+    if count? && pluralForm?
       suffix = pluralForm count
       interpolatedKey = "%@.%@".fmt key, suffix
       result = findTemplate(interpolatedKey, false)
