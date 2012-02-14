@@ -2,13 +2,18 @@
 
 Internationalization for Ember
 
+### Requirements
+
+The [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js).
+
 ### Examples
 
 Given
 
     I18n.translations = {
       'user.edit.title': 'Edit User',
-      'user.followers.title': 'All {{count}} Followers',
+      'user.followers.title.one': 'One Follower',
+      'user.followers.title.other': 'All {{count}} Followers',
       'button.add_user.title': 'Add a user',
       'button.add_user.text': 'Add',
       'button.add_user.disabled': 'Saving...'
