@@ -35,6 +35,7 @@ end
 
 directory project_dir + '/dist'
 
+desc "Build the distribution version of Em.I18n"
 task :build => [ :compile, project_dir + '/dist' ] do
   version = (File.read project_dir + '/VERSION').strip
   cp project_dir + '/lib/i18n.js', project_dir + "/dist/ember-i18n-#{version}.js"
