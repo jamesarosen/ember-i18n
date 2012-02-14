@@ -94,4 +94,4 @@ Jasmine::Headless::Task.new('jasmine:headless') do |t|
   t.colors = true
 end
 
-task :default => ['compile', 'spec:compile', 'jasmine:headless']
+task :default => ['clean', 'compile', 'spec:compile', 'jasmine:headless']
