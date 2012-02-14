@@ -1,28 +1,47 @@
 (function() {
-  var I18n, getPath, isBinding, isTranslatedAttribute;
+  var I18n, findTemplate, getPath, isBinding, isTranslatedAttribute, pluralForm;
 
   isTranslatedAttribute = /(.+)Translation$/;
 
   getPath = Ember.Handlebars.getPath || Ember.getPath;
 
-  I18n = {
-    compile: Handlebars.compile,
-    translations: {},
-    template: function(key) {
-      var result;
-      sc_assert("You must provide a translation key string, not %@".fmt(key), typeof key === 'string');
-      result = I18n.translations[key];
+  if (typeof CLDR !== "undefined" && CLDR !== null) pluralForm = CLDR.pluralForm;
+
+  if (pluralForm == null) {
+    Ember.Logger.warn("CLDR.pluralForm not found. Em.I18n will not support count-based inflection.");
+  }
+
+  findTemplate = function(key, setOnMissing) {
+    var result;
+    ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key === 'string');
+    result = I18n.translations[key];
+    if (setOnMissing) {
       if (result == null) {
         result = I18n.translations[key] = I18n.compile("Missing translation: " + key);
       }
-      if (!$.isFunction(result)) {
-        result = I18n.translations[key] = I18n.compile(result);
+    }
+    if ((result != null) && !$.isFunction(result)) {
+      result = I18n.translations[key] = I18n.compile(result);
+    }
+    return result;
+  };
+
+  I18n = {
+    compile: Handlebars.compile,
+    translations: {},
+    template: function(key, count) {
+      var interpolatedKey, result, suffix;
+      if ((count != null) && (pluralForm != null)) {
+        suffix = pluralForm(count);
+        interpolatedKey = "%@.%@".fmt(key, suffix);
+        result = findTemplate(interpolatedKey, false);
       }
-      return result;
+      return result != null ? result : result = findTemplate(key, true);
     },
     t: function(key, context) {
       var template;
-      template = I18n.template(key);
+      if (context == null) context = {};
+      template = I18n.template(key, context.count);
       return template(context);
     },
     TranslateableAttributes: Em.Mixin.create({
