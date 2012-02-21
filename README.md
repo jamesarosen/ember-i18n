@@ -59,6 +59,9 @@ if `user.getPath('followers.count)` returns `2`.
 
 #### Translate attributes in a view:
 
+Add the mixin `Em.Button.reopen.call(Em.Button, Em.I18n.TranslateableAttributes)` and use like this:
+
+
     {{#view Em.Button titleTranslation="button.add_user.title">
       {{t button.add_user.text}}
     {{/view}}
