@@ -71,7 +71,7 @@ yields
 
 #### Translate attributes on a plain tag:
 
-    <a {{translatedAttr title="button.add_user.title"
+    <a {{translateAttr title="button.add_user.title"
                         data-disable-with="button.add_user.disabled"}}>
       {{t button.add_user.text}}
     </a>
