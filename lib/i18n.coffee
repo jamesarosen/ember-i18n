@@ -96,7 +96,7 @@ Handlebars.registerHelper 't', (key, options) ->
       # Get the current values for any bound properties:
       propertyName = isBindingMatch[1]
       bindPath = attrs[property]
-      currentValue = getPath bindPath
+      currentValue = getPath context, bindPath
       attrs[propertyName] = currentValue
 
       # Set up an observer for changes:
