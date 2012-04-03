@@ -47,7 +47,7 @@ describe 'Em.I18n', ->
       expect(Em.I18n.t('foo.bar')).toEqual('A Foobar')
 
     it 'interpolates', ->
-      expect(SC.I18n.t('foo.bar.named', { name: 'Sue' })).toEqual('A Foobar named Sue')
+      expect(Em.I18n.t('foo.bar.named', { name: 'Sue' })).toEqual('A Foobar named Sue')
 
     it 'uses the "zero" form when the language calls for it', ->
       expect(Em.I18n.t('foos', { count: 0 })).toEqual('No Foos')
