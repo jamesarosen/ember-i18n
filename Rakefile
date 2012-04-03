@@ -35,11 +35,20 @@ end
 
 directory project_dir + '/dist'
 
-desc "Build the distribution version of Em.I18n"
-task :build => [ :compile, project_dir + '/dist' ] do
-  version = (File.read project_dir + '/VERSION').strip
-  cp project_dir + '/lib/i18n.js', project_dir + "/dist/ember-i18n-#{version}.js"
-  puts "Copied i18n.js to dist/"
+namespace :build do
+  desc "Build the distribution version of Em.I18n"
+  task :dist => [ :compile, project_dir + '/dist' ] do
+    version = (File.read project_dir + '/VERSION').strip
+    cp project_dir + '/lib/i18n.js', project_dir + "/dist/ember-i18n-#{version}.js"
+    puts "Copied i18n.js to dist/"
+  end
+
+  desc "Build the latest version of Em.I18n"
+  task :latest => [ :compile, project_dir + '/dist' ] do
+    version = "latest"
+    cp project_dir + '/lib/i18n.js', project_dir + "/dist/ember-i18n-#{version}.js"
+    puts "Copied i18n.js to dist/"
+  end
 end
 
 namespace :jasmine do
