@@ -82,7 +82,7 @@
       if (isBindingMatch) {
         propertyName = isBindingMatch[1];
         bindPath = attrs[property];
-        currentValue = getPath(bindPath);
+        currentValue = getPath(context, bindPath);
         attrs[propertyName] = currentValue;
         invoker = null;
         observer = function() {
