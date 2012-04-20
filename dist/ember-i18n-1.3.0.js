@@ -62,8 +62,6 @@
     })
   };
 
-  SC.I18n = I18n;
-
   Em.I18n = I18n;
 
   Ember.I18n = I18n;
@@ -84,7 +82,7 @@
       if (isBindingMatch) {
         propertyName = isBindingMatch[1];
         bindPath = attrs[property];
-        currentValue = getPath(bindPath);
+        currentValue = getPath(context, bindPath);
         attrs[propertyName] = currentValue;
         invoker = null;
         observer = function() {
