@@ -8,9 +8,19 @@ pluralForm = CLDR.pluralForm if CLDR?
 
 Ember.Logger.warn "CLDR.pluralForm not found. Em.I18n will not support count-based inflection." unless pluralForm?
 
+lookupKey = (key, hash) ->
+  result = hash[key]
+  idx = key.indexOf('.')
+  if !result and idx != -1
+    firstKey = key.substr(0, idx)
+    remainingKeys = key.substr(idx + 1)
+    hash = hash[firstKey]
+    result = lookupKey(remainingKeys, hash) if hash
+  result
+
 findTemplate = (key, setOnMissing) ->
   ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key is 'string')
-  result = I18n.translations[key]
+  result = lookupKey(key, I18n.translations)
   if setOnMissing
     result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
   if result? and not $.isFunction(result)
