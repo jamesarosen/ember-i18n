@@ -93,14 +93,14 @@ Handlebars.registerHelper 't', (key, options) ->
       # Get the current values for any bound properties:
       propertyName = isBindingMatch[1]
       bindPath = attrs[property]
-      currentValue = getPath context, bindPath
+      currentValue = getPath context, bindPath, options
       attrs[propertyName] = currentValue
 
       # Set up an observer for changes:
       invoker = null
 
       observer = ()->
-        newValue = getPath context, bindPath
+        newValue = getPath context, bindPath, options
         elem = view.$ "##{elementID}"
 
         # If we aren't able to find the element, it means the element
