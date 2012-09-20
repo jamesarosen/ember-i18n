@@ -92,10 +92,45 @@ describe 'Em.I18n', ->
       Em.run ->
         expect(view.$().text()).toEqual('All 4 Bars')
 
+    it 'does not error due to bound properties during a rerender', ->
+      Em.run ->
+        TestNamespace.set 'count', 3
+      render '{{t bars.all countBinding="TestNamespace.count"}}'
+      expect ->
+        Em.run ->
+          view.rerender()
+          TestNamespace.set 'count', 4
+      .not.toThrow()
+
+    it 'responds to updates on bound properties after a rerender', ->
+      Em.run ->
+        TestNamespace.set 'count', 3
+      render '{{t bars.all countBinding="TestNamespace.count"}}'
+      Em.run ->
+        view.rerender()
+        TestNamespace.set 'count', 4
+      Em.run ->
+        expect(view.$().text()).toEqual('All 4 Bars')
+
     it 'obeys a custom tag name', ->
       render '{{t foo.bar tagName="h2"}}'
       Em.run ->
         expect(view.$('h2').html()).toEqual('A Foobar')
+
+    it 'handles interpolations from contextual keywords', ->
+      render '{{t foo.bar.named nameBinding="view.favouriteBeer" }}',
+              { favouriteBeer: 'IPA' }
+      Em.run ->
+        expect(view.$().text()).toEqual('A Foobar named IPA')
+
+    it 'responds to updates on bound keyword properties', ->
+      render '{{t foo.bar.named nameBinding="view.favouriteBeer"}}',
+              { favouriteBeer: 'Lager' }
+      expect(view.$().text()).toEqual('A Foobar named Lager')
+      Em.run ->
+        view.set 'favouriteBeer', 'IPA'
+      Em.run ->
+        expect(view.$().text()).toEqual('A Foobar named IPA')
 
   describe '{{{t}}}', ->
     it 'does not over-escape translations', ->
