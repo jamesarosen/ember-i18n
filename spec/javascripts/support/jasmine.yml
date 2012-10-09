@@ -11,7 +11,8 @@
 #   - dist/**/*.js
 #
 src_files:
-  - vendor/jquery-1.6.js
+  - vendor/jquery.js
+  - vendor/handlebars.js
   - vendor/ember.js
   - vendor/cldr*.js
   - lib/i18n.js
