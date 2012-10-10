@@ -78,7 +78,8 @@ isBinding = /(.+)Binding$/
 Handlebars.registerHelper 't', (key, options) ->
   context = this
   attrs = options.hash
-  view = options.data.view
+  data = options.data
+  view = data.view
   tagName = attrs.tagName || 'span'
   delete attrs.tagName
 
@@ -93,23 +94,25 @@ Handlebars.registerHelper 't', (key, options) ->
       # Get the current values for any bound properties:
       propertyName = isBindingMatch[1]
       bindPath = attrs[property]
-      currentValue = getPath context, bindPath
+      currentValue = getPath context, bindPath, options
       attrs[propertyName] = currentValue
 
       # Set up an observer for changes:
       invoker = null
 
-      observer = ()->
-        newValue = getPath context, bindPath
-        elem = view.$ "##{elementID}"
+      normalized = Ember.Handlebars.normalizePath context, bindPath, data
+      [root, normalizedPath] = [normalized.root, normalized.path]
 
-        # If we aren't able to find the element, it means the element
-        # to which we were bound has been removed from the view.
-        # In that case, we can assume the template has been re-rendered
-        # and we need to clean up the observer.
-        if elem.length == 0
-          Em.removeObserver context, bindPath, invoker
+      observer = ()->
+        # The view is being rerendered or has been destroyed. In the former case
+        # the observer will be added back, and in the latter it should be
+        # removed permanently.
+        if view.get('state') isnt 'inDOM'
+          Em.removeObserver root, normalizedPath, invoker
           return
+
+        newValue = getPath context, bindPath, options
+        elem = view.$ "##{elementID}"
 
         attrs[propertyName] = newValue
         elem.html I18n.t key, attrs
@@ -117,7 +120,7 @@ Handlebars.registerHelper 't', (key, options) ->
       invoker = ->
         Em.run.once observer
 
-      Em.addObserver context, bindPath, invoker
+      Em.addObserver root, normalizedPath, invoker
 
   result = '<%@ id="%@">%@</%@>'.fmt tagName, elementID, I18n.t(key, attrs), tagName
   new Handlebars.SafeString result
