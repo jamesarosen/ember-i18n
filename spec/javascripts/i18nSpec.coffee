@@ -28,6 +28,15 @@ describe 'Em.I18n', ->
       'foos.other': 'All {{count}} Foos'
 
       'bars.all': 'All {{count}} Bars'
+
+      baz: {
+        qux: 'A qux appears'
+      }
+
+      fum: {
+        one: 'A fum'
+        other: '{{count}} fums'
+      }
     }
 
     CLDR.defaultLanguage = 'ksh' # has zero, one, and many
@@ -63,6 +72,14 @@ describe 'Em.I18n', ->
 
     it 'warns about missing translations', ->
       expect(Em.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here')
+
+    describe 'using nested objects', ->
+      it 'works with a simple case', ->
+        expect(Em.I18n.t('baz.qux')).toEqual('A qux appears')
+
+      it 'works with counts', ->
+        expect(Em.I18n.t('fum', { count: 1 })).toEqual('A fum')
+        expect(Em.I18n.t('fum', { count: 2 })).toEqual('2 fums')
 
   describe '{{t}}', ->
 
