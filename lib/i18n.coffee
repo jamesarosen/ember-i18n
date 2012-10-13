@@ -18,8 +18,11 @@ lookupKey = (key, hash) ->
     result = lookupKey(remainingKeys, hash) if hash
   result
 
+# If we're on pre-1.0 versions of Ember, we need ember_assert; otherwise use Ember.assert to avoid deprecation warnings.
+assert = if Ember.assert? then Ember.assert else ember_assert
+
 findTemplate = (key, setOnMissing) ->
-  ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key is 'string')
+  assert("You must provide a translation key string, not %@".fmt(key), typeof key is 'string')
   result = lookupKey(key, I18n.translations)
   if setOnMissing
     result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
