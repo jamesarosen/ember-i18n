@@ -1,0 +1,27 @@
+{
+  "name": "ember-i18n",
+  "version": "1.3.0",
+  "description": "I18n support for Ember.js",
+  "main": [ "dist/ember-i18n-latest.js" ],
+  "dependencies": {
+    "cldr": "~1.0",
+    "jquery": "~1.7.2",
+    "handlebars": "~1.0",
+    "ember": "~0.9.7"
+  },
+  "scripts": {
+    "test": "rake"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/jamesarosen/ember-i18n.git"
+  },
+  "keywords": [
+    "ember",
+    "emberjs",
+    "i18n",
+    "internationalization"
+  ],
+  "author": "James A. Rosen",
+  "license": "MIT"
+}

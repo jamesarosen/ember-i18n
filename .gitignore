@@ -1,3 +1,4 @@
 /.jhw-cache/
+/components/
 /lib/*.js
 /spec/javascripts/*.js

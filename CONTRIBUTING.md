@@ -1,8 +1,11 @@
 ## Running the tests
 
-You'll need Ruby 1.9, Rake, and Bundler.
+You'll need Ruby 1.9, [Rake](http://rake.rubyforge.org/),
+[Bundler](http://gembundler.com/), and
+[Bower](http://twitter.github.com/bower/).
 
 ```bash
+bower install
 bundle
 rake
 ```
