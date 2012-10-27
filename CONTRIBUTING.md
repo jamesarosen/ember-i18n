@@ -10,6 +10,8 @@ bundle
 rake
 ```
 
+`rake -T` will show available Rake tasks, including test-running tasks.
+
 ## Commit-Bit Policy
 
 If a commit of yours lands in the `master` branch, you've earned committer
