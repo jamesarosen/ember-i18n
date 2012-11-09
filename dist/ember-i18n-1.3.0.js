@@ -1,20 +1,32 @@
 (function() {
-  var I18n, findTemplate, getPath, isBinding, isTranslatedAttribute, pluralForm;
-
+  var I18n, assert, findTemplate, getPath, isBinding, isTranslatedAttribute, lookupKey, pluralForm;
   isTranslatedAttribute = /(.+)Translation$/;
-
   getPath = Ember.Handlebars.getPath || Ember.getPath;
-
-  if (typeof CLDR !== "undefined" && CLDR !== null) pluralForm = CLDR.pluralForm;
-
+  if (typeof CLDR !== "undefined" && CLDR !== null) {
+    pluralForm = CLDR.pluralForm;
+  }
   if (pluralForm == null) {
     Ember.Logger.warn("CLDR.pluralForm not found. Em.I18n will not support count-based inflection.");
   }
-
+  lookupKey = function(key, hash) {
+    var firstKey, idx, remainingKeys, result;
+    result = hash[key];
+    idx = key.indexOf('.');
+    if (!result && idx !== -1) {
+      firstKey = key.substr(0, idx);
+      remainingKeys = key.substr(idx + 1);
+      hash = hash[firstKey];
+      if (hash) {
+        result = lookupKey(remainingKeys, hash);
+      }
+    }
+    return result;
+  };
+  assert = Ember.assert != null ? Ember.assert : ember_assert;
   findTemplate = function(key, setOnMissing) {
     var result;
-    ember_assert("You must provide a translation key string, not %@".fmt(key), typeof key === 'string');
-    result = I18n.translations[key];
+    assert("You must provide a translation key string, not %@".fmt(key), typeof key === 'string');
+    result = lookupKey(key, I18n.translations);
     if (setOnMissing) {
       if (result == null) {
         result = I18n.translations[key] = I18n.compile("Missing translation: " + key);
@@ -25,7 +37,6 @@
     }
     return result;
   };
-
   I18n = {
     compile: Handlebars.compile,
     translations: {},
@@ -40,7 +51,9 @@
     },
     t: function(key, context) {
       var template;
-      if (context == null) context = {};
+      if (context == null) {
+        context = {};
+      }
       template = I18n.template(key, context.count);
       return template(context);
     },
@@ -61,51 +74,49 @@
       }
     })
   };
-
   Em.I18n = I18n;
-
   Ember.I18n = I18n;
-
   isBinding = /(.+)Binding$/;
-
   Handlebars.registerHelper('t', function(key, options) {
-    var attrs, context, elementID, result, tagName, view;
+    var attrs, context, data, elementID, result, tagName, view;
     context = this;
     attrs = options.hash;
-    view = options.data.view;
+    data = options.data;
+    view = data.view;
     tagName = attrs.tagName || 'span';
     delete attrs.tagName;
     elementID = "i18n-" + (jQuery.uuid++);
     Em.keys(attrs).forEach(function(property) {
-      var bindPath, currentValue, invoker, isBindingMatch, observer, propertyName;
+      var bindPath, currentValue, invoker, isBindingMatch, normalized, normalizedPath, observer, propertyName, root, _ref;
       isBindingMatch = property.match(isBinding);
       if (isBindingMatch) {
         propertyName = isBindingMatch[1];
         bindPath = attrs[property];
-        currentValue = getPath(context, bindPath);
+        currentValue = getPath(context, bindPath, options);
         attrs[propertyName] = currentValue;
         invoker = null;
+        normalized = Ember.Handlebars.normalizePath(context, bindPath, data);
+        _ref = [normalized.root, normalized.path], root = _ref[0], normalizedPath = _ref[1];
         observer = function() {
           var elem, newValue;
-          newValue = getPath(context, bindPath);
-          elem = view.$("#" + elementID);
-          if (elem.length === 0) {
-            Em.removeObserver(context, bindPath, invoker);
+          if (view.get('state') !== 'inDOM') {
+            Em.removeObserver(root, normalizedPath, invoker);
             return;
           }
+          newValue = getPath(context, bindPath, options);
+          elem = view.$("#" + elementID);
           attrs[propertyName] = newValue;
           return elem.html(I18n.t(key, attrs));
         };
         invoker = function() {
           return Em.run.once(observer);
         };
-        return Em.addObserver(context, bindPath, invoker);
+        return Em.addObserver(root, normalizedPath, invoker);
       }
     });
     result = '<%@ id="%@">%@</%@>'.fmt(tagName, elementID, I18n.t(key, attrs), tagName);
     return new Handlebars.SafeString(result);
   });
-
   Handlebars.registerHelper('translateAttr', function(options) {
     var attrs, result;
     attrs = options.hash;
@@ -117,5 +128,4 @@
     });
     return new Handlebars.SafeString(result.join(' '));
   });
-
 }).call(this);
