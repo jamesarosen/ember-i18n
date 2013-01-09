@@ -35,7 +35,7 @@
         result = I18n.translations[key] = I18n.compile("Missing translation: " + key);
       }
     }
-    if ((result != null) && !$.isFunction(result)) {
+    if ((result != null) && !jQuery.isFunction(result)) {
       result = I18n.translations[key] = I18n.compile(result);
     }
     return result;
