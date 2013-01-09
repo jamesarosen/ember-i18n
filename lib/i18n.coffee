@@ -28,7 +28,7 @@ findTemplate = (key, setOnMissing) ->
   result = lookupKey(key, I18n.translations)
   if setOnMissing
     result ?= I18n.translations[key] = I18n.compile "Missing translation: " + key
-  if result? and not $.isFunction(result)
+  if result? and not jQuery.isFunction(result)
     result = I18n.translations[key] = I18n.compile result
   result
 
