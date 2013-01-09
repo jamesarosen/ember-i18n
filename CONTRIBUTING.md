@@ -12,6 +12,12 @@ rake
 
 `rake -T` will show available Rake tasks, including test-running tasks.
 
+## Changing `dist/`
+
+Please only change the files in `dist/` by running the `build:*` Rake commands,
+and only when bumping the version of the library. Specifically, commits that
+change `lib/` should *not* have corresponding changes in `dist/`.
+
 ## Commit-Bit Policy
 
 If a commit of yours lands in the `master` branch, you've earned committer
