@@ -2,7 +2,7 @@
   "name": "ember-i18n",
   "version": "1.3.2",
   "description": "I18n support for Ember.js",
-  "main": [ "dist/ember-i18n-latest.js" ],
+  "main": [ "lib/i18n.js" ],
   "dependencies": {
     "cldr": "~1.0",
     "jquery": "~1.7.2",
