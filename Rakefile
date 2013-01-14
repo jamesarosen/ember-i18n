@@ -3,6 +3,25 @@ require 'pathname'
 Bundler.require
 project_dir = File.expand_path(File.dirname(__FILE__))
 
+desc "Run JSHint checks"
+task :jshint do
+  hint_command = File.join project_dir, 'node_modules', 'jshint', 'bin', 'hint'
+  abort "Could not find JSHint. Try `npm install`" unless File.exists?(hint_command)
+
+  config_file = File.join project_dir, '.jshintrc'
+
+  files = FileList.new
+  files.include File.join(project_dir, 'lib', '**/*.js')
+  files.include File.join(project_dir, 'spec', '**/*.js')
+  files.exclude File.join(project_dir, 'spec', 'support', '**/*')
+
+  sh "#{hint_command} #{files.join(' ')} --config #{config_file}" do |ok, res|
+    fail 'JSHint found errors.' unless ok
+  end
+
+  puts "JSHint OK"
+end
+
 namespace :jasmine do
   task :require do
     require 'jasmine'

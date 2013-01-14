@@ -9,6 +9,9 @@
     "handlebars": "~1.0",
     "ember": "~0.9.7"
   },
+  "devDependencies": {
+    "jshint": "~0.9.1"
+  },
   "scripts": {
     "test": "rake"
   },
