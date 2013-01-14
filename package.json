@@ -10,7 +10,9 @@
     "ember": "~0.9.7"
   },
   "devDependencies": {
-    "jshint": "~0.9.1"
+    "jshint": "~0.9.1",
+    "grunt": "~0.3.17",
+    "grunt-clientside": "~0.2.0"
   },
   "scripts": {
     "test": "rake"

@@ -11,11 +11,10 @@
 #   - dist/**/*.js
 #
 src_files:
-  - components/ember/lib/headless-ember.js
-  - components/jquery/jquery.js
-  - components/handlebars.js/handlebars-1*.js
-  - components/ember/lib/ember*.js
-  - components/cldr/plurals.js
+  - node_modules/jquery/lib/node-jquery.js
+  - node_modules/handlebars/lib/handlebars.js
+  - node_modules/ember/ember.js
+  - node_modules/cldr-plurals/plurals.js
   - lib/i18n.js
 
 # stylesheets
