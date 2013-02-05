@@ -13,8 +13,8 @@
 src_files:
   - components/ember/lib/headless-ember.js
   - components/jquery/jquery.js
-  - components/handlebars.js/handlebars-1*.js
-  - components/ember/lib/ember*.js
+  - components/handlebars/handlebars.js
+  - components/ember/**/ember.js
   - components/cldr/plurals.js
   - lib/i18n.js
 
