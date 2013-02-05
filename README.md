@@ -2,6 +2,12 @@
 
 Internationalization for Ember
 
+## Dependencies
+
+ember-i18n v2.0.0 requires ember 1.0.0-pre4 or higher.  For earlier versions of
+ember, please use [ember-i18n
+v1.3.2](https://github.com/jamesarosen/ember-i18n/tree/v1.3.2).
+
 ### Requirements
 
 Set `Em.I18n.translations` to an object containing your translation
