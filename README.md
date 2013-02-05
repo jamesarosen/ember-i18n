@@ -4,11 +4,15 @@ Internationalization for Ember
 
 ### Requirements
 
-Set `Em.I18n.translations` to an object containing your translation
-information. If you want to support inflection based on `count`, you will
-also need to include the
-[CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
-and set `CLDR.defaultLocale` to the current locale code (e.g. "de").
+ * Ember 0.9.7.1 or 0.9.8.1. If you want to use Ember 1.0-pre4, try the
+   [https://github.com/jamesarosen/ember-i18n/tree/v2.0](v2.0) branch. It's
+   still in-progress, but should generally work.
+ * Set `Em.I18n.translations` to an object containing your translation
+   information.
+ * If you want to support inflection based on `count`, you will
+   also need to include the
+   [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
+   and set `CLDR.defaultLocale` to the current locale code (e.g. "de").
 
 ### Examples
 
