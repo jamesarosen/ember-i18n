@@ -1,5 +1,9 @@
 (function() {
 
+  // Tests should fail if we're using deprecated APIs or relying on deprecated
+  // behaviour.
+  Ember.ENV.RAISE_ON_DEPRECATION = true;
+
   describe('Em.I18n', function() {
     var view;
 
@@ -12,13 +16,17 @@
       });
     };
 
+    Handlebars.registerHelper('question', function(value) {
+      return value + "?";
+    });
+
     beforeEach(function() {
-      window.TestNamespace = Em.Object.create({
+      window.TestNamespace = Em.Object.extend({
         toString: "TestNamespace",
         count: (function(property, value) {
           return value;
         }).property().cacheable()
-      });
+      }).create();
 
       this.originalTranslations = Em.I18n.translations;
 
@@ -29,6 +37,7 @@
         'foos.zero': 'No Foos',
         'foos.one': 'One Foo',
         'foos.other': 'All {{count}} Foos',
+        'foo.withHelper': '{{question count}}',
         'bars.all': 'All {{count}} Bars',
         baz: {
           qux: 'A qux appears'
@@ -43,8 +52,12 @@
     });
 
     afterEach(function() {
+      var windowMeta = Em.meta(window);
       if (view != null) view.destroy();
       delete window.TestNamespace;
+      // TODO: not very pretty: is there not a better way to reset meta?
+      for(metaProp in windowMeta) { delete windowMeta[metaProp] }
+      Em.merge(windowMeta, Em.EMPTY_META);
       Em.I18n.translations = this.originalTranslations;
       CLDR.defaultLanguage = null;
     });
@@ -230,11 +243,19 @@
           expect(view.$('.loading').text()).toEqual('Loading…');
         });
       });
+
+      it("supports translation templates that use helpers reigstered with Handlebars", function(){
+        render('{{t foo.withHelper count=3}}');
+
+        Em.run(function() {
+          expect(view.$().text()).toEqual('3?');
+        });
+      });
     });
 
     describe('{{translateAttr}}', function() {
       it('outputs translated attribute strings', function() {
-        render('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}');
+        render('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
         Em.run(function() {
           expect(view.$('a').attr('title')).toEqual('A Foobar');
           expect(view.$('a').attr('data-disable-with')).toEqual('Saving Foo...');
