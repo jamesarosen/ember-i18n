@@ -3,6 +3,17 @@ require 'pathname'
 Bundler.require
 project_dir = File.expand_path(File.dirname(__FILE__))
 
+desc "Run JSHint checks"
+task :jshint do
+
+  grunt_command = File.join project_dir, 'node_modules', 'grunt', 'bin', 'grunt'
+  abort "Could not find Grunt. Try `npm install`" unless File.exists?(grunt_command)
+
+  sh "#{grunt_command} lint" do |ok, res|
+    fail 'JSHint found errors.' unless ok
+  end
+end
+
 namespace :jasmine do
   task :require do
     require 'jasmine'

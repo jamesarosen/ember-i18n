@@ -2,12 +2,17 @@
   "name": "ember-i18n",
   "version": "1.3.2",
   "description": "I18n support for Ember.js",
-  "main": [ "lib/i18n.js" ],
+  "main": "lib/i18n.js",
   "dependencies": {
-    "cldr": "~1.0",
-    "jquery": "~1.7.2",
+    "cldr-plurals": "~1.0",
+    "jquery": "~1.7",
     "handlebars": "~1.0",
     "ember": "~0.9.7"
+  },
+  "devDependencies": {
+    "jshint": "~0.9.1",
+    "grunt": "~0.3.17",
+    "grunt-clientside": "~0.2.0"
   },
   "scripts": {
     "test": "rake"
