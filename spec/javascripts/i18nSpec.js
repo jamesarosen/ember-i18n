@@ -212,7 +212,7 @@
             foo: 'bar'
           });
 
-          Em.fun(function() {
+          Em.run(function() {
             expect(view.$().text()).toEqual('String and ChildA bar');
           });
         });
@@ -220,7 +220,7 @@
         it('applies same translation interpolation to same keys', function() {
           render('{{t parent string="childB" valB="childC" valC="foo.bar"}}');
 
-          Em.fun(function() {
+          Em.run(function() {
             expect(view.$().text()).toEqual('String and ChildB ChildC A Foobar A Foobar');
           });
         });
@@ -230,7 +230,7 @@
             foo: 'bar'
           });
 
-          Em.fun(function() {
+          Em.run(function() {
             expect(view.$().text()).toEqual('String and ChildB ChildC bar bar');
           });
         });
@@ -238,7 +238,7 @@
         it('applies same raw interpolation to same keys', function() {
           render('{{t parent string="childB" valB="childC" valC="123"}}');
 
-          Em.fun(function() {
+          Em.run(function() {
             expect(view.$().text()).toEqual('String and ChildB ChildC 123 123');
           });
         });
