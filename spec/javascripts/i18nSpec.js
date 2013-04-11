@@ -226,7 +226,7 @@
         });
 
         it('applies same bindings interpolation to same keys', function() {
-          render('{{t parent string="childB" valB="childC" valC="view.foo"}}', {
+          render('{{t parent string="childB" valB="childC" valCBinding="view.foo"}}', {
             foo: 'bar'
           });
 
