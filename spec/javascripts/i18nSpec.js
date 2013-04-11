@@ -45,7 +45,12 @@
         fum: {
           one: 'A fum',
           other: '{{count}} fums'
-        }
+        },
+        'parent': 'String and {{string}}',
+        'childA': 'ChildA {{valA}}',
+        'childB': 'ChildB {{valB}} {{valC}}',
+        'childC': 'ChildC {{valC}}',
+        '1': 'one'
       };
 
       CLDR.defaultLanguage = 'ksh';
@@ -131,11 +136,35 @@
         });
       });
 
-      it('interpolates values', function() {
+      it('interpolates string as translations', function() {
+        render('{{t parent string="foo.bar"}}');
+
+        Em.run(function() {
+          expect(view.$().text()).toEqual('String and A Foobar');
+        });
+      });
+
+      it('interpolates "don\'t translate" string as values', function() {
+        render('{{t parent string="!t foo.bar"}}')
+
+        Em.run(function() {
+          expect(view.$().text()).toEqual('String and foo.bar');
+        });
+      });
+
+      it('interpolates number as values', function() {
         render('{{t bars.all count="597"}}');
 
         Em.run(function() {
           expect(view.$().text()).toEqual('All 597 Bars');
+        });
+      });
+
+      it('interpolates "translate" number as translations', function() {
+        render('{{t parent string="t 1"}}');
+
+        Em.run(function() {
+          expect(view.$().text()).toEqual('String and one');
         });
       });
 
@@ -148,6 +177,70 @@
 
         Em.run(function() {
           expect(view.$().text()).toEqual('All 3 Bars');
+        });
+      });
+
+      it('interpolates bindings over translations', function() {
+        render('{{t parent string="foo.bar" stringBinding="foo"}}', {
+          foo: 'bar'
+        });
+
+        Em.run(function() {
+          expect(view.$().text()).toEqual('String and ChildA bar');
+        });
+      });
+
+      describe('recursive interpolation', function() {
+        it('interpolates translations recursively', function() {
+          render('{{t parent string="childA" valA="foo.bar"}}');
+
+          Em.run(function() {
+            expect(view.$().text()).toEqual('String and ChildA A Foobar');
+          });
+        });
+
+        it('interpolates raw values recursively', function() {
+          render('{{t parent string="childA" valA="123"}}');
+
+          Em.run(function() {
+            expect(view.$().text()).toEqual('String and ChildA 123');
+          });
+        });
+
+        it('interpolates bindings recursively', function() {
+          render('{[t parent string="childA" valABinding="view.foo"]}', {
+            foo: 'bar'
+          });
+
+          Em.fun(function() {
+            expect(view.$().text()).toEqual('String and ChildA bar');
+          });
+        });
+
+        it('applies same translation interpolation to same keys', function() {
+          render('{{t parent string="childB" valB="childC" valC="foo.bar"}}');
+
+          Em.fun(function() {
+            expect(view.$().text()).toEqual('String and ChildB ChildC A Foobar A Foobar');
+          });
+        });
+
+        it('applies same bindings interpolation to same keys', function() {
+          render('{{t parent string="childB" valB="childC" valC="view.foo"}}', {
+            foo: 'bar'
+          });
+
+          Em.fun(function() {
+            expect(view.$().text()).toEqual('String and ChildB ChildC bar bar');
+          });
+        });
+
+        it('applies same raw interpolation to same keys', function() {
+          render('{{t parent string="childB" valB="childC" valC="123"}}');
+
+          Em.fun(function() {
+            expect(view.$().text()).toEqual('String and ChildB ChildC 123 123');
+          });
         });
       });
 
