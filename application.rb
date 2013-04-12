@@ -4,6 +4,7 @@ require 'guard/jasmine'
 require 'sprockets/railtie'
 require 'jquery-rails'
 require 'ember-rails'
+require 'ember_script-rails'
 require 'json'
 
 module EmberI18n

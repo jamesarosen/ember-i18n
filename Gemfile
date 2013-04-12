@@ -1,8 +1,9 @@
 source 'https://rubygems.org'
 
 group :assets do
-  gem 'coffee-script', '~> 2.2'
-  gem 'uglifier',      '~> 1.3'
+  gem 'coffee-script',      '~> 2.2'
+  gem 'ember_script-rails', '~> 0.0'
+  gem 'uglifier',           '~> 1.3'
 end
 
 group :development, :test do
