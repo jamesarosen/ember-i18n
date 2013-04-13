@@ -105,7 +105,7 @@ describe 'Em.I18n', ->
       Em.run -> expect(view.$().text()).toEqual 'All 597 Bars'
 
     it 'interpolates "translate" number as translations', ->
-      render '{{ t parent string="t 1"}}'
+      render '{{t parent string="t 1"}}'
       Em.run -> expect(view.$().text()).toEqual 'String and one'
 
     it 'interpolates bindings', ->
@@ -114,8 +114,8 @@ describe 'Em.I18n', ->
       Em.run -> expect(view.$().text()).toEqual 'All 3 Bars'
 
     it 'interpolates bindings over translations', ->
-      render '{{t parent string="foo.bar" stringBinding="foo"}}', { foo: 'bar' }
-      Em.run -> expect(view.$().text()).toEqual 'String and ChildA bar'
+      render '{{t parent string="foo.bar" stringBinding="view.foo"}}', { foo: 'bar' }
+      Em.run -> expect(view.$().text()).toEqual 'String and bar'
 
     describe 'recursive interpolation', ->
 
