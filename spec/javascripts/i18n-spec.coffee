@@ -1,4 +1,22 @@
 describe 'Em.I18n2', ->
+  beforeEach ->
+    Em.I18n2.Translations.reopen
+      foo: 'foo'
+      foo_named: 'foo {{name}}'
+      foos:
+        zero: 'zero foo'
+        one: 'one foo'
+        other: '{{count}} foos'
+      nested:
+        bars:
+          one: 'one bar'
+          other: '{{count}} bars'
+      bars_all: '{{count}} bars'
+    Em.I18n2.Config.reopen { locale: 'en' }
+
+  afterEach ->
+    Em.I18n2.Config.reopen { locale: null }
+
   it 'is defined', -> expect(Em.I18n2).toBeDefined()
 
   describe '#uuid', ->
@@ -6,24 +24,6 @@ describe 'Em.I18n2', ->
       expect(Em.I18n2.uuid()).toEqual(Em.I18n2.uuid()-1)
 
   describe '#t', ->
-    beforeEach ->
-      Em.I18n2.Translations.reopen
-        foo: 'foo'
-        foo_named: 'foo {{name}}'
-        foos:
-          zero: 'zero foo'
-          one: 'one foo'
-          other: '{{count}} foos'
-        nested:
-          bars:
-            one: 'one bar'
-            other: '{{count}} bars'
-        bars_all: '{{count}} bars'
-      Em.I18n2.Config.reopen { locale: 'en' }
-
-    afterEach ->
-      Em.I18n2.Config.reopen { locale: null }
-
     it 'translates simple strings', ->
       expect(Em.I18n2.t('foo')).toEqual 'foo'
 
