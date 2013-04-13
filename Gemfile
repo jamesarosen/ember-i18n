@@ -15,6 +15,7 @@ group :development, :test do
 
   gem 'jasminerice',      '~> 0.0'
   gem 'jquery-rails',     '~> 2.2'
+  gem 'underscore-rails', '~> 1.4'
   gem 'guard-jasmine',    '~> 1.14'
   gem 'ember-rails',      '~> 0.10'
 end

@@ -1,6 +1,9 @@
 //= require jquery
+//= require underscore
 //= require handlebars
 //= require ember
 //= require ember-data
 //= require ../../lib/ember-i18n
+//= require_tree ./helpers
+//= require_tree ./examples
 //= require_tree .
