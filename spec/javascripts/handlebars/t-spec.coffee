@@ -16,11 +16,16 @@ describe '{{t2}}', ->
       childB: 'childB {{valB}} {{valC}}'
       childC: 'childC {{valC}}'
       '1': 'one'
+      'foo bar': 'foo-bar-v'
     window.Foo = Em.Object.create() # namespace
 
   it 'outputs simple translated strings', ->
     render '{{t2 foo}}'
     Em.run -> expect(view.$().text()).toEqual 'foo-v'
+
+  it 'supports keys with space', ->
+    render '{{t2 "foo bar"}}'
+    Em.run -> expect(view.$().text()).toEqual 'foo-bar-v'
 
   it 'interpolates string as translations', ->
     render '{{t2 parent string="foo"}}'
