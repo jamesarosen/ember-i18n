@@ -1,7 +1,7 @@
 describe 'Em.I18n2', ->
   beforeEach ->
     Em.I18n2.Translations.reopen
-      foo: 'foo'
+      foo: 'foo-v'
       foo_named: 'foo {{name}}'
       foos:
         one: 'one foo'
@@ -42,7 +42,7 @@ describe 'Em.I18n2', ->
       expect(-> Em.I18n2.t(1)).toThrow()
 
     it 'translates simple strings', ->
-      expect(Em.I18n2.t('foo')).toEqual 'foo'
+      expect(Em.I18n2.t('foo')).toEqual 'foo-v'
 
     it 'interpolates', ->
       expect(Em.I18n2.t('foo_named', { name: 'bar' })).toEqual 'foo bar'
