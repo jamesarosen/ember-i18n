@@ -22,6 +22,21 @@ describe 'Em.I18n2', ->
     it 'increments at each call', ->
       expect(Em.I18n2.uuid()).toEqual(Em.I18n2.uuid()-1)
 
+  describe '#resolveKey', ->
+    it 'resolves translation key based on locale + count', ->
+      expect(Em.I18n2.resolveKey('foos', 1)).toEqual 'foos.one'
+      expect(Em.I18n2.resolveKey('foos', 2)).toEqual 'foos.other'
+
+    it 'resolves to base if count not given', ->
+      expect(Em.I18n2.resolveKey('foos')).toEqual 'foos'
+
+    it 'resolves to base if count object not defined', ->
+      expect(Em.I18n2.resolveKey('foo', 1)).toEqual 'foo'
+
+    it 'resolves to base if locale not defined', ->
+      Em.I18n2.Config.reopen { locale: null }
+      expect(Em.I18n2.resolveKey('foos', 1)).toEqual 'foos'
+
   describe '#t', ->
     it 'translates simple strings', ->
       expect(Em.I18n2.t('foo')).toEqual 'foo'
