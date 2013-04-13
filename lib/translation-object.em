@@ -17,7 +17,7 @@ class Em.I18n2.TranslationObject
     super.apply(this, arguments)
 
   html: ~>
-    "<#{@tagName} id='i18n-#{@uuid}'>#{@value}</#{@tagName}>"
+    "<#{@tagName} data-ember-i18n-#{@uuid}='#{@uuid}'>#{@value}</#{@tagName}>"
 
   # helpers
 
@@ -72,7 +72,7 @@ class Em.I18n2.TranslationObject
         root.removeObserver path, this, invoker
         return
       @context[property] = @hbGet(@hbContext, value, @options)
-      $e = @view.$("#i18n-#{@uuid}")
+      $e = @view.$("[data-ember-i18n-#{@uuid}]")
       $e.html Em.I18n2.t(@key, @context)
     invoker = -> Em.run.once(observer)
     root.addObserver path, this, invoker
