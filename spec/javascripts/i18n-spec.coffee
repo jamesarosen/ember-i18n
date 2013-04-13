@@ -38,6 +38,9 @@ describe 'Em.I18n2', ->
       expect(Em.I18n2.resolveKey('foos', 1)).toEqual 'foos'
 
   describe '#t', ->
+    it 'throws on non-string keys', ->
+      expect(-> Em.I18n2.t(1)).toThrow()
+
     it 'translates simple strings', ->
       expect(Em.I18n2.t('foo')).toEqual 'foo'
 
