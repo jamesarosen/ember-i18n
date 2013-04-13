@@ -5,9 +5,11 @@ class Em.I18n2.TranslationObject
   view:           null   # view bindings will bind to this view
   hbContext:      null   # context of handlebars
   options:        null   # "options" data hash from handlebars
+  attr:           null   # used in attrVal. name of attr to set.
 
   context:        null   # rendering context
   tagName:        'span' # default tag name
+  format:         null   # 'html' or 'text'
 
   init: ->
     @tagName          = @options.hash.tagName if @options.hash?.tagName?
@@ -17,7 +19,16 @@ class Em.I18n2.TranslationObject
     super.apply(this, arguments)
 
   html: ~>
+    @format = 'html'
     "<#{@tagName} data-ember-i18n-#{@uuid}='#{@uuid}'>#{@value}</#{@tagName}>"
+
+  attrVal: ~>
+    @format = 'text'
+    "data-ember-i18n-#{@uuid}='#{@uuid}' #{@attr}='#{@value}'"
+
+  text: ~>
+    @format = 'text'
+    @value
 
   # helpers
 
@@ -73,7 +84,9 @@ class Em.I18n2.TranslationObject
         return
       @context[property] = @hbGet(@hbContext, value, @options)
       $e = @view.$("[data-ember-i18n-#{@uuid}]")
-      $e.html Em.I18n2.t(@key, @context)
+      switch @format
+        when 'html'    then $e.html Em.I18n2.t(@key, @context)
+        when 'attrVal' then $e.attr @attr, Em.I18n2.t(@key, @context)
     invoker = -> Em.run.once(observer)
     root.addObserver path, this, invoker
 
@@ -87,7 +100,7 @@ class Em.I18n2.TranslationObject
       view:           @view          # preserve top level view bindings
       hbContext:      @hbContext
       options:        @options
-    @context[property] = new Handlebars.SafeString(child.html)
+    @context[property] = new Handlebars.SafeString(child.get(@format))
 
   interpolateLiteral: (property, value) ->
     @context[property] = value
