@@ -46,7 +46,7 @@ describe '{{t2}}', ->
 
   it 'interpolates bindings over translations', ->
     render '{{t2 parent string="foo" stringBinding="view.baz"}}', { baz: 'bar' }
-    Em.run -> expect(view.$().text()).toEqual 'string and bar'
+    Em.run -> expect(view.$().text()).toEqual 'parent and bar'
 
   describe 'recursive interpolation', ->
 
