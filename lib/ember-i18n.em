@@ -2,3 +2,4 @@
 #= require i18n
 #= require config
 #= require translations
+#= require translateable-attributes
