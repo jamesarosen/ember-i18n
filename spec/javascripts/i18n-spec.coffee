@@ -11,6 +11,7 @@ describe 'Em.I18n2', ->
           one: 'one bar'
           other: '{{count}} bars'
       bars_all: '{{count}} bars'
+      empty: ''
     Em.I18n2.Config.reopen { locale: 'en' }
 
   afterEach ->
@@ -37,6 +38,22 @@ describe 'Em.I18n2', ->
       Em.I18n2.Config.reopen { locale: null }
       expect(Em.I18n2.resolveKey('foos', 1)).toEqual 'foos'
 
+  describe '#getTemplate', ->
+    it 'delegates to #resolveKey for pluralization', ->
+      spyOn(Em.I18n2, 'resolveKey').andCallThrough()
+      Em.I18n2.getTemplate('foo')
+      expect(Em.I18n2.resolveKey).toHaveBeenCalled()
+
+    it 'returns translation template', ->
+      expect(Em.I18n2.getTemplate('foo_named')).toEqual 'foo {{name}}'
+
+    it 'works with empty template', ->
+      expect(Em.I18n2.getTemplate('empty')).toEqual ''
+
+    it 'warns about missing translations', ->
+      expect(Em.I18n2.getTemplate('missing'))
+        .toEqual 'Missing translation: missing'
+
   describe '#t', ->
     it 'throws on non-string keys', ->
       expect(-> Em.I18n2.t(1)).toThrow()
@@ -58,9 +75,6 @@ describe 'Em.I18n2', ->
 
     it "works on keys that don't have count suffixes", ->
       expect(Em.I18n2.t('bars_all', { count: 22 })).toEqual '22 bars'
-
-    it 'warns about missing translations', ->
-      expect(Em.I18n2.t('missing')).toEqual 'Missing translation: missing'
 
     it 'works on count within objects', ->
       expect(Em.I18n2.t('nested.bars', { count: 1 })).toEqual 'one bar'

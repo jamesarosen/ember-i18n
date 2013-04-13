@@ -11,16 +11,16 @@ class i18n
     return key if !Em.I18n2.Translations.get(keyWithCount)?
     keyWithCount
 
-  t: (rawKey, context = {}) ->
-    msg = "You must provide a string translation key, not #{typeof rawKey}"
-    Em.assert msg, typeof rawKey == 'string'
+  getTemplate: (rawKey, count) ->
+    key = @resolveKey rawKey, count
+    if (translation = Em.I18n2.Translations.get(key))?
+      translation
+    else
+      "Missing translation: #{key}"
 
-    key = @resolveKey rawKey, context.count
-    template =
-      if (translation = Em.I18n2.Translations.get(key))?
-        Handlebars.compile translation
-      else
-        Handlebars.compile "Missing translation: #{key}"
-    template(context)
+  t: (key, context = {}) ->
+    msg = "You must provide a string translation key, not #{typeof key}"
+    Em.assert msg, typeof key == 'string'
+    Handlebars.compile(@getTemplate(key, context.count))(context)
 
 Em.I18n2 = i18n.create()
