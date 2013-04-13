@@ -4,7 +4,6 @@ describe 'Em.I18n2', ->
       foo: 'foo'
       foo_named: 'foo {{name}}'
       foos:
-        zero: 'zero foo'
         one: 'one foo'
         other: '{{count}} foos'
       nested:
@@ -30,11 +29,11 @@ describe 'Em.I18n2', ->
     it 'interpolates', ->
       expect(Em.I18n2.t('foo_named', { name: 'bar' })).toEqual 'foo bar'
 
-    it 'uses the "zero" form when the language calls for it', ->
-      expect(Em.I18n2.t('foos', { count: 0 })).toEqual 'zero foo'
-
     it 'uses the "one" form when the language calls for it', ->
       expect(Em.I18n2.t('foos', { count: 1 })).toEqual 'one foo'
+
+    it 'uses the "other" form when the language calls for it', ->
+      expect(Em.I18n2.t('foos', { count: 2 })).toEqual '2 foos'
 
     it 'interpolates count', ->
       expect(Em.I18n2.t('foos', { count: 21 })).toEqual '21 foos'
