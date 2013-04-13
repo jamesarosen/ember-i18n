@@ -17,7 +17,6 @@ describe '{{t2}}', ->
       childC: 'childC {{valC}}'
       '1': 'one'
     window.Foo = Em.Object.create() # namespace
-    Foo.TestView = Em.View.extend Em.I18n2.TranslateableAttributes
 
   it 'outputs simple translated strings', ->
     render '{{t2 foo}}'
