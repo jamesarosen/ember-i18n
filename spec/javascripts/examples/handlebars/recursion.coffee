@@ -1,25 +1,20 @@
 example 'helper with recursion', ({ template, retrieval, needRerender }) ->
-  # using evals in expectations. can't get either call() or apply() to work
+  bootstrap()
 
-  view = null
-
-  render = (template, options = {}) ->
-    options.template = Em.Handlebars.compile template
-    view = Em.View.create(options)
-    Em.run -> view.append()
+  Handlebars.registerHelper 'question', (value) -> "#{value}?"
 
   beforeEach ->
     Em.I18n2.Translations.reopen
       foo: 'foo-v'
       foo_named: 'foo {{name}}'
       bar: '{{count}} bars'
+      helper: '{{question count}}'
       parent: 'parent and {{string}}'
       childA: 'childA {{valA}}'
       childB: 'childB {{valB}} {{valC}}'
       childC: 'childC {{valC}}'
       '1': 'one'
       'foo bar': 'foo-bar-v'
-    window.Foo = Em.Object.create() # namespace
 
   it 'supports basic syntax', ->
     render template.fmt('foo')
@@ -28,6 +23,10 @@ example 'helper with recursion', ({ template, retrieval, needRerender }) ->
   it 'supports keys with space', ->
     render template.fmt('"foo bar"')
     Em.run -> expect(eval(retrieval)).toEqual 'foo-bar-v'
+
+  it 'supports templates using helpers', ->
+    render template.fmt('helper count="3"')
+    Em.run -> expect(eval(retrieval)).toEqual '3?'
 
   it 'interpolates string as translations', ->
     render template.fmt('parent string="foo"')
@@ -97,13 +96,13 @@ example 'helper with recursion', ({ template, retrieval, needRerender }) ->
         Em.run -> Foo.set 'count', 3
         render template.fmt('parent string="childA" valABinding="Foo.count"')
         expect( ->
-          Em.run -> view.rerender(); Foo.set 'count', 4
+          Em.run -> Foo.View.rerender(); Foo.set 'count', 4
         ).not.toThrow()
 
       it 'responds to updates on bound properties after a rerender', ->
         Em.run -> Foo.set 'count', 3
         render template.fmt('parent string="childA" valABinding="Foo.count"')
-        Em.run -> view.rerender(); Foo.set 'count', 4
+        Em.run -> Foo.View.rerender(); Foo.set 'count', 4
         Em.run -> expect(eval(retrieval)).toEqual 'parent and childA 4'
 
   it 'handles interpolations from contextual keywords', ->
@@ -114,6 +113,6 @@ example 'helper with recursion', ({ template, retrieval, needRerender }) ->
     render template.fmt('foo_named nameBinding="view.foo"'), { foo: 'baz' }
     Em.run -> expect(eval(retrieval)).toEqual 'foo baz'
     Em.run ->
-      view.rerender() if needRerender
-      view.set 'foo', 'quux'
+      Foo.View.rerender() if needRerender
+      Foo.View.set 'foo', 'quux'
     Em.run -> expect(eval(retrieval)).toEqual 'foo quux'
