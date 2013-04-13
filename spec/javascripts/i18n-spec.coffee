@@ -19,6 +19,10 @@ describe 'Em.I18n2', ->
             one: 'one bar'
             other: '{{count}} bars'
         bars_all: '{{count}} bars'
+      Em.I18n2.Config.reopen { locale: 'en' }
+
+    afterEach ->
+      Em.I18n2.Config.reopen { locale: null }
 
     it 'translates simple strings', ->
       expect(Em.I18n2.t('foo')).toEqual 'foo'
