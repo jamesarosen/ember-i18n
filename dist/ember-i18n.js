@@ -400,8 +400,6 @@ set$(get$(Em, 'I18n'), 'TranslationObject', Ember.Object.extend({
     cache$ = nPath;
     root = cache$.root;
     path = cache$.path;
-    if (this.isView(value))
-      root = get$(this, 'view');
     observer = (this$ = this, function () {
       var $e;
       if (get$(this$, 'view').get('state') !== 'inDOM') {
