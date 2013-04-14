@@ -135,7 +135,7 @@ Full change list
   * Vanilla `jasmine` tests replaced by `guard-jasmine` + `jasminerice`.
   * `js` and `min.js` distribution files built with `sprockets`.
 * Expanded `.gitignore`.
-* Source gem scaffolded.
+* Source gem scaffolded (at `ember-i18n-source`).
 * `package.json` scaffolded, ready for npm.
 * `component.json` removed; rely on bower to auto-generate one based on
   github repo name and tags..
