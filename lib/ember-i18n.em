@@ -1,4 +1,4 @@
-#= require ember-i18n-o
+#= require plurals
 #= require i18n
 #= require config
 #= require translations
