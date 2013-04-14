@@ -21,3 +21,7 @@ describe 'Em.I18n.Translations', ->
       foo: { bar: 'object' }
       'foo.bar': 'dot'
     expect(Em.I18n.Translations.get('foo.bar')).toEqual 'dot'
+
+  it 'returns undefined when trying to access object container', ->
+    Em.I18n.Translations.reopen { foo: { bar: 'baz' } }
+    expect(Em.I18n.Translations.get('foo')).not.toBeDefined()
