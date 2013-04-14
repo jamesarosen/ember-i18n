@@ -8,11 +8,16 @@ describe 'Em.I18n.Translations', ->
     Em.I18n.Translations.reopen { foo: 'bar' }
     expect(Em.I18n.Translations.get('foo')).toEqual 'bar'
 
-  it 'supports object keys by default', ->
+  it 'supports object keys', ->
     Em.I18n.Translations.reopen { foo: { bar: 'baz' } }
     expect(Em.I18n.Translations.get('foo.bar')).toEqual 'baz'
 
-  it 'supports dot keys with config', ->
-    Em.I18n.Config.reopen { translationsKey: 'dot' }
+  it 'supports dot keys', ->
     Em.I18n.Translations.reopen { 'foo.bar': 'bar' }
     expect(Em.I18n.Translations.get('foo.bar')).toEqual 'bar'
+
+  it 'dot keys takes precedence over object keys', ->
+    Em.I18n.Translations.reopen
+      foo: { bar: 'object' }
+      'foo.bar': 'dot'
+    expect(Em.I18n.Translations.get('foo.bar')).toEqual 'dot'
