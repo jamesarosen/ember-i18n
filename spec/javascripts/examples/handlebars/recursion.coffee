@@ -15,6 +15,8 @@ example 'helper with recursion', ({ template, retrieval, needRerender }) ->
       childC: 'childC {{valC}}'
       '1': 'one'
       'foo bar': 'foo-bar-v'
+    Foo.reopen
+      count: ((property, value) -> value).property().cacheable()
 
   it 'supports basic syntax', ->
     render template.fmt('foo')
