@@ -76,7 +76,6 @@ class Em.I18n.TranslationObject
     @context[property] = @hbGet(@hbContext, value, @options)
     nPath = Em.Handlebars.normalizePath(this, value, @options.data)
     { root, path } = nPath
-    if @isView(value) then root = @view
 
     observer = =>
       if @view.get('state') != 'inDOM'
