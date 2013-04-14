@@ -197,15 +197,15 @@ Going more than one level deep:
 Em.I18n.Translations.reopen
   user: '{{type}} User'
   type: { admin: 'Admin' }
-  power: { super: 'Super' }
+  power: { root: 'Root' }
 ```
 
 ```handlebars
-{{t user type="type.admin" power="power.super"}}
+{{t user type="type.admin" power="power.root"}}
 ```
 
 ```html
-Super Admin User
+Root Admin User
 ```
 
 If both an interpolation and a binding are specified, the binding will take
