@@ -4,42 +4,28 @@
   "description": "Provides internationalization support to ember.js.",
   "keywords": ["ember", "emberjs", "ember.js", "i18n", "internationalization"],
   "homepage": "https://github.com/heartsentwined/ember-i18n",
-  "author": "heartsentwined <heartsentwined@cogito-lab.com>",
+  "bugs": "https://github.com/heartsentwined/ember-i18n/issues",
   "version": "0.0.1",
   "main": "dist/ember-i18n.js",
 
+  "author": {
+    "name": "heartsentwined",
+    "email": "heartsentwined@cogito-lab.com"
+  },
+  "maintainers": [
+    {
+      "name": "heartsentwined",
+      "email": "heartsentwined@cogito-lab.com"
+    },
+    {
+      "name": "James A. Rosen"
+    }
+  ],
+
+  "engines": { "node": "*" },
   "repository": {
     "type": "git",
     "url": "https://github.com/heartsentwined/ember-i18n"
   },
-  "repositories": [
-    {
-      "type": "git",
-      "url": "https://github.com/heartsentwined/ember-i18n"
-    }
-  ],
-  "github": "https://github.com/heartsentwined/ember-i18n",
-
-  "engines": { "node": "*" },
-
-  "directories": {
-    "lib": "dist"
-  },
-  "bpm:build": {
-    "bpm_libs.js": {
-      "files": ["dist"]
-    }
-  },
-
-  "jam": {
-    "main": "dist/ember-i18n.js"
-  },
-
-  "license": "GPL-3.0",
-  "licenses": [
-    {
-      "type": "GPL-3.0",
-      "url": "http://opensource.org/licenses/GPL-3.0"
-    }
-  ]
+  "license": "GPL-3.0"
 }
