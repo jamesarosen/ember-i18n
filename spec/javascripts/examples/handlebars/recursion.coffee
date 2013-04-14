@@ -4,7 +4,7 @@ example 'helper with recursion', ({ template, retrieval, needRerender }) ->
   Handlebars.registerHelper 'question', (value) -> "#{value}?"
 
   beforeEach ->
-    Em.I18n2.Translations.reopen
+    Em.I18n.Translations.reopen
       foo: 'foo-v'
       foo_named: 'foo {{name}}'
       bar: '{{count}} bars'

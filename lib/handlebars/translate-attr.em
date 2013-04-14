@@ -1,10 +1,10 @@
-Handlebars.registerHelper 'translateAttr2', (attr, key, options) ->
+Handlebars.registerHelper 'translateAttr', (attr, key, options) ->
   if typeof attr == 'object'
     options = attr
     [hash, options.hash] = [options.hash, {}]
     attrVals = for eachAttr, eachKey of hash
-      translation = Em.I18n2.TranslationObject.create
-        uuid:      Em.I18n2.uuid()
+      translation = Em.I18n.TranslationObject.create
+        uuid:      Em.I18n.uuid()
         key:       eachKey
         hbContext: this
         options:   options
@@ -12,8 +12,8 @@ Handlebars.registerHelper 'translateAttr2', (attr, key, options) ->
       translation.attrVal
     return new Handlebars.SafeString(attrVals.join(' '))
 
-  translation = Em.I18n2.TranslationObject.create
-    uuid:      Em.I18n2.uuid()
+  translation = Em.I18n.TranslationObject.create
+    uuid:      Em.I18n.uuid()
     key:       key
     hbContext: this
     options:   options

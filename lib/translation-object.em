@@ -1,4 +1,4 @@
-class Em.I18n2.TranslationObject
+class Em.I18n.TranslationObject
   uuid:           null   # uuid part of element id
   key:            null   # translation key
   interpolations: null   # interpolations needed for current template
@@ -47,7 +47,7 @@ class Em.I18n2.TranslationObject
         else
           # literal
           @interpolateLiteral attr, (isLiteral?[1] || value)
-    Em.I18n2.t(@key, @context)
+    Em.I18n.t(@key, @context)
 
   # cannot use *Binding suffix
   isBind:      (str) -> str.match /^(.+)Binding$/
@@ -85,16 +85,16 @@ class Em.I18n2.TranslationObject
       @context[property] = @hbGet(@hbContext, value, @options)
       $e = @view.$("[data-ember-i18n-#{@uuid}]")
       switch @format
-        when 'html'    then $e.html Em.I18n2.t(@key, @context)
-        when 'attrVal' then $e.attr @attr, Em.I18n2.t(@key, @context)
+        when 'html'    then $e.html Em.I18n.t(@key, @context)
+        when 'attrVal' then $e.attr @attr, Em.I18n.t(@key, @context)
     invoker = -> Em.run.once(observer)
     root.addObserver path, this, invoker
 
   interpolateTranslation: (property, key) ->
-    template = Em.I18n2.getTemplate key, { count: @options.hash.count }
+    template = Em.I18n.getTemplate key, { count: @options.hash.count }
     interpolations = @getInterpolations template
-    child = Em.I18n2.TranslationObject.create
-      uuid:           Em.I18n2.uuid()
+    child = Em.I18n.TranslationObject.create
+      uuid:           Em.I18n.uuid()
       key:            key
       interpolations: interpolations # limit to prevent inf. loop
       view:           @view          # preserve top level view bindings

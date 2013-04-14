@@ -1,11 +1,11 @@
-describe 'Em.I18n2.TranslateableAttributes', ->
+describe 'Em.I18n.TranslateableAttributes', ->
   bootstrap()
 
   beforeEach ->
-    Em.I18n2.Translations.reopen { foo: 'foo' }
-    Foo.TestView = Em.View.extend Em.I18n2.TranslateableAttributes
+    Em.I18n.Translations.reopen { foo: 'foo' }
+    Foo.TestView = Em.View.extend Em.I18n.TranslateableAttributes
 
-  it 'exists', -> expect(Em.I18n2.TranslateableAttributes).toBeDefined()
+  it 'exists', -> expect(Em.I18n.TranslateableAttributes).toBeDefined()
 
   it 'translates *Translation attributes', ->
     render '{{view Foo.TestView titleTranslation="foo"}}'
