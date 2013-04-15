@@ -15,7 +15,9 @@ Gem::Specification.new do |gem|
 
   gem.files       = ['dist/ember-i18n.js', 'lib/ember-i18n/source.rb']
 
-  gem.add_dependency 'ember-rails', ['~> 0.10']
+  gem.add_dependency 'ember-source', [
+    '>= 0.0.1', '!= 1.0.0.pre4.1', '!= 1.0.0.rc1.0.0'
+  ]
 
   gem.license     = 'GPL-3'
 end
