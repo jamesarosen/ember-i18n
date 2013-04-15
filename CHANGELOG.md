@@ -132,8 +132,12 @@ Full change list
     * Guard
     * Jasminerice
     * `ember-rails` package
-  * Vanilla `jasmine` tests replaced by `guard-jasmine` + `jasminerice`.
-  * `js` and `min.js` distribution files built with `sprockets`.
+* Vanilla `jasmine` tests replaced by `guard-jasmine` + `jasminerice`.
+  * Tested against all released gem versions of `ember-source` - working with
+    all except `1.0.0.pre4.1` and `1.0.0.rc1.0.0`.
+  * Tests are also broken apart into logical units.
+  * Support rspec-esque shared examples in tests.
+* `js` and `min.js` distribution files built with `sprockets`.
 * Expanded `.gitignore`.
 * Source gem scaffolded (at `ember-i18n-source`).
 * `package.json` scaffolded, ready for npm.
