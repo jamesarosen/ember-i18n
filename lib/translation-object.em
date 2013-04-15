@@ -74,12 +74,15 @@ class Em.I18n.TranslationObject
   # cannot use *Binding suffix
   interpolateBind: (property, value) ->
     @context[property] = @hbGet(@hbContext, value, @options)
-    nPath = Em.Handlebars.normalizePath(this, value, @options.data)
+    nPath = Em.Handlebars.normalizePath(@hbContext, value, @options.data)
     { root, path } = nPath
 
     observer = =>
       if @view.get('state') != 'inDOM'
-        root.removeObserver path, this, invoker
+        if @isView value
+          root.removeObserver path, this, invoker
+        else
+          Em.removeObserver root, path, invoker
         return
       @context[property] = @hbGet(@hbContext, value, @options)
       $e = @view.$("[data-ember-i18n-#{@uuid}]")
@@ -87,7 +90,10 @@ class Em.I18n.TranslationObject
         when 'html'    then $e.html Em.I18n.t(@key, @context)
         when 'attrVal' then $e.attr @attr, Em.I18n.t(@key, @context)
     invoker = -> Em.run.once(observer)
-    root.addObserver path, this, invoker
+    if @isView value
+      root.addObserver path, this, invoker
+    else
+      Em.addObserver root, path, invoker
 
   interpolateTranslation: (property, key) ->
     template = Em.I18n.getTemplate key, { count: @options.hash.count }
