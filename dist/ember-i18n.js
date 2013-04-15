@@ -396,14 +396,18 @@ set$(get$(Em, 'I18n'), 'TranslationObject', Ember.Object.extend({
   interpolateBind: function (property, value) {
     var cache$, invoker, nPath, observer, path, root, this$;
     get$(this, 'context')[property] = this.hbGet(get$(this, 'hbContext'), value, get$(this, 'options'));
-    nPath = get$(Em, 'Handlebars').normalizePath(this, value, get$(get$(this, 'options'), 'data'));
+    nPath = get$(Em, 'Handlebars').normalizePath(get$(this, 'hbContext'), value, get$(get$(this, 'options'), 'data'));
     cache$ = nPath;
     root = cache$.root;
     path = cache$.path;
     observer = (this$ = this, function () {
       var $e;
       if (get$(this$, 'view').get('state') !== 'inDOM') {
-        root.removeObserver(path, this$, invoker);
+        if (this$.isView(value)) {
+          root.removeObserver(path, this$, invoker);
+        } else {
+          Em.removeObserver(root, path, invoker);
+        }
         return;
       }
       get$(this$, 'context')[property] = this$.hbGet(get$(this$, 'hbContext'), value, get$(this$, 'options'));
@@ -418,7 +422,11 @@ set$(get$(Em, 'I18n'), 'TranslationObject', Ember.Object.extend({
     invoker = function () {
       return get$(Em, 'run').once(observer);
     };
-    return root.addObserver(path, this, invoker);
+    if (this.isView(value)) {
+      return root.addObserver(path, this, invoker);
+    } else {
+      return Em.addObserver(root, path, invoker);
+    }
   },
   interpolateTranslation: function (property, key) {
     var child, interpolations, template;
