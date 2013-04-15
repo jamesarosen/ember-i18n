@@ -33,4 +33,13 @@ task :dist do
   puts 'Successfully built ember-auth at dist/'
 end
 
+# appraisal
+require 'appraisal'
+
+desc 'Run tests'
+task :test, :timeout do |t, args|
+  timeout = args.timeout ? "--server-timeout=#{args.timeout}" : ''
+  exit system "guard-jasmine #{timeout}"
+end
+
 task :default => [:dist]
