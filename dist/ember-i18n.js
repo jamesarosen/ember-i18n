@@ -354,19 +354,19 @@ set$(get$(Em, 'I18n'), 'TranslationObject', Ember.Object.extend({
     return get$(Em, 'I18n').t(get$(this, 'key'), get$(this, 'context'));
   }).property('interpolations', '', 'context'),
   isBind: function (str) {
-    return str.match(/^(.+)Binding$/);
+    return String(str).match(/^(.+)Binding$/);
   },
   isTranslate: function (str) {
-    return str.match(/^t (.+)$/);
+    return String(str).match(/^t (.+)$/);
   },
   isLiteral: function (str) {
-    return str.match(/^!t (.+)$/);
+    return String(str).match(/^!t (.+)$/);
   },
   isNumber: function (str) {
     return !isNaN(parseFloat(str)) && isFinite(str);
   },
   isView: function (str) {
-    return str.match(/^view\.(.+)$/);
+    return String(str).match(/^view\.(.+)$/);
   },
   matchInterpolations: function (str) {
     var interpolation;
