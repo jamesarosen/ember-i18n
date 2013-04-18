@@ -50,11 +50,11 @@ class Em.I18n.TranslationObject
     Em.I18n.t(@key, @context)
 
   # cannot use *Binding suffix
-  isBind:      (str) -> str.match /^(.+)Binding$/
-  isTranslate: (str) -> str.match /^t (.+)$/
-  isLiteral:   (str) -> str.match /^!t (.+)$/
+  isBind:      (str) -> String(str).match /^(.+)Binding$/
+  isTranslate: (str) -> String(str).match /^t (.+)$/
+  isLiteral:   (str) -> String(str).match /^!t (.+)$/
   isNumber:    (str) -> !isNaN(parseFloat(str)) && isFinite(str)
-  isView:      (str) -> str.match /^view\.(.+)$/
+  isView:      (str) -> String(str).match /^view\.(.+)$/
 
   matchInterpolations: (str) ->
     interpolation = /{{([^}]+)}}/g
