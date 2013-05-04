@@ -1,22 +1,10 @@
 ## Running the tests
 
-You'll need Ruby 1.9, [Rake](http://rake.rubyforge.org/),
-[Bundler](http://gembundler.com/), and
-[Bower](http://twitter.github.com/bower/).
+You'll need [npm](https://npmjs.org) and `make`.
 
 ```bash
-bower install
-bundle
-rake
+make test
 ```
-
-`rake -T` will show available Rake tasks, including test-running tasks.
-
-## Changing `dist/`
-
-Please only change the files in `dist/` by running the `build:*` Rake commands,
-and only when bumping the version of the library. Specifically, commits that
-change `lib/` should *not* have corresponding changes in `dist/`.
 
 ## Commit-Bit Policy
 
