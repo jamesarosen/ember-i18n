@@ -1,25 +1,19 @@
-(function() {
+(function () {
 
-  describe('Em.I18n', function() {
-    var view;
+  describe('Em.I18n', function () {
+    var view, controller;
 
     function render(template, options) {
       if (options == null) options = {};
       options.template = Em.Handlebars.compile(template);
-      view = Em.View.create(options);
+      view = Em.View.create({ controller: controller }, options);
       Em.run(function() {
         view.append();
       });
-    };
+    }
 
     beforeEach(function() {
-      window.TestNamespace = Em.Object.create({
-        toString: "TestNamespace",
-        count: (function(property, value) {
-          return value;
-        }).property().cacheable()
-      });
-
+      controller = Em.Object.create();
       this.originalTranslations = Em.I18n.translations;
 
       Em.I18n.translations = {
@@ -44,67 +38,66 @@
 
     afterEach(function() {
       if (view != null) view.destroy();
-      delete window.TestNamespace;
       Em.I18n.translations = this.originalTranslations;
       CLDR.defaultLanguage = null;
     });
 
     it('exists', function() {
-      expect(Em.I18n).not.toBeUndefined();
+      expect(Em.I18n).to.not.equal(undefined);
     });
 
     describe('.t', function() {
       it('translates simple strings', function() {
-        expect(Em.I18n.t('foo.bar')).toEqual('A Foobar');
+        expect(Em.I18n.t('foo.bar')).to.equal('A Foobar');
       });
 
       it('interpolates', function() {
         expect(Em.I18n.t('foo.bar.named', {
           name: 'Sue'
-        })).toEqual('A Foobar named Sue');
+        })).to.equal('A Foobar named Sue');
       });
 
       it('uses the "zero" form when the language calls for it', function() {
         expect(Em.I18n.t('foos', {
           count: 0
-        })).toEqual('No Foos');
+        })).to.equal('No Foos');
       });
 
       it('uses the "one" form when the language calls for it', function() {
         expect(Em.I18n.t('foos', {
           count: 1
-        })).toEqual('One Foo');
+        })).to.equal('One Foo');
       });
 
       it('interpolates count', function() {
         expect(Em.I18n.t('foos', {
           count: 21
-        })).toEqual('All 21 Foos');
+        })).to.equal('All 21 Foos');
       });
 
       it("works on keys that don't have count suffixes", function() {
         expect(Em.I18n.t('bars.all', {
           count: 532
-        })).toEqual('All 532 Bars');
+        })).to.equal('All 532 Bars');
       });
 
       it('warns about missing translations', function() {
-        expect(Em.I18n.t('nothing.here')).toEqual('Missing translation: nothing.here');
+        expect(Em.I18n.t('nothing.here')).to.equal('Missing translation: nothing.here');
       });
 
       describe('using nested objects', function() {
         it('works with a simple case', function() {
-          expect(Em.I18n.t('baz.qux')).toEqual('A qux appears');
+          expect(Em.I18n.t('baz.qux')).to.equal('A qux appears');
         });
 
         it('works with counts', function() {
           expect(Em.I18n.t('fum', {
             count: 1
-          })).toEqual('A fum');
+          })).to.equal('A fum');
 
           expect(Em.I18n.t('fum', {
             count: 2
-          })).toEqual('2 fums');
+          })).to.equal('2 fums');
         });
       });
     });
@@ -114,7 +107,7 @@
         render('{{t foo.bar}}');
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('A Foobar');
+          expect(view.$().text()).to.equal('A Foobar');
         });
       });
 
@@ -122,67 +115,58 @@
         render('{{t bars.all count="597"}}');
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('All 597 Bars');
+          expect(view.$().text()).to.equal('All 597 Bars');
         });
       });
 
       it('interpolates bindings', function() {
-        Em.run(function() {
-          TestNamespace.set('count', 3);
-        });
+        controller.set('count', 3);
 
-        render('{{t bars.all countBinding="TestNamespace.count"}}');
+        render('{{t bars.all countBinding="count"}}');
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('All 3 Bars');
+          expect(view.$().text()).to.equal('All 3 Bars');
         });
       });
 
       it('responds to updates on bound properties', function() {
+        controller.set('count', 3);
+
+        render('{{t bars.all countBinding="count"}}');
+
         Em.run(function() {
-          TestNamespace.set('count', 3);
+          controller.set('count', 4);
         });
 
-        render('{{t bars.all countBinding="TestNamespace.count"}}');
-
         Em.run(function() {
-          TestNamespace.set('count', 4);
-        });
-
-        Em.run(function() {
-          expect(view.$().text()).toEqual('All 4 Bars');
+          expect(view.$().text()).to.equal('All 4 Bars');
         });
       });
 
       it('does not error due to bound properties during a rerender', function() {
-        Em.run(function() {
-          TestNamespace.set('count', 3);
-        });
+        controller.set('count', 3);
 
-        render('{{t bars.all countBinding="TestNamespace.count"}}');
+        render('{{t bars.all countBinding="count"}}');
 
         expect(function() {
           Em.run(function() {
             view.rerender();
-            TestNamespace.set('count', 4);
+            controller.set('count', 4);
           });
-        }).not.toThrow();
+        }).to.not['throw']();
       });
 
       it('responds to updates on bound properties after a rerender', function() {
-        Em.run(function() {
-          TestNamespace.set('count', 3);
-        });
-
-        render('{{t bars.all countBinding="TestNamespace.count"}}');
+        controller.set('count', 3);
+        render('{{t bars.all countBinding="count"}}');
 
         Em.run(function() {
           view.rerender();
-          TestNamespace.set('count', 4);
+          controller.set('count', 4);
         });
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('All 4 Bars');
+          expect(view.$().text()).to.equal('All 4 Bars');
         });
       });
 
@@ -190,7 +174,7 @@
         render('{{t foo.bar tagName="h2"}}');
 
         Em.run(function() {
-          expect(view.$('h2').html()).toEqual('A Foobar');
+          expect(view.$('h2').html()).to.equal('A Foobar');
         });
       });
 
@@ -200,7 +184,7 @@
         });
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('A Foobar named IPA');
+          expect(view.$().text()).to.equal('A Foobar named IPA');
         });
       });
 
@@ -209,14 +193,14 @@
           favouriteBeer: 'Lager'
         });
 
-        expect(view.$().text()).toEqual('A Foobar named Lager');
+        expect(view.$().text()).to.equal('A Foobar named Lager');
 
         Em.run(function() {
           view.set('favouriteBeer', 'IPA');
         });
 
         Em.run(function() {
-          expect(view.$().text()).toEqual('A Foobar named IPA');
+          expect(view.$().text()).to.equal('A Foobar named IPA');
         });
       });
     });
@@ -226,35 +210,32 @@
         Em.I18n.translations['message.loading'] = '<span class="loading">Loading…</span>';
         render('<div>{{{t "message.loading"}}}</div>');
         Em.run(function() {
-          expect(view.$('.loading').length).toEqual(1);
-          expect(view.$('.loading').text()).toEqual('Loading…');
+          expect(view.$('.loading').length).to.equal(1);
+          expect(view.$('.loading').text()).to.equal('Loading…');
         });
       });
     });
 
     describe('{{translateAttr}}', function() {
       it('outputs translated attribute strings', function() {
-        render('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}');
+        render('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
         Em.run(function() {
-          expect(view.$('a').attr('title')).toEqual('A Foobar');
-          expect(view.$('a').attr('data-disable-with')).toEqual('Saving Foo...');
+          expect(view.$('a').attr('title')).to.equal('A Foobar');
+          expect(view.$('a').attr('data-disable-with')).to.equal('Saving Foo...');
         });
       });
     });
 
     describe('TranslatableAttributes', function() {
-      beforeEach(function() {
-        TestNamespace.TranslateableView = Em.View.extend(Em.I18n.TranslateableAttributes);
-      });
-
       it('exists', function() {
-        expect(Em.I18n.TranslateableAttributes).not.toBeUndefined();
+        expect(Em.I18n.TranslateableAttributes).to.not.equal(undefined);
       });
 
       it('translates ___Translation attributes', function() {
-        render('{{view TestNamespace.TranslateableView titleTranslation="foo.bar"}}');
+        Em.View.reopen(Em.I18n.TranslateableAttributes);
+        render('{{view titleTranslation="foo.bar"}}');
         Em.run(function() {
-          expect(view.$().children().first().attr('title')).toEqual("A Foobar");
+          expect(view.$().children().first().attr('title')).to.equal("A Foobar");
         });
       });
     });
