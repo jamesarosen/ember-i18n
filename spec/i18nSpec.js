@@ -1,19 +1,18 @@
 (function () {
 
   describe('Em.I18n', function () {
-    var view, controller;
+    var view;
 
     function render(template, options) {
       if (options == null) options = {};
       options.template = Em.Handlebars.compile(template);
-      view = Em.View.create({ controller: controller }, options);
+      view = Em.View.create(options);
       Em.run(function() {
         view.append();
       });
     }
 
     beforeEach(function() {
-      controller = Em.Object.create();
       this.originalTranslations = Em.I18n.translations;
 
       Em.I18n.translations = {
@@ -125,9 +124,7 @@
       });
 
       it('interpolates bindings', function() {
-        controller.set('count', 3);
-
-        render('{{t bars.all countBinding="count"}}');
+        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
           expect(view.$().text()).to.equal('All 3 Bars');
@@ -135,12 +132,10 @@
       });
 
       it('responds to updates on bound properties', function() {
-        controller.set('count', 3);
-
-        render('{{t bars.all countBinding="count"}}');
+        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
-          controller.set('count', 4);
+          view.set('count', 4);
         });
 
         Em.run(function() {
@@ -149,25 +144,22 @@
       });
 
       it('does not error due to bound properties during a rerender', function() {
-        controller.set('count', 3);
-
-        render('{{t bars.all countBinding="count"}}');
+        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
 
         expect(function() {
           Em.run(function() {
             view.rerender();
-            controller.set('count', 4);
+            view.set('count', 4);
           });
         }).to.not['throw']();
       });
 
       it('responds to updates on bound properties after a rerender', function() {
-        controller.set('count', 3);
-        render('{{t bars.all countBinding="count"}}');
+        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
           view.rerender();
-          controller.set('count', 4);
+          view.set('count', 4);
         });
 
         Em.run(function() {
