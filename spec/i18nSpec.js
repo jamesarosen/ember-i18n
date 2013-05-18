@@ -100,6 +100,11 @@
           })).to.equal('2 fums');
         });
       });
+
+      it('prefers dotted keys to nested ones', function() {
+        Em.I18n.translations.foo = { bar: 'Nested foo.bar' };
+        expect(Em.I18n.t('foo.bar')).to.equal('A Foobar');
+      });
     });
 
     describe('{{t}}', function() {
