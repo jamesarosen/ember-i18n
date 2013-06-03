@@ -223,17 +223,26 @@
       });
     });
 
-    describe('TranslatableAttributes', function() {
+    describe('TranslateableProperties', function() {
+
+      it('translates ___Translation attributes on the object', function() {
+        var subject = Em.Object.extend(Em.I18n.TranslateableProperties).create({
+          titleTranslation: 'foo.bar'
+        });
+        expect(subject.get('title')).to.equal('A Foobar');
+      });
+
+    });
+
+    describe('TranslateableAttributes', function() {
       it('exists', function() {
         expect(Em.I18n.TranslateableAttributes).to.not.equal(undefined);
       });
 
-      it('translates ___Translation attributes', function() {
+      it('translates ___Translation attributes on the DOM element', function() {
         Em.View.reopen(Em.I18n.TranslateableAttributes);
         render('{{view titleTranslation="foo.bar"}}');
-        Em.run(function() {
-          expect(view.$().children().first().attr('title')).to.equal("A Foobar");
-        });
+        expect(view.$().children().first().attr('title')).to.equal("A Foobar");
       });
     });
   });
