@@ -5,9 +5,9 @@
   "main": [ "lib/i18n.js" ],
   "dependencies": {
     "cldr": "~1.0",
-    "jquery": "~1.7.2",
+    "jquery": "~1.7",
     "handlebars": "~1.0",
-    "ember": "~0.9.7"
+    "ember": ">0.9.7, <1.1"
   },
   "scripts": {
     "test": "rake"
