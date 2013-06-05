@@ -8,7 +8,7 @@ Set `Em.I18n.translations` to an object containing your translation
 information. If you want to support inflection based on `count`, you will
 also need to include the
 [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
-and set `CLDR.defaultLocale` to the current locale code (e.g. "de").
+and set `CLDR.defaultLanguage` to the current locale code (e.g. "de").
 
 ### Examples
 
