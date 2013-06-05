@@ -62,11 +62,15 @@ if `user.getPath('followers.count)` returns `2`.
 The `Em.I18n.TranslateableProperties` mixin automatically translates
 any property ending in `"Translation"`:
 
-    user = Em.Object.extend(Em.I18n.TranslateableProperties, {
-      labelTranslation: 'user.label'
+    userButton = Em.Object.extend(Em.I18n.TranslateableProperties, {
+      labelTranslation: 'button.add_user.title'
     });
 
-    user.get('label'); "User: "
+    userButton.get('label');
+
+yields
+
+    "Add a user"
 
 #### Translate attributes in a view:
 
