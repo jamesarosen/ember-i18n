@@ -96,6 +96,33 @@ yields
       Add
     </a>
 
+#### Nested Translation Syntax:
+
+The above translation data can also be expressed as nested JSON objects:
+
+    Em.I18n.translations = {
+      'user': {
+        'edit': {
+          'title': 'Edit User'
+        },
+        'followers': {
+          'title': {
+            'one': 'One Follower',
+            'other': 'All {{count}} Followers'
+          }
+        }
+      },
+      'button': {
+        'add_user': {
+          'title': 'Add a user',,
+          'text': 'Add',
+          'disabled': 'Saving...'
+        }
+      }
+    };
+
+This format is often smaller and so makes downloading translation packs faster.
+
 ### Limitations
 
  * There is no way to pass interpolations to attribute translations. I can't
