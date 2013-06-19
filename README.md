@@ -118,7 +118,7 @@ The above translation data can also be expressed as nested JSON objects:
       },
       'button': {
         'add_user': {
-          'title': 'Add a user',,
+          'title': 'Add a user',
           'text': 'Add',
           'disabled': 'Saving...'
         }
