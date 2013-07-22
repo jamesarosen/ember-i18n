@@ -74,7 +74,7 @@ yields
 
 #### Translate attributes in a view:
 
-Add the mixin `Em.Button.reopen.call(Em.Button, Em.I18n.TranslateableAttributes)` and use like this:
+Add the mixin `Em.Button.reopen(Em.I18n.TranslateableAttributes)` and use like this:
 
 
     {{#view Em.Button titleTranslation="button.add_user.title">
