@@ -7,7 +7,7 @@
     "cldr": "~1.0",
     "jquery": "~1.7",
     "handlebars": "~1.0",
-    "ember": ">0.9.7, <1.1"
+    "ember": ">0.9.7 <1.1"
   },
   "scripts": {
     "test": "rake"
