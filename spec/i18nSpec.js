@@ -45,6 +45,21 @@
       expect(Em.I18n).to.not.equal(undefined);
     });
 
+    describe('.exists', function() {
+      it('returns true for present keys', function() {
+        expect(Em.I18n.exists('foo.bar')).to.equal(true);
+      });
+
+      it('returns false for absent keys', function() {
+        expect(Em.I18n.exists('chumble.fuzz')).to.equal(false);
+      });
+
+      it("returns false for absent keys even if they've been used", function() {
+        Em.I18n.t('yakka foob');
+        expect(Em.I18n.exists('yakka foob')).to.equal(false);
+      });
+    });
+
     describe('.t', function() {
       it('translates simple strings', function() {
         expect(Em.I18n.t('foo.bar')).to.equal('A Foobar');
