@@ -39,6 +39,14 @@ yields
 
     <h2 id="i18n-123">Edit User</h2>
 
+#### Define a `class` attribute by specifying a `className`:
+
+    {{t user.edit.title className="edit"}}
+
+yields
+
+    <span class="edit" id="i18n-123">Edit User</span>
+
 #### Set interpoloated values directly:
 
     <h2>{{t user.followers.title count="2"}}</h2>
