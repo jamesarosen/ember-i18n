@@ -99,6 +99,25 @@
         expect(Em.I18n.t('nothing.here')).to.equal('Missing translation: nothing.here');
       });
 
+      describe('missing event', function() {
+        var observer;
+        
+        afterEach(function() {
+            Ember.I18n.off('missing', observer);
+        });
+
+        it('triggers missing events when translations are missing', function() {
+          var didCall = false;
+          observer = function(key) {
+            expect(key).to.equal('nothing.here');
+            didCall = true;
+          };
+          Ember.I18n.on('missing', observer);
+          Em.I18n.t('nothing.here');
+          expect(didCall).to.equal(true);
+        });
+      });
+
       describe('using nested objects', function() {
         it('works with a simple case', function() {
           expect(Em.I18n.t('baz.qux')).to.equal('A qux appears');
