@@ -209,6 +209,14 @@
         });
       });
 
+      it('obeys a custom class name', function() {
+        render('{{t foo.bar className="klass"}}');
+
+        Em.run(function() {
+          expect(view.$('.klass').html()).to.equal('A Foobar');
+        });
+      });
+
       it('handles interpolations from contextual keywords', function() {
         render('{{t foo.bar.named nameBinding="view.favouriteBeer" }}', {
           favouriteBeer: 'IPA'
