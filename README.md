@@ -4,6 +4,8 @@ Internationalization for Ember
 
 ### Requirements
 
+Ember-I18n v2.x requires Ember v1.x.
+
 Set `Em.I18n.translations` to an object containing your translation
 information. If you want to support inflection based on `count`, you will
 also need to include the
