@@ -165,6 +165,22 @@
         });
       });
 
+      it('supports a bound translation key', function() {
+        render('{{t view.i18nKey}}', { i18nKey: 'foo.bar' });
+
+        Em.run(function() {
+          expect(view.$().text()).to.equal('A Foobar');
+        });
+
+        Em.run(function() {
+          view.set('i18nKey', 'foo.save.disabled');
+        });
+
+        Em.run(function() {
+          expect(view.$().text()).to.equal('Saving Foo...');
+        });
+      });
+
       it('responds to updates on bound properties', function() {
         render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
