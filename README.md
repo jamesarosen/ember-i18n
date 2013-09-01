@@ -27,7 +27,7 @@ Given
 
 #### A simple translation:
 
-    <h2>{{t user.edit.title}}</h2>
+    <h2>{{t "user.edit.title"}}</h2>
 
 yields
 
@@ -35,7 +35,7 @@ yields
 
 #### Remove the `span` by specifying a `tagName`:
 
-    {{t user.edit.title tagName="h2"}}
+    {{t "user.edit.title" tagName="h2"}}
 
 yields
 
@@ -43,7 +43,7 @@ yields
 
 #### Set interpoloated values directly:
 
-    <h2>{{t user.followers.title count="2"}}</h2>
+    <h2>{{t "user.followers.title" count="2"}}</h2>
 
 yields
 
@@ -51,7 +51,7 @@ yields
 
 #### Bind interpolated values:
 
-    <h2>{{t user.followers.title countBinding="user.followers.count"}}</h2>
+    <h2>{{t "user.followers.title" countBinding="user.followers.count"}}</h2>
 
 yields
 

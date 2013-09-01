@@ -101,7 +101,7 @@
 
       describe('missing event', function() {
         var observer;
-        
+
         afterEach(function() {
             Ember.I18n.off('missing', observer);
         });
@@ -142,7 +142,7 @@
 
     describe('{{t}}', function() {
       it('outputs simple translated strings', function() {
-        render('{{t foo.bar}}');
+        render('{{t "foo.bar"}}');
 
         Em.run(function() {
           expect(view.$().text()).to.equal('A Foobar');
@@ -150,7 +150,7 @@
       });
 
       it('interpolates values', function() {
-        render('{{t bars.all count="597"}}');
+        render('{{t "bars.all" count="597"}}');
 
         Em.run(function() {
           expect(view.$().text()).to.equal('All 597 Bars');
@@ -158,7 +158,7 @@
       });
 
       it('interpolates bindings', function() {
-        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
+        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
           expect(view.$().text()).to.equal('All 3 Bars');
@@ -166,7 +166,7 @@
       });
 
       it('responds to updates on bound properties', function() {
-        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
+        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
           view.set('count', 4);
@@ -178,7 +178,7 @@
       });
 
       it('does not error due to bound properties during a rerender', function() {
-        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
+        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         expect(function() {
           Em.run(function() {
@@ -189,7 +189,7 @@
       });
 
       it('responds to updates on bound properties after a rerender', function() {
-        render('{{t bars.all countBinding="view.count"}}', { count: 3 });
+        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Em.run(function() {
           view.rerender();
@@ -202,7 +202,7 @@
       });
 
       it('obeys a custom tag name', function() {
-        render('{{t foo.bar tagName="h2"}}');
+        render('{{t "foo.bar" tagName="h2"}}');
 
         Em.run(function() {
           expect(view.$('h2').html()).to.equal('A Foobar');
@@ -210,7 +210,7 @@
       });
 
       it('handles interpolations from contextual keywords', function() {
-        render('{{t foo.bar.named nameBinding="view.favouriteBeer" }}', {
+        render('{{t "foo.bar.named" nameBinding="view.favouriteBeer" }}', {
           favouriteBeer: 'IPA'
         });
 
@@ -220,7 +220,7 @@
       });
 
       it('responds to updates on bound keyword properties', function() {
-        render('{{t foo.bar.named nameBinding="view.favouriteBeer"}}', {
+        render('{{t "foo.bar.named" nameBinding="view.favouriteBeer"}}', {
           favouriteBeer: 'Lager'
         });
 
