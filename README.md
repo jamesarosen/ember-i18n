@@ -83,9 +83,9 @@ Add the mixin `Em.Button.reopen(Em.I18n.TranslateableAttributes)` and use like t
 ```
 yields
 ```html
-    <button title="Add a user">
-      Add
-    </button>
+<button title="Add a user">
+  Add
+</button>
 ```
 
 #### Translate attributes on a plain tag:
