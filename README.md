@@ -55,7 +55,7 @@ yields
 ```html
 <h2><span id="i18n-123">All 2 Followers</span></h2>
 ```
-if `user.getPath('followers.count)` returns `2`.
+if `user.getPath('followers.count')` returns `2`.
 
 #### Translate properties on any object:
 
