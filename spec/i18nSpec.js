@@ -257,6 +257,26 @@
       });
     });
 
+    describe('{{ta}}', function() {
+      it('outputs translated attribute strings', function() {
+        render('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
+        Em.run(function() {
+          expect(view.$('a').attr('title')).to.equal('A Foobar');
+          expect(view.$('a').attr('data-disable-with')).to.equal('Saving Foo...');
+        });
+      });
+    });
+
+    describe('{{ta}} == {{translateAttr}}', function() {
+      it('check that {{ta}} and {{translateAttr}} outputs the same', function() {
+        render('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a><span {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></span>');
+        Em.run(function() {
+          expect(view.$('a').attr('title')).to.equal(view.$('span').attr('title'));
+          expect(view.$('a').attr('data-disable-with')).to.equal(view.$('span').attr('data-disable-with'));
+        });
+      });
+    });
+
     describe('TranslateableProperties', function() {
 
       it('translates ___Translation attributes on the object', function() {
