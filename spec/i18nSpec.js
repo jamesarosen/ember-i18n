@@ -101,7 +101,7 @@
 
       describe('missing event', function() {
         var observer;
-        
+
         afterEach(function() {
             Ember.I18n.off('missing', observer);
         });
@@ -274,6 +274,26 @@
           expect(view.$('a').attr('title')).to.equal(view.$('span').attr('title'));
           expect(view.$('a').attr('data-disable-with')).to.equal(view.$('span').attr('data-disable-with'));
         });
+      });
+    });
+
+    describe('eachTranslatedAttribute', function() {
+      var calledWith;
+
+      beforeEach(function() {
+        calledWith = {};
+        var object = { aKey: 'a value', titleTranslation: 'foo.bar' };
+        Ember.I18n.eachTranslatedAttribute(object, function(attributeName, translation) {
+          calledWith[attributeName] = translation;
+        });
+      });
+
+      it('skips non-translated attributes', function() {
+        expect(calledWith.aKey).to.equal(undefined);
+      });
+
+      it('calls the callback with translated attributes, minus the marker suffix, and their translations', function() {
+        expect(calledWith.title).to.equal('A Foobar');
       });
     });
 
