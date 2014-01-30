@@ -2,7 +2,7 @@
   <head>
     <meta charset="utf-8">
     <script src="../vendor/jquery-{{jQueryVersion}}.js"></script>
-    <script src="../vendor/handlebars-1.0.0-rc.3.js"></script>
+    <script src="../vendor/handlebars-{{handlebarsVersion}}.js"></script>
     <script src="../vendor/ember-{{emberVersion}}.js"></script>
     <script src="../vendor/cldr-1.0.0.js"></script>
     <script src="../lib/i18n.js"></script>
