@@ -2,3 +2,6 @@
 /components/
 /node_modules/
 /spec/suite.html
+/vendor/ember*
+/vendor/handlebars*
+/vendor/jquery*
