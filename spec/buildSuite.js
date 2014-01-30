@@ -22,12 +22,13 @@ function versionFor(library) {
   return version;
 }
 
-var jQueryVersion    = versionFor('jquery'),
-    emberVersion     = versionFor('ember');
-    template         = fs.readFileSync('spec/suite.hdbs').toString(),
-    compiledTemplate = hdbs.compile(template),
-    templateData     = { jQueryVersion: jQueryVersion, emberVersion: emberVersion },
-    outputPath       = 'spec/suite.html';
+var emberVersion      = versionFor('ember'),
+    handlebarsVersion = versionFor('handlebars'),
+    jQueryVersion     = versionFor('jquery'),
+    template          = fs.readFileSync('spec/suite.hdbs').toString(),
+    compiledTemplate  = hdbs.compile(template),
+    templateData      = { jQueryVersion: jQueryVersion, emberVersion: emberVersion, handlebarsVersion: handlebarsVersion },
+    outputPath        = 'spec/suite.html';
 
 fs.writeFileSync(outputPath, compiledTemplate(templateData));
 console.info('Wrote suite to ' + outputPath);
