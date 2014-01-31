@@ -11,16 +11,28 @@ test_ember_101: jshint npm_install vendor_install
 	JQUERY_VERSION=1.9.1 EMBER_VERSION=1.0.1 HANDLEBARS_VERSION=1.1.0 ./spec/buildSuite.js
 	./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/suite.html
 
+test_ember_release: jshint npm_install vendor_install
+	JQUERY_VERSION=1.11.0 EMBER_VERSION=release HANDLEBARS_VERSION=1.3.0 ./spec/buildSuite.js
+	./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/suite.html
+
+test_ember_beta: jshint npm_install vendor_install
+	JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./spec/buildSuite.js
+	./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/suite.html
+
 test_ember_canary: jshint npm_install vendor_install
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 ./spec/buildSuite.js
 	./node_modules/mocha-phantomjs/bin/mocha-phantomjs spec/suite.html
 
 test: test_ember_0981 test_ember_101 test_ember_canary
 
+test_channels: test_ember_release test_ember_beta test_ember_canary
+
+test_all: test test_channels
+
 npm_install:
 	npm install
 
-vendor_install: vendor/ember-0.9.8.1.js vendor/ember-1.0.1.js vendor/ember-canary.js vendor/jquery-1.7.2.js vendor/jquery-1.9.1.js vendor/jquery-1.11.0.js vendor/handlebars-1.0.0-rc.3.js vendor/handlebars-1.1.0.js vendor/handlebars-1.3.0.js
+vendor_install: vendor/ember-0.9.8.1.js vendor/ember-1.0.1.js vendor/ember-release.js vendor/ember-beta.js vendor/ember-canary.js vendor/jquery-1.7.2.js vendor/jquery-1.9.1.js vendor/jquery-1.11.0.js vendor/handlebars-1.0.0-rc.3.js vendor/handlebars-1.1.0.js vendor/handlebars-1.3.0.js
 	@echo "Installed vendor libraries"
 
 vendor/ember-0.9.8.1.js:
@@ -28,6 +40,12 @@ vendor/ember-0.9.8.1.js:
 
 vendor/ember-1.0.1.js:
 	@curl https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.1/ember.js > $@
+
+vendor/ember-release.js:
+	@curl http://builds.emberjs.com/release/ember.js > $@
+
+vendor/ember-beta.js:
+	@curl http://builds.emberjs.com/beta/ember.js > $@
 
 vendor/ember-canary.js:
 	@curl http://builds.emberjs.com/canary/ember.js > $@
