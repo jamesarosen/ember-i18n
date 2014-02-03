@@ -27,7 +27,7 @@
   "ignore": [
     "**/.*",
     "node_modules",
-    "spec"
+    "spec",
     "vendor",
     "Makefile"
   ]
