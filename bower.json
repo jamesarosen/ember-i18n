@@ -23,5 +23,12 @@
     "internationalization"
   ],
   "author": "James A. Rosen",
-  "license": "APLv2"
+  "license": "APLv2",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "spec",
+    "vendor",
+    "Makefile"
+  ]
 }
