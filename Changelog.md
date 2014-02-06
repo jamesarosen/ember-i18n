@@ -1,9 +1,16 @@
+## v1.6.0 2014-02-06
+
+ * Add `Ember.I18n.on`
+ * Emit `missing` events when translation missin
+ * Add `{{ta}}` helper as shorthand for `{{translateAttr}}`
+ * `TranslateableProperties` observes when the translation key changes
+ * Use the `afterRender` queue if available (Ember 1+)
+
 ## v1.5.0 2013-07-30
 
  * Add Ember warning if missing translation
  * Add `I18n.exists(key)`
  * Avoid calling `compile` for missing translations
- *
 
 ## v1.4.1 2013-06-25
 
