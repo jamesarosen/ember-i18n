@@ -5,6 +5,7 @@
  * Add `{{ta}}` helper as shorthand for `{{translateAttr}}`
  * `TranslateableProperties` observes when the translation key changes
  * Use the `afterRender` queue if available (Ember 1+)
+ * Expose `Ember.I18n.eachTranslatedAttribute`
 
 ## v1.5.0 2013-07-30
 
