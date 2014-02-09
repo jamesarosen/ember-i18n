@@ -1,28 +1,16 @@
-all: clean test
+all: clean test_stables
 
 jshint: npm_install
 	./node_modules/jshint/bin/jshint lib/*.js spec/*Spec.js
 
-test_ember_0981: jshint npm_install vendor_install
+test_stables: jshint npm_install vendor_install
 	JQUERY_VERSION=1.7.2 EMBER_VERSION=0.9.8.1 HANDLEBARS_VERSION=1.0.0-rc.3 ./spec/run.js
-
-test_ember_101: jshint npm_install vendor_install
 	JQUERY_VERSION=1.9.1 EMBER_VERSION=1.0.1 HANDLEBARS_VERSION=1.1.0 ./spec/run.js
-
-test_ember_release: jshint npm_install vendor_install
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=release HANDLEBARS_VERSION=1.3.0 ./spec/run.js
 
-test_ember_beta: jshint npm_install vendor_install
+test_prereleases: jshint npm_install vendor_install
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./spec/run.js
-
-test_ember_canary: jshint npm_install vendor_install
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 ./spec/run.js
-
-test: test_ember_0981 test_ember_101 test_ember_canary
-
-test_channels: test_ember_release test_ember_beta test_ember_canary
-
-test_all: test test_channels
 
 npm_install:
 	npm install
@@ -71,4 +59,4 @@ realclean: clean
 	@rm -f vendor/handlebars*
 	@rm -f vendor/jquery*
 
-.PHONY: jshint test test_ember_0981 test_ember_101 npm_install vendor_install clean realclean
+.PHONY: jshint test_stables test_prereleases npm_install vendor_install clean realclean
