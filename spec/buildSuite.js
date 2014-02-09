@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 var fs   = require('fs'),
     hdbs = require('handlebars').create();
 
@@ -22,13 +20,15 @@ function versionFor(library) {
   return version;
 }
 
-var emberVersion      = versionFor('ember'),
-    handlebarsVersion = versionFor('handlebars'),
-    jQueryVersion     = versionFor('jquery'),
-    template          = fs.readFileSync('spec/suite.hdbs').toString(),
-    compiledTemplate  = hdbs.compile(template),
-    templateData      = { jQueryVersion: jQueryVersion, emberVersion: emberVersion, handlebarsVersion: handlebarsVersion },
-    outputPath        = 'spec/suite.html';
-
-fs.writeFileSync(outputPath, compiledTemplate(templateData));
-console.info('Wrote suite to ' + outputPath);
+module.exports = function buildSuite() {
+  var template          = fs.readFileSync('spec/suite.hdbs').toString(),
+      compiledTemplate  = hdbs.compile(template),
+      outputPath        = 'spec/suite.html'
+      templateData = {
+        emberVersion:      versionFor('ember'),
+        jQueryVersion:     versionFor('jquery'),
+        handlebarsVersion: versionFor('handlebars')
+      };
+  fs.writeFileSync(outputPath, compiledTemplate(templateData));
+  return outputPath;
+};
