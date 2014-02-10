@@ -23,7 +23,7 @@ function versionFor(library) {
 module.exports = function buildSuite() {
   var template          = fs.readFileSync('spec/suite.hdbs').toString(),
       compiledTemplate  = hdbs.compile(template),
-      outputPath        = 'spec/suite.html'
+      outputPath        = 'spec/suite.html',
       templateData = {
         emberVersion:      versionFor('ember'),
         jQueryVersion:     versionFor('jquery'),

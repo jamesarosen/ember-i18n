@@ -20,7 +20,7 @@ var FILES = {
   "handlebars-1.0.0-rc.3": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
   "handlebars-1.1.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.0/handlebars.js",
   "handlebars-1.3.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"
-}
+};
 
 function fetchAll() {
   for (var library in FILES) {

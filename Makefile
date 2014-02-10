@@ -1,7 +1,7 @@
 all: clean test_stables
 
 jshint: npm_install
-	./node_modules/jshint/bin/jshint lib/*.js spec/*Spec.js
+	./node_modules/jshint/bin/jshint lib/*.js spec/*Spec.js script/*.js
 
 test_stables: jshint npm_install vendor_install
 	JQUERY_VERSION=1.7.2 EMBER_VERSION=0.9.8.1 HANDLEBARS_VERSION=1.0.0-rc.3 ./script/run.js
