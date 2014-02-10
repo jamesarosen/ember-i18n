@@ -1,3 +1,7 @@
+## v1.6.1 2014-02-09
+
+ * relax jQuery dependency to ">=1.7 <3"
+
 ## v1.6.0 2014-02-06
 
  * Add `Ember.I18n.on`
