@@ -29,7 +29,7 @@
  * Dotted-style keys win over nested-style keys
  * Add `TranslateableProperties` mixin
 
-## v1.3.1 2013-01-09
+## v1.3.2 2013-01-09
 
  * Support use with `jQuery.noconflict`
 
