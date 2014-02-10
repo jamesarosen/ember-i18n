@@ -15,6 +15,7 @@ var FILES = {
   "jquery-1.7.2": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.7.2/jquery.min.js",
   "jquery-1.9.1": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js",
   "jquery-1.11.0": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js",
+  "jquery-2.0.3": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js",
 
   "handlebars-1.0.0-rc.3": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.0.0-rc.3/handlebars.js",
   "handlebars-1.1.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.0/handlebars.js",
