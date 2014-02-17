@@ -10,6 +10,8 @@ also need to include the
 [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
 and set `CLDR.defaultLanguage` to the current locale code (e.g. "de").
 
+> Include the full `handlebars.js` library, it's needed to compile the templates (e.g. not handlebars.runtime.js).
+
 ### Examples
 
 Given
