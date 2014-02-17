@@ -4,8 +4,15 @@ Internationalization for Ember
 
 ### Requirements
 
-Set `Em.I18n.translations` to an object containing your translation
-information. If you want to support inflection based on `count`, you will
+Set `Ember.I18n.translations` to an object containing your translation
+information. If the values of `Ember.I18n.translations` are `Function`s,
+they will be used as-is; if they are `String`s, they will first be
+compiled via `Ember.I18n.compile`, which defaults to using
+`Handlebars.compile`. (That means that if you haven't precompiled your
+translations, you'll need to include the full Handlebars, not just
+`handlebars-runtime.js` in your application.)
+
+If you want to support inflection based on `count`, you will
 also need to include the
 [CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
 and set `CLDR.defaultLanguage` to the current locale code (e.g. "de").
