@@ -1,3 +1,7 @@
+## v1.6.3 2014-02-19
+
+ * relax CLDR and Handlebars dependencies via the `^` operator
+
 ## v1.6.2 2014-02-19
 
  * relax Ember dependency to ">0.9.7 <2"
