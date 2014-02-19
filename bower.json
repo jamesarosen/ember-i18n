@@ -4,9 +4,9 @@
   "description": "I18n support for Ember.js",
   "main": [ "lib/i18n.js" ],
   "dependencies": {
-    "cldr": "~1.0",
+    "cldr": "^1.0",
     "jquery": ">=1.7 <3",
-    "handlebars": "~1.0",
+    "handlebars": "^1.0",
     "ember": ">0.9.7 <2"
   },
   "scripts": {
