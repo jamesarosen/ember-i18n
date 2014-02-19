@@ -1,3 +1,7 @@
+## v1.6.2 2014-02-19
+
+ * relax Ember dependency to ">0.9.7 <2"
+
 ## v1.6.1 2014-02-09
 
  * relax jQuery dependency to ">=1.7 <3"
