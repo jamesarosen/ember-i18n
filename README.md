@@ -46,7 +46,7 @@ yields
 ```html
 <h2 id="i18n-123">Edit User</h2>
 ```
-#### Set interpoloated values directly:
+#### Set interpolated values directly:
 ```html
 <h2>{{t user.followers.title count="2"}}</h2>
 ```
