@@ -1,6 +1,7 @@
 {
   "eqnull": true,
   "undef": true,
+  "unused": true,
 
   "globals": {
     "console": false,
