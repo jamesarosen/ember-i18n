@@ -3,7 +3,7 @@ var fs   = require('fs'),
 
 function versionFor(library) {
   var envPropertyName = library.toUpperCase() + '_VERSION';
-      version = process.env[ envPropertyName ];
+  var version = process.env[ envPropertyName ];
 
   if (version == null || version === '') {
     console.error('Must set environment variable ' + envPropertyName);
