@@ -1,3 +1,13 @@
+## v1.6.4 2014-05-27
+
+ * Use `Ember.Handlebars`, not `Handlebars` for helper management
+ * The default `compileTemplate` throws an `Ember.Error` if the full
+   `Ember.Handlebars` is not available
+ * Check `view.$()` instead of `view.state` as Ember is deprecating the
+   latter in favor in favor of `view._state`, but doesn't consider either
+   to be part of the public API.
+ * Convert `Em` to `Ember` for consistency
+
 ## v1.6.3 2014-02-19
 
  * relax CLDR and Handlebars dependencies via the `^` operator
