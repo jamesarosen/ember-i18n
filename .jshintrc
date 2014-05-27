@@ -9,7 +9,6 @@
 
     "CLDR": false,
     "Ember": false,
-    "Handlebars": false,
     "jQuery": false,
 
     "module": false,
