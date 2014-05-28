@@ -1,3 +1,7 @@
+## 2.0.0 2014-05-28
+
+ * Drop support for Ember 0.x.
+
 ## v1.6.4 2014-05-27
 
  * Use `Ember.Handlebars`, not `Handlebars` for helper management
