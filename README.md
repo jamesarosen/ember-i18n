@@ -32,7 +32,7 @@ Em.I18n.translations = {
 ```
 #### A simple translation:
 ```html
-<h2>{{t user.edit.title}}</h2>
+<h2>{{t "user.edit.title"}}</h2>
 ```
 yields
 ```html
@@ -40,7 +40,7 @@ yields
 ```
 #### Remove the `span` by specifying a `tagName`:
 ```html
-{{t user.edit.title tagName="h2"}}
+{{t "user.edit.title" tagName="h2"}}
 ```
 yields
 ```html
@@ -48,7 +48,7 @@ yields
 ```
 #### Set interpolated values directly:
 ```html
-<h2>{{t user.followers.title count="2"}}</h2>
+<h2>{{t "user.followers.title" count="2"}}</h2>
 ```
 yields
 ```html
@@ -56,7 +56,7 @@ yields
 ```
 #### Bind interpolated values:
 ```html
-<h2>{{t user.followers.title countBinding="user.followers.count"}}</h2>
+<h2>{{t "user.followers.title" countBinding="user.followers.count"}}</h2>
 ```
 yields
 ```html
@@ -85,7 +85,7 @@ Add the mixin `Em.Button.reopen(Em.I18n.TranslateableAttributes)` and use like t
 
 ```html
 {{#view Em.Button titleTranslation="button.add_user.title">
-  {{t button.add_user.text}}
+  {{t "button.add_user.text"}}
 {{/view}}
 ```
 yields
@@ -98,7 +98,7 @@ yields
 #### Translate attributes on a plain tag:
 ```html
 <a {{translateAttr title="button.add_user.title" data-disable-with="button.add_user.disabled"}}>
-  {{t button.add_user.text}}
+  {{t "button.add_user.text"}}
 </a>
 ```
 yields
