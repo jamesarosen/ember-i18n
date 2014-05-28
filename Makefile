@@ -4,7 +4,6 @@ jshint: npm_install
 	./node_modules/jshint/bin/jshint lib/*.js spec/*Spec.js script/*.js
 
 test_stables: jshint npm_install vendor_install
-	JQUERY_VERSION=1.7.2 EMBER_VERSION=0.9.8.1 HANDLEBARS_VERSION=1.0.0-rc.3 ./script/run.js
 	JQUERY_VERSION=1.9.1 EMBER_VERSION=1.0.1 HANDLEBARS_VERSION=1.1.0 ./script/run.js
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=release HANDLEBARS_VERSION=1.3.0 ./script/run.js
 	JQUERY_VERSION=2.0.3 EMBER_VERSION=release HANDLEBARS_VERSION=1.3.0 ./script/run.js
