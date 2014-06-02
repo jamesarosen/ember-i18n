@@ -206,6 +206,15 @@
         });
       });
 
+      it('uses a span by default', function() {
+        render('{{t "foo.bar"}}');
+
+        Ember.run(function() {
+          console.log(view.$().html());
+          expect(view.$('span').html()).to.equal('A Foobar');
+        });
+      });
+
       it('obeys a custom tag name', function() {
         render('{{t "foo.bar" tagName="h2"}}');
 
