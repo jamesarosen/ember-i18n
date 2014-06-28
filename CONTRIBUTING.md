@@ -3,7 +3,7 @@
 You'll need [npm](https://npmjs.org) and `make`.
 
 ```bash
-make test
+make all
 ```
 
 ## Commit-Bit Policy

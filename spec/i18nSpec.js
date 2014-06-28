@@ -20,6 +20,8 @@
     beforeEach(function() {
       this.originalTranslations = Ember.I18n.translations;
 
+      Ember.I18n.reset();
+      Ember.I18n.config.test = "test conf";
       Ember.I18n.translations = {
         'foo.bar': 'A Foobar',
         'foo.bar.named': 'A Foobar named {{name}}',
@@ -62,6 +64,27 @@
       it("returns false for absent keys even if they've been used", function() {
         Ember.I18n.t('yakka foob');
         expect(Ember.I18n.exists('yakka foob')).to.equal(false);
+      });
+    });
+
+    describe('.config', function() {
+      it('has a config property', function() {
+        expect(Ember.I18n.config).to.not.equal(undefined);
+      });
+
+      it('returns stored config info', function() {
+        expect(Ember.I18n.config.test).to.equal("test conf");
+      });
+      it("can change config values", function() {
+        var initialValue = Ember.I18n.config.test;
+        Ember.I18n.config.test = "bye";
+        expect(Ember.I18n.config.test).to.not.equal(initialValue);
+        expect(Ember.I18n.config.test).to.equal("bye");
+      });
+      describe('.tagName', function() {
+        it('defaults to span', function(){
+          expect(Ember.I18n.config.tagName).to.equal('span');
+        });
       });
     });
 
@@ -211,7 +234,7 @@
 
         Ember.run(function() {
           console.log(view.$().html());
-          expect(view.$('span').html()).to.equal('A Foobar');
+          expect(view.$().html()).to.match(/^<span id="[\d+]">A Foobar<\/span>$/);
         });
       });
 
@@ -222,6 +245,30 @@
           expect(view.$('h2').html()).to.equal('A Foobar');
         });
       });
+
+      it("doesn't wrap if custom tag name is false", function() {
+        render('{{t "foo.bar" tagName=false}}');
+
+        Ember.run(function() {
+          expect(view.$().html()).to.equal('A Foobar');
+        });
+      });      
+
+      it('wraps congig.tagName around translation, if set', function(){
+          Ember.I18n.config.tagName = 'p';
+          render('{{t "foo.bar"}}');
+          Ember.run(function() {
+            expect(view.$().html()).to.match(/^<p id="\d+">A Foobar<\/p>$/);
+          });
+        });
+
+      it('outputs raw translation, if config.tagName is set to false', function(){
+          Ember.I18n.config.tagName = null;
+          render('{{t "foo.bar"}}');
+          Ember.run(function() {
+            expect(view.$().html()).to.equal('A Foobar');
+          });
+        });
 
       it('handles interpolations from contextual keywords', function() {
         render('{{t "foo.bar.named" nameBinding="view.favouriteBeer" }}', {
