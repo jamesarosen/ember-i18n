@@ -36,16 +36,31 @@ Em.I18n.translations = {
 ```
 yields
 ```html
-<h2><span id="i18n-123">Edit User</span></h2>
+<h2><span id="123">Edit User</span></h2>
 ```
-#### Remove the `span` by specifying a `tagName`:
+#### Change the `span` by specifying a `tagName`:
 ```html
 {{t "user.edit.title" tagName="h2"}}
 ```
 yields
 ```html
-<h2 id="i18n-123">Edit User</h2>
+<h2 id="123">Edit User</h2>
 ```
+set `tagName` to `false` to remove all wrapping:
+```html
+{{t "user.edit.title" tagName=false}}
+```
+yields
+```html
+Edit User
+```
+
+Set it in the config options to avoid repetition:
+```javascript
+Em.I18n.config.tagName=false;
+```
+
+
 #### Set interpolated values directly:
 ```html
 <h2>{{t "user.followers.title" count="2"}}</h2>
