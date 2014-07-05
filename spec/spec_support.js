@@ -5,7 +5,16 @@
     mocha.globals([ 'jQuery*' ]);
   }
 
+  function renderTemplate(template, options) {
+    if (options == null) options = {};
+    options.template = Ember.Handlebars.compile(template);
+    var view = this._ember_view = Ember.View.create(options);
+    Ember.run(view, 'append');
+    return view;
+  }
+
   beforeEach(function() {
+    this.renderTemplate = renderTemplate.bind(this);
     this.originalTranslations = Ember.I18n.translations;
 
     Ember.I18n.translations = {
@@ -29,6 +38,11 @@
   });
 
   afterEach(function() {
+    if (this._ember_view) {
+      Ember.run(this._ember_view, 'destroy');
+      delete this._ember_view;
+    }
+
     Ember.I18n.translations = this.originalTranslations;
     CLDR.defaultLanguage = null;
   });

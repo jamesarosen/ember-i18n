@@ -1,20 +1,6 @@
 (function () {
 
   describe('Ember.I18n', function () {
-    var view;
-
-    function render(template, options) {
-      if (options == null) options = {};
-      options.template = Ember.Handlebars.compile(template);
-      view = Ember.View.create(options);
-      Ember.run(function() {
-        view.append();
-      });
-    }
-
-    afterEach(function() {
-      if (view != null) view.destroy();
-    });
 
     it('exists', function() {
       expect(Ember.I18n).to.not.equal(undefined);
@@ -117,7 +103,7 @@
 
     describe('{{t}}', function() {
       it('outputs simple translated strings', function() {
-        render('{{t "foo.bar"}}');
+        var view = this.renderTemplate('{{t "foo.bar"}}');
 
         Ember.run(function() {
           expect(view.$().text()).to.equal('A Foobar');
@@ -125,7 +111,7 @@
       });
 
       it('interpolates values', function() {
-        render('{{t "bars.all" count="597"}}');
+        var view = this.renderTemplate('{{t "bars.all" count="597"}}');
 
         Ember.run(function() {
           expect(view.$().text()).to.equal('All 597 Bars');
@@ -133,7 +119,7 @@
       });
 
       it('interpolates bindings', function() {
-        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
+        var view = this.renderTemplate('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Ember.run(function() {
           expect(view.$().text()).to.equal('All 3 Bars');
@@ -141,7 +127,7 @@
       });
 
       it('responds to updates on bound properties', function() {
-        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
+        var view = this.renderTemplate('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Ember.run(function() {
           view.set('count', 4);
@@ -153,7 +139,7 @@
       });
 
       it('does not error due to bound properties during a rerender', function() {
-        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
+        var view = this.renderTemplate('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         expect(function() {
           Ember.run(function() {
@@ -164,7 +150,7 @@
       });
 
       it('responds to updates on bound properties after a rerender', function() {
-        render('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
+        var view = this.renderTemplate('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
         Ember.run(function() {
           view.rerender();
@@ -177,7 +163,7 @@
       });
 
       it('uses a span by default', function() {
-        render('{{t "foo.bar"}}');
+        var view = this.renderTemplate('{{t "foo.bar"}}');
 
         Ember.run(function() {
           expect(view.$('span').html()).to.equal('A Foobar');
@@ -185,7 +171,7 @@
       });
 
       it('obeys a custom tag name', function() {
-        render('{{t "foo.bar" tagName="h2"}}');
+        var view = this.renderTemplate('{{t "foo.bar" tagName="h2"}}');
 
         Ember.run(function() {
           expect(view.$('h2').html()).to.equal('A Foobar');
@@ -193,7 +179,7 @@
       });
 
       it('handles interpolations from contextual keywords', function() {
-        render('{{t "foo.bar.named" nameBinding="view.favouriteBeer" }}', {
+        var view = this.renderTemplate('{{t "foo.bar.named" nameBinding="view.favouriteBeer" }}', {
           favouriteBeer: 'IPA'
         });
 
@@ -203,7 +189,7 @@
       });
 
       it('responds to updates on bound keyword properties', function() {
-        render('{{t "foo.bar.named" nameBinding="view.favouriteBeer"}}', {
+        var view = this.renderTemplate('{{t "foo.bar.named" nameBinding="view.favouriteBeer"}}', {
           favouriteBeer: 'Lager'
         });
 
@@ -222,7 +208,7 @@
     describe('{{{t}}}', function() {
       it('does not over-escape translations', function() {
         Ember.I18n.translations['message.loading'] = '<span class="loading">Loading…</span>';
-        render('<div>{{{t "message.loading"}}}</div>');
+        var view = this.renderTemplate('<div>{{{t "message.loading"}}}</div>');
         Ember.run(function() {
           expect(view.$('.loading').length).to.equal(1);
           expect(view.$('.loading').text()).to.equal('Loading…');
@@ -232,7 +218,7 @@
 
     describe('{{translateAttr}}', function() {
       it('outputs translated attribute strings', function() {
-        render('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
+        var view = this.renderTemplate('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
         Ember.run(function() {
           expect(view.$('a').attr('title')).to.equal('A Foobar');
           expect(view.$('a').attr('data-disable-with')).to.equal('Saving Foo...');
@@ -242,7 +228,7 @@
 
     describe('{{ta}}', function() {
       it('outputs translated attribute strings', function() {
-        render('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
+        var view = this.renderTemplate('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
         Ember.run(function() {
           expect(view.$('a').attr('title')).to.equal('A Foobar');
           expect(view.$('a').attr('data-disable-with')).to.equal('Saving Foo...');
@@ -252,7 +238,7 @@
 
     describe('{{ta}} == {{translateAttr}}', function() {
       it('check that {{ta}} and {{translateAttr}} outputs the same', function() {
-        render('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a><span {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></span>');
+        var view = this.renderTemplate('<a {{ta title="foo.bar" data-disable-with="foo.save.disabled"}}></a><span {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></span>');
         Ember.run(function() {
           expect(view.$('a').attr('title')).to.equal(view.$('span').attr('title'));
           expect(view.$('a').attr('data-disable-with')).to.equal(view.$('span').attr('data-disable-with'));
@@ -311,7 +297,7 @@
 
       it('translates ___Translation attributes on the DOM element', function() {
         Ember.View.reopen(Ember.I18n.TranslateableAttributes);
-        render('{{view titleTranslation="foo.bar"}}');
+        var view = this.renderTemplate('{{view titleTranslation="foo.bar"}}');
         expect(view.$().children().first().attr('title')).to.equal("A Foobar");
       });
     });
