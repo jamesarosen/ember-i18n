@@ -205,7 +205,6 @@
         render('{{t "foo.bar"}}');
 
         Ember.run(function() {
-          console.log(view.$().html());
           expect(view.$('span').html()).to.equal('A Foobar');
         });
       });
