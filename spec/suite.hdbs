@@ -17,6 +17,7 @@
       mocha.ui('bdd');
       mocha.reporter('html');
     </script>
+    <script src="./spec_support.js"></script>
     <script src="./i18nSpec.js"></script>
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
