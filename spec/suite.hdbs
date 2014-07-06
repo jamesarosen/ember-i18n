@@ -20,6 +20,7 @@
     <script src="./spec_support.js"></script>
     <script src="./i18nSpec.js"></script>
     <script src="./translateHelperSpec.js"></script>
+    <script src="./translateAttributeHelperSpec.js"></script>
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
       else { mocha.run(); }
