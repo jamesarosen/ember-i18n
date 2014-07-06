@@ -23,6 +23,7 @@
     <script src="./translateHelperSpec.js"></script>
     <script src="./translateAttributeHelperSpec.js"></script>
     <script src="./eachTranslatedAttributeSpec.js"></script>
+    <script src="./translateablePropertiesSpec.js"></script>
     <script>
       if (window.mochaPhantomJS) { mochaPhantomJS.run(); }
       else { mocha.run(); }
