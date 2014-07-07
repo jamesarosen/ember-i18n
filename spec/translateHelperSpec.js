@@ -1,4 +1,10 @@
 describe('{{t}}', function() {
+
+  beforeEach(function() {
+    // compatibility mode:
+    Ember.FEATURES.I18N_TRANSLATE_HELPER_SPAN = true;
+  });
+
   it('outputs simple translated strings', function() {
     var view = this.renderTemplate('{{t "foo.bar"}}');
 
@@ -56,22 +62,6 @@ describe('{{t}}', function() {
 
     Ember.run(function() {
       expect(view.$().text()).to.equal('All 4 Bars');
-    });
-  });
-
-  it('uses a span by default', function() {
-    var view = this.renderTemplate('{{t "foo.bar"}}');
-
-    Ember.run(function() {
-      expect(view.$('span').html()).to.equal('A Foobar');
-    });
-  });
-
-  it('obeys a custom tag name', function() {
-    var view = this.renderTemplate('{{t "foo.bar" tagName="h2"}}');
-
-    Ember.run(function() {
-      expect(view.$('h2').html()).to.equal('A Foobar');
     });
   });
 

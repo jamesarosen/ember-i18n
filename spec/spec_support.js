@@ -5,6 +5,8 @@
     mocha.globals([ 'jQuery*' ]);
   }
 
+  Ember.FEATURES = Ember.FEATURES || {};
+
   function renderTemplate(template, options) {
     if (options == null) options = {};
     options.template = Ember.Handlebars.compile(template);
