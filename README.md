@@ -64,6 +64,29 @@ yields
 ```
 if `user.getPath('followers.count')` returns `2`.
 
+#### Extends translation key with suffix
+
+```html
+<h2>{{t "button.add_user" translationSuffix="title"}}</h2>
+```
+yields
+```html
+<h2><span id="i18n-123">Add a user</span></h2>
+```
+as tranlation key is now `button.add_user.title`.
+
+#### Extends translation key with bound property
+
+```html
+<h2>{{t "button.add_user" translationSuffixBinding="view.buttonType"}}</h2>
+```
+yields
+```html
+<h2><span id="i18n-123">Saving...</span></h2>
+```
+if `view.get('buttonType')` returns `disabled`,
+then the translation key is `button.add_user.disabled`.
+
 #### Translate properties on any object:
 
 The `Em.I18n.TranslateableProperties` mixin automatically translates

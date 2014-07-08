@@ -26,7 +26,8 @@
       'foos.other': 'All {{count}} Foos',
       'bars.all': 'All {{count}} Bars',
       baz: {
-        qux: 'A qux appears'
+        qux: 'A qux appears',
+        foo: 'A foo appears'
       },
       fum: {
         one: 'A fum',

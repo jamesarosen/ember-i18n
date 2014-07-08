@@ -100,6 +100,28 @@ describe('{{t}}', function() {
       expect(view.$().text()).to.equal('A Foobar named IPA');
     });
   });
+
+  it('responds to postfix attribute', function() {
+    var view = this.renderTemplate('{{t "baz" translationSuffix="qux"}}');
+
+    expect(view.$().text()).to.equal('A qux appears');
+  });
+
+  it('responds to updates on bound postfix attribute', function() {
+    var view = this.renderTemplate('{{t "baz" translationSuffixBinding="view.suffix"}}', {
+      suffix: 'qux'
+    });
+
+    expect(view.$().text()).to.equal('A qux appears');
+
+    Ember.run(function() {
+      view.set('suffix', 'foo');
+    });
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('A foo appears');
+    });
+  });
 });
 
 describe('{{{t}}}', function() {
