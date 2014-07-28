@@ -6,7 +6,6 @@
   "dependencies": {
     "cldr": "^1.0",
     "jquery": ">=1.7 <3",
-    "handlebars": "^1.0",
     "ember": "^1.0"
   },
   "scripts": {
