@@ -1,4 +1,5 @@
 /.jhw-cache/
+/.idea
 /components/
 /node_modules/
 /spec/suite.html
