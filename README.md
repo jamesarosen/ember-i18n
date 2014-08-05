@@ -35,6 +35,12 @@ Em.I18n.translations = {
   'button.add_user.disabled': 'Saving...'
 };
 ```
+
+To disable missing translation warnings in console
+```javascript
+Ember.ENV.I18N_LOG_MISSING_TRANSLATIONS = false;
+```
+
 #### A simple translation:
 ```html
 <h2>{{t "user.edit.title"}}</h2>
