@@ -100,6 +100,14 @@ describe('{{t}}', function() {
       expect(view.$().text()).to.equal('A Foobar named IPA');
     });
   });
+
+  it('uses cssClass to set the class attribute', function() {
+    var view = this.renderTemplate('{{t "foo.bar" cssClass="button active" }}');
+
+    Ember.run(function() {
+      expect(view.$('span').attr('class')).to.include('button active');
+    });
+  });
 });
 
 describe('{{{t}}}', function() {
