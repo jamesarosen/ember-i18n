@@ -12,7 +12,7 @@ compiled via `Ember.I18n.compile`, which defaults to using
 translations, you'll need to include the full Handlebars, not just
 `handlebars-runtime.js` in your application.)
 
-Set `Ember.I18n.I18N_COMPILE_WITHOUT_HANDLEBARS = true;` before including
+Set `Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS = true;` before including
 ember-i18n to use the new translation compiler that does not depend on the full
 Handlebars. The older Handlebars-based compiler has been deprecated and
 will be removed in a future release.
