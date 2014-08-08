@@ -1,3 +1,13 @@
+## 2.1.0 2014-08-08
+
+ * Use `Ember.uuid` to generate unique IDs
+ * Add a Handlebars-less compiler; enable with
+   `Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS = true;`
+ * `{{t}}` helper uses Metamorph tags.
+ * `{{t}}` helper: allow turning off the default `<span>`
+   tag; enable with
+   `Ember.FEATURES.I18N_TRANSLATE_HELPER_SPAN = false;`
+
 ## 2.0.0 2014-05-28
 
  * Drop support for Ember 0.x.
