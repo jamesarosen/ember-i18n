@@ -51,6 +51,14 @@ yields
 ```html
 <h2 id="i18n-123">Edit User</h2>
 ```
+#### Set the `class` attribute of the tag:
+```html
+{{t "user.edit.title" cssClass="button"}}
+```
+yields
+```html
+<span id="i18n-123" class="button">Edit User</span>
+```
 #### Set interpolated values directly:
 ```html
 <h2>{{t "user.followers.title" count="2"}}</h2>
