@@ -27,6 +27,7 @@
     <script src="./translationExistsSpec.js"></script>
     <script src="./tSpec.js"></script>
     <script src="./translateHelperSpec.js"></script>
+    <script src="./taglessTranslateHelperSpec.js"></script>
     <script src="./translateAttributeHelperSpec.js"></script>
     <script src="./eachTranslatedAttributeSpec.js"></script>
     <script src="./translateablePropertiesSpec.js"></script>
