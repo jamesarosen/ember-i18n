@@ -17,6 +17,12 @@ test_prereleases: jshint npm_install vendor_install
 	WITHOUT_HANDLEBARS=true JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./script/run.js
 	WITHOUT_HANDLEBARS=true JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 ./script/run.js
 
+# Run the tests against the current environment only; don't run any prerequisites like
+# dependency installation or JSHint checks.
+test:
+	@echo "Running tests with jQuery $$JQUERY_VERSION, Ember $$EMBER_VERSION, and Handlebars $$HANDLEBARS_VERSION"
+	@./script/run.js
+
 npm_install:
 	npm install
 
@@ -31,4 +37,4 @@ realclean: clean
 	@rm -f vendor/handlebars*
 	@rm -f vendor/jquery*
 
-.PHONY: jshint test_stables test_prereleases npm_install vendor_install clean realclean
+.PHONY: jshint test_stables test_prereleases test npm_install vendor_install clean realclean
