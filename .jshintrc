@@ -15,6 +15,7 @@
     "process": false,
     "require": false,
 
+    "sinon": false,
     "mocha": false,
     "afterEach": false,
     "beforeEach": false,

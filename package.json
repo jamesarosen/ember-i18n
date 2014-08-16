@@ -20,6 +20,7 @@
   "devDependencies": {
     "mocha": "~1.9.0",
     "chai": "~1.6.0",
+    "sinon": "1.10.3",
     "mocha-phantomjs": "~2.0.1",
     "jshint": "~2.0.1",
     "handlebars": "~1.0.11"
