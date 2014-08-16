@@ -1,19 +1,17 @@
 describe('Ember.I18n.eachTranslatedAttribute', function() {
-  var calledWith;
+  var spy;
 
   beforeEach(function() {
-    calledWith = {};
+    spy = sinon.spy();
     var object = { aKey: 'a value', titleTranslation: 'foo.bar' };
-    Ember.I18n.eachTranslatedAttribute(object, function(attributeName, translation) {
-      calledWith[attributeName] = translation;
-    });
+    Ember.I18n.eachTranslatedAttribute(object, spy);
   });
 
   it('skips non-translated attributes', function() {
-    expect(calledWith.aKey).to.equal(undefined);
+    expect(spy.calledWith('aKey')).to.equal(false);
   });
 
   it('calls the callback with translated attributes, minus the marker suffix, and their translations', function() {
-    expect(calledWith.title).to.equal('A Foobar');
+    expect(spy.calledWithExactly('title', 'A Foobar')).to.equal(true);
   });
 });

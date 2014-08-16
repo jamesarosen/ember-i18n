@@ -38,21 +38,17 @@ describe('Ember.I18n.t', function() {
   });
 
   describe('missing event', function() {
-    var observer;
+    var spy;
 
     afterEach(function() {
-        Ember.I18n.off('missing', observer);
+      Ember.I18n.off('missing', spy);
     });
 
     it('triggers missing events when translations are missing', function() {
-      var didCall = false;
-      observer = function(key) {
-        expect(key).to.equal('nothing.here');
-        didCall = true;
-      };
-      Ember.I18n.on('missing', observer);
+      spy = sinon.spy();
+      Ember.I18n.on('missing', spy);
       Ember.I18n.t('nothing.here');
-      expect(didCall).to.equal(true);
+      expect(spy.calledWithExactly('nothing.here')).to.equal(true);
     });
   });
 
