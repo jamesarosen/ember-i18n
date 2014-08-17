@@ -13,6 +13,19 @@ describe('{{t}}', function() {
     });
   });
 
+  it('emits a warning on unquoted keys', function() {
+    var spy = sinon.spy(Ember.Logger, 'warn');
+
+    var view = this.renderTemplate('{{t foo.bar}}');
+
+    Ember.run(function() {
+      expect(spy.callCount).to.equal(1);
+      expect(spy.lastCall.args[0]).to.match(/unquoted/);
+      expect(spy.lastCall.args[0]).to.match(/foo\.bar/);
+      expect(view.$().text()).to.equal('A Foobar');
+    });
+  });
+
   it('interpolates values', function() {
     var view = this.renderTemplate('{{t "bars.all" count="597"}}');
 
