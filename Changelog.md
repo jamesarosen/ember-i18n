@@ -1,3 +1,21 @@
+## 2.2.0 2014-08-16
+
+ * The `{{t}}` helper now warns if passed an unquoted key argument.
+   It still uses unquoted arguments as string literals, but this
+   behavior will change in the next major release.
+ * Removed deprecation warning for those who've opt-in to
+   `I18N_COMPILE_WITHOUT_HANDLEBARS`
+ * Fixed a typo in the warning message for
+   `I18N_COMPILE_WITHOUT_HANDLEBARS`
+ * Remove check for `Ember.I18n.fire` as that was only
+   necessary on Ember 0.9, which this library no longer supports.
+ * Don't warn on missing translations. Clients that want to be notified
+   can subscribe to the `missing` event on `Ember.I18n`.
+ * `compileWithHandlebars` uses saved-off `warn` helper (which
+   uses `Ember.Logger.warn` rather than `Ember.warn`).
+ * Run separate Travis builds for each dependency set.
+ * Add Sinon as a test dependency and use its spies in specs.
+
 ## 2.1.0 2014-08-08
 
  * Use `Ember.uuid` to generate unique IDs

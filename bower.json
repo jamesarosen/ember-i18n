@@ -1,6 +1,6 @@
 {
   "name": "ember-i18n",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "I18n support for Ember.js",
   "main": [ "lib/i18n.js" ],
   "dependencies": {
