@@ -1,3 +1,8 @@
+## 2.2.1 2014-08-17
+
+ * Fixed overeager warnings related to I18N_COMPILE_WITHOUT_HANDLEBARS
+   and unquoted key arguments to the `{{t}}` helper.
+
 ## 2.2.0 2014-08-16
 
  * The `{{t}}` helper now warns if passed an unquoted key argument.
