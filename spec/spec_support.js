@@ -8,8 +8,11 @@
   Ember.FEATURES = Ember.FEATURES || {};
 
   function renderTemplate(template, options) {
+    var container = new Ember.Container();
+    container.register('view:toplevel', Ember.View.extend());
     if (options == null) options = {};
     options.template = Ember.Handlebars.compile(template);
+    options.container = container;
     var view = this._ember_view = Ember.View.create(options);
     Ember.run(view, 'append');
     return view;

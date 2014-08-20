@@ -11,6 +11,7 @@ function runSpecs() {
     logIfAnything(stderr);
     if (error !== null) {
       console.error('Error running specs: ' + error);
+      process.exit(1);
     }
   });
 }
