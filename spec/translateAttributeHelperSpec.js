@@ -1,13 +1,4 @@
 describe('{{translateAttr}}', function() {
-  it('throws error when no arguments are specified', function() {
-    var self = this;
-    expect(function() {
-      Ember.run(function() {
-        self.renderTemplate('<a {{translateAttr}}></a>');
-      });
-    }).to['throw']('at least one hash argument to translateAttr');
-  });
-
   it('outputs translated attribute strings', function() {
     var view = this.renderTemplate('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
     Ember.run(function() {
@@ -42,7 +33,7 @@ describe("Bound values", function() {
   var context, view;
 
   beforeEach(function() {
-    context = Em.Object.create({ fooBar: 'foo.bar', isDisabled: 'foo.save.disabled' });
+    context = Ember.Object.create({ fooBar: 'foo.bar', isDisabled: 'foo.save.disabled' });
     view = this.renderTemplate('<a {{ta title=fooBar data-disable-with=isDisabled}}></a>', { context: context });
   });
 
