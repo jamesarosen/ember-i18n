@@ -1,4 +1,13 @@
 describe('{{translateAttr}}', function() {
+  it('throws error when no arguments are specified', function() {
+    var self = this;
+    expect(function() {
+      Ember.run(function() {
+        self.renderTemplate('<a {{translateAttr}}></a>');
+      });
+    }).to['throw']('at least one hash argument to translateAttr');
+  });
+
   it('outputs translated attribute strings', function() {
     var view = this.renderTemplate('<a {{translateAttr title="foo.bar" data-disable-with="foo.save.disabled"}}></a>');
     Ember.run(function() {
@@ -24,6 +33,47 @@ describe('{{ta}} == {{translateAttr}}', function() {
     Ember.run(function() {
       expect(view.$('a').attr('title')).to.equal(view.$('span').attr('title'));
       expect(view.$('a').attr('data-disable-with')).to.equal(view.$('span').attr('data-disable-with'));
+    });
+  });
+});
+
+
+describe("Bound values", function() {
+  var context, view;
+
+  beforeEach(function() {
+    context = Em.Object.create({ fooBar: 'foo.bar', isDisabled: 'foo.save.disabled' });
+    view = this.renderTemplate('<a {{ta title=fooBar data-disable-with=isDisabled}}></a>', { context: context });
+  });
+
+  it('outputs translated attribute from bound values', function() {
+    Ember.run(function() {
+      expect(view.$('a').attr('title')).to.equal('A Foobar');
+      expect(view.$('a').attr('data-disable-with')).to.equal('Saving Foo...');
+    });
+  });
+
+  it('emits a warning on quoted bound keys', function() {
+    var spy = sinon.spy(Ember.Logger, 'warn');
+    view = this.renderTemplate('<a {{ta title="fooBar"}}></a>', { context: context });
+
+    Ember.run(function() {
+      expect(spy.callCount).to.equal(1);
+      expect(spy.lastCall.args[0]).to.match(/\ quoted\ key/);
+      expect(spy.lastCall.args[0]).to.match(/fooBar/);
+      expect(view.$('a').attr('title')).to.equal('A Foobar');
+    });
+
+    spy.restore();
+  });
+
+  it('updates translation when bound value changes', function() {
+    Ember.run(function() {
+      context.set('fooBar', 'foos.zero');
+    });
+
+    Ember.run(function() {
+      expect(view.$('a').attr('title')).to.equal('No Foos');
     });
   });
 });
