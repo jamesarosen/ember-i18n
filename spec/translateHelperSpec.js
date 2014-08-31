@@ -24,6 +24,8 @@ describe('{{t}}', function() {
       expect(spy.lastCall.args[0]).to.match(/foo\.bar/);
       expect(view.$().text()).to.equal('A Foobar');
     });
+
+    spy.restore();
   });
 
   it('interpolates values', function() {
