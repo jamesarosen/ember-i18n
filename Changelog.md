@@ -1,3 +1,13 @@
+## 2.2.2 2014-09-16
+
+ * Use internal UUID generation, since implementations differ
+   across Ember versions
+ * Select template compiler on first use so
+   `Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS` is sure to have
+   been set properly.
+ * Fix TranslateableAttributes tests on Ember Canary
+ * Better messaging during the build process
+
 ## 2.2.1 2014-08-17
 
  * Fixed overeager warnings related to I18N_COMPILE_WITHOUT_HANDLEBARS
