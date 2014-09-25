@@ -21,6 +21,7 @@
   beforeEach(function() {
     this.renderTemplate = renderTemplate.bind(this);
     this.originalTranslations = Ember.I18n.translations;
+    this.originalMissingMessage = Ember.I18n.missingMessage;
 
     Ember.I18n.translations = {
       'foo.bar': 'A Foobar',
@@ -49,6 +50,7 @@
     }
 
     Ember.I18n.translations = this.originalTranslations;
+    Ember.I18n.missingMessage = this.originalMissingMessage;
     CLDR.defaultLanguage = null;
   });
 
