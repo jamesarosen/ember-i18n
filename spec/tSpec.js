@@ -37,6 +37,11 @@ describe('Ember.I18n.t', function() {
     expect(Ember.I18n.t('nothing.here')).to.equal('Missing translation: nothing.here');
   });
 
+  it('warns with a custom message', function() {
+    Ember.I18n.missingMessage = function(key) { return "there.is." + key + ".to.see"; };
+    expect(Ember.I18n.t('nothing.here')).to.equal('there.is.nothing.here.to.see');
+  });
+
   describe('missing event', function() {
     var spy;
 
