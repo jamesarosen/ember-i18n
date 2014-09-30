@@ -31,6 +31,7 @@
       'foos.one': 'One Foo',
       'foos.other': 'All {{count}} Foos',
       'bars.all': 'All {{count}} Bars',
+      'bars.x_of_y': '{{count}} of {{total}} Bars',
       baz: {
         qux: 'A qux appears'
       },
