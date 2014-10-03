@@ -1,5 +1,3 @@
-require "ember-i18n/version"
-
 module EmberI18n
   if defined? ::Rails::Engine
     # auto wire assets as Rails Engine
