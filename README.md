@@ -151,6 +151,21 @@ Em.I18n.translations = {
 ```
 This format is often smaller and so makes downloading translation packs faster.
 
+
+### Using with Ember-cli
+
+Install ember-i18n as node module:
+```
+npm install ember-i18n --save-dev
+```
+
+Run generator to fetch dependencies:
+```
+ember generate ember-i18n
+```
+
+That's it.
+
 ### Limitations
 
  * There is no way to pass interpolations to attribute translations. I can't
