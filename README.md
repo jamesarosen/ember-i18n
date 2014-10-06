@@ -192,6 +192,20 @@ Example using pluralization in the template:
 
 Depending on the locale there could be up to 6 plural forms used, namely: 'zero', 'one', 'two', 'few', 'many', 'other'.
 
+### Using with Ember-cli
+
+Install ember-i18n as node module:
+```
+npm install ember-i18n --save-dev
+```
+
+Run generator to fetch dependencies:
+```
+ember generate ember-i18n
+```
+
+That's it.
+
 ### Limitations
 
  * There is no way to pass interpolations to attribute translations. I can't
