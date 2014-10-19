@@ -1,5 +1,13 @@
 describe("{{t}}", function() {
 
+  beforeEach(function() {
+    sinon.stub(Ember, 'deprecate');
+  });
+
+  afterEach(function() {
+    Ember.deprecate.restore();
+  });
+
   describe("with Ember.FEATURES.I18N_TRANSLATE_HELPER_SPAN on", function() {
 
     beforeEach(function() {
