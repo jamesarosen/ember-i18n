@@ -111,6 +111,15 @@ describe('{{t}}', function() {
       expect(view.$().text()).to.equal('A Foobar');
     });
   });
+
+  it('loops up through the parent views untill a rendered name is found for lazy lookups', function() {
+    var parentView = Ember.View.create({ renderedName: 'foo' });
+    var view = this.renderTemplate('{{t ".bar" }}', { _parentView: parentView });
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('A Foobar');
+    });
+  });
 });
 
 describe('{{{t}}}', function() {
