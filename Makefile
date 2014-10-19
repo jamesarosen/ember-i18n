@@ -16,9 +16,7 @@ test_stables: jshint npm_install vendor_install
 
 test_prereleases: jshint npm_install vendor_install
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./script/run.js
-	JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 ./script/run.js
 	WITHOUT_HANDLEBARS=true JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./script/run.js
-	WITHOUT_HANDLEBARS=true JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 ./script/run.js
 
 # Run the tests against the current environment only; don't run any prerequisites like
 # dependency installation or JSHint checks.

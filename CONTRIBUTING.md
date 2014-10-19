@@ -9,7 +9,7 @@ To run tests against a single combination, run `make test` with a set of environ
 variables set:
 
 ```bash
-$ JQUERY_VERSION=2.0.3 EMBER_VERSION=canary HANDLEBARS_VERSION=1.3.0 make test
+$ JQUERY_VERSION=2.0.3 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 make test
 ```
 
 ## Commit-Bit Policy
