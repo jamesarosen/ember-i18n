@@ -40,7 +40,7 @@
       }
     };
 
-    CLDR.defaultLanguage = 'ksh';
+    Ember.I18n.locale = 'ksh';
   });
 
   afterEach(function() {
@@ -51,7 +51,7 @@
 
     Ember.I18n.translations = this.originalTranslations;
     Ember.I18n.missingMessage = this.originalMissingMessage;
-    CLDR.defaultLanguage = null;
+    Ember.I18n.locale = null;
   });
 
 }());
