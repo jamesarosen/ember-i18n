@@ -103,6 +103,14 @@ describe('{{t}}', function() {
       expect(view.$().text()).to.equal('A Foobar named IPA');
     });
   });
+
+  it('it uses the views rendered name for lazy lookups when the translation key starts with a dot', function() {
+    var view = this.renderTemplate('{{t ".bar" }}', { renderedName: 'foo' });
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('A Foobar');
+    });
+  });
 });
 
 describe('{{{t}}}', function() {
