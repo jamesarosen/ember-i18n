@@ -1,3 +1,15 @@
+## 2.9.0 2014-10-20
+
+ * Ember 2.9+ is not compatible with Ember 1.9+
+ * Use `Ember.$.isFunction` instead of `jQuery.isFunction`
+ * Deprecate use of `tagName` in the `{{t}}` helper
+ * Implement pluralization logic in this project and remove
+   dependency on CLDR.js
+ * Expose `I18n.missingMessage` for customising the
+   "missing translation" message
+ * `Makefile` ensures the environment has `node`, `npm`,
+   and `phantomjs`
+
 ## 2.2.2 2014-09-16
 
  * Use internal UUID generation, since implementations differ
