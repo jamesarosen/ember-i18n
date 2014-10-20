@@ -24,12 +24,10 @@ module.exports = function buildSuite() {
   var template          = fs.readFileSync('spec/suite.hdbs').toString(),
       compiledTemplate  = hdbs.compile(template),
       outputPath        = 'spec/suite.html',
-      withoutHandlebars = (process.env.WITHOUT_HANDLEBARS === 'true'),
       templateData = {
         emberVersion:      versionFor('ember'),
         jQueryVersion:     versionFor('jquery'),
-        handlebarsVersion: versionFor('handlebars'),
-        withoutHandlebars: withoutHandlebars
+        handlebarsVersion: versionFor('handlebars')
       };
   fs.writeFileSync(outputPath, compiledTemplate(templateData));
   return outputPath;
