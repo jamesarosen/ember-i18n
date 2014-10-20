@@ -4,10 +4,10 @@ Internationalization for Ember
 
 ### Requirements
 
-Ember-I18n 2.x (the current stable branch) requires
+Ember-I18n requires
 
  * Ember v1.0 - v1.8. **Note: v1.9 and above will be supported in Ember-I18n v3.x.**
- * Handlebars v1.x
+ * Handlebars-runtime v1.x
  * jQuery v1.7 - v2.x
 
 Set `Ember.I18n.translations` to an object containing your translation
@@ -17,11 +17,6 @@ compiled via `Ember.I18n.compile`, which defaults to using
 `Handlebars.compile`. (That means that if you haven't precompiled your
 translations, you'll need to include the full Handlebars, not just
 `handlebars-runtime.js` in your application.)
-
-Set `Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS = true;` before including
-ember-i18n to use the new translation compiler that does not depend on the full
-Handlebars. The older Handlebars-based compiler has been deprecated and
-will be removed in a future release.
 
 If you want to support inflection based on `count`, you will
 also need to include Ember-I18n's pluralization support (`lib/i18n-plurals.js`)
