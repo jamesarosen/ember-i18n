@@ -7,7 +7,6 @@
   "globals": {
     "console": false,
 
-    "CLDR": false,
     "Ember": false,
     "jQuery": false,
 
