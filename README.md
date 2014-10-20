@@ -6,7 +6,7 @@ Internationalization for Ember
 
 Ember-I18n requires
 
- * Ember v1.0 - v1.8. **Note: v1.9 and above will be supported in Ember-I18n v3.x.**
+ * Ember v1.x
  * Handlebars-runtime v1.x
  * jQuery v1.7 - v2.x
 
@@ -22,22 +22,6 @@ If you want to support inflection based on `count`, you will
 also need to include Ember-I18n's pluralization support (`lib/i18n-plurals.js`)
 *after* the Ember-I18n core (`lib/i18n.js`) itself and set `Ember.I18n.locale`
 to the current locale code (e.g. "de").
-
-#### New: I18N_TRANSLATE_HELPER_SPAN
-
-In previous versions of Ember-I18n, the `{{t}}` helper emitted a `<span>` tag
-by default; the tag name could be changed, but the tag could not be removed.
-
-Ember-I18n now uses Metamorph tags so it no longer requires a wrapping tag.
-Emitting a `<span>` is still the default for backwards-compatibility reasons,
-but this will change in the next major release. If you wish to opt to
-tagless translations, set
-
-```js
-Ember.FEATURES.I18N_TRANSLATE_HELPER_SPAN = false;
-```
-
-The examples below assume this feature flag is set to `true` (the default).
 
 ### Examples
 
@@ -61,20 +45,9 @@ yields
 ```html
 <h2>
   <script id="metamorph-28-start"></script>
-  <span id="i18n-123">Edit User</span>
+  Edit User
   <script id="metamorph-28-end"></script>
 </h2>
-```
-
-#### Emit directly into the h2:
-```html
-{{t "user.edit.title" tagName="h2"}}
-```
-yields
-```html
-<script id="metamorph-28-start"></script>
-<h2 id="i18n-123">Edit User</h2>
-<script id="metamorph-28-end"></script>
 ```
 
 #### Set interpolated values directly:
@@ -85,7 +58,7 @@ yields
 ```html
 <h2>
   <script id="metamorph-28-start"></script>
-  <span id="i18n-123">All 2 Followers</span>
+  All 2 Followers
   <script id="metamorph-28-end"></script>
 </h2>
 ```
@@ -98,7 +71,7 @@ yields
 ```html
 <h2>
   <script id="metamorph-28-start"></script>
-  <span id="i18n-123">All 2 Followers</span>
+  All 2 Followers
   <script id="metamorph-28-end"></script>
 </h2>
 ```
