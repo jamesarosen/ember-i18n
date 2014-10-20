@@ -24,9 +24,9 @@ Handlebars. The older Handlebars-based compiler has been deprecated and
 will be removed in a future release.
 
 If you want to support inflection based on `count`, you will
-also need to include the
-[CLDR.js pluralization library](https://github.com/jamesarosen/CLDR.js)
-and set `CLDR.defaultLanguage` to the current locale code (e.g. "de").
+also need to include Ember-I18n's pluralization support (`lib/i18n-plurals.js`)
+*after* the Ember-I18n core (`lib/i18n.js`) itself and set `Ember.I18n.locale`
+to the current locale code (e.g. "de").
 
 #### New: I18N_TRANSLATE_HELPER_SPAN
 

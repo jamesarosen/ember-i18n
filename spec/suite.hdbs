@@ -9,8 +9,8 @@
         Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS = {{withoutHandlebars}};
       </script>
     {{/if}}
-    <script src="../vendor/cldr-1.0.0.js"></script>
     <script src="../lib/i18n.js"></script>
+    <script src="../lib/i18n-plurals.js"></script>
     <link rel="stylesheet" href="../node_modules/mocha-phantomjs/node_modules/mocha/mocha.css" />
   </head>
   <body>

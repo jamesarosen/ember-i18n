@@ -25,6 +25,7 @@ test: development_dependencies
 	@./script/run.js
 
 vendor_install: development_dependencies
+	@mkdir -p ./vendor
 	@./script/fetch_vendor.js
 	@echo "$(CHECK) Fetched vendor dependencies"
 
