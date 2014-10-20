@@ -1,8 +1,14 @@
-## Ember.I18n
+## Ember-I18n
 
 Internationalization for Ember
 
 ### Requirements
+
+Ember-I18n 2.x (the current stable branch) requires
+
+ * Ember v1.0 - v1.8. **Note: v1.9 and above will be supported in Ember-I18n v3.x.**
+ * Handlebars v1.x
+ * jQuery v1.7 - v2.x
 
 Set `Ember.I18n.translations` to an object containing your translation
 information. If the values of `Ember.I18n.translations` are `Function`s,
