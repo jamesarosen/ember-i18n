@@ -60,6 +60,21 @@ describe('{{t}}', function() {
     });
   });
 
+  it('responds to updates on multiple bound properties', function() {
+    var view = this.renderTemplate('{{t "bars.x_of_y" countBinding="view.count" totalBinding="view.total"}}', { count: 3, total: 4 });
+
+    Ember.run(function() {
+      view.setProperties({
+        count: 4,
+        total: 5
+      });
+    });
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('4 of 5 Bars');
+    });
+  });
+
   it('does not error due to bound properties during a rerender', function() {
     var view = this.renderTemplate('{{t "bars.all" countBinding="view.count"}}', { count: 3 });
 
