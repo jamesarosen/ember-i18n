@@ -40,6 +40,6 @@ realclean: clean
 	@rm -f vendor/ember*
 	@rm -f vendor/handlebars*
 	@rm -f vendor/jquery*
-	@echo "$(CHECK) Cleaned *everyhing*"
+	@echo "$(CHECK) Cleaned *everything*"
 
 .PHONY: jshint test_stables test_prereleases test npm_install vendor_install clean realclean
