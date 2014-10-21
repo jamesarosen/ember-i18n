@@ -151,6 +151,25 @@ yields
   <script id="metamorph-28-end"></script>
 </a>
 ```
+
+#### Translate bound attributes on a plain tag:
+Given
+```javascript
+Em.Object.extend({
+  buttonTooltipText: function() {
+    return this.get('isSaving') ? "button.add_user.disabled" : "button.add_user.title";
+  }.property('isSaving'),  
+  isSaving: true
+});
+```
+and
+```html
+<a {{translateAttr data-original-title=buttonTooltipText}}></a>
+```
+yields
+```html
+<a data-original-title="Saving..." data-bindtranslateattr-265="265"></a>
+```
 #### Nested Translation Syntax:
 
 The above translation data can also be expressed as nested JSON objects:

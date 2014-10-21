@@ -30,6 +30,8 @@ describe('{{t}}', function() {
       expect(warn.lastCall.args[0]).to.match(/foo\.bar/);
       expect(view.$().text()).to.equal('A Foobar');
     });
+
+    spy.restore();
   });
 
   it('interpolates values', function() {
