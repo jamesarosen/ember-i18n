@@ -1,6 +1,6 @@
 ## 2.9.0 2014-10-20
 
- * Ember 2.9+ is not compatible with Ember 1.9+
+ * Ember-I18n 2.9+ is not compatible with Ember 1.9+
  * Use `Ember.$.isFunction` instead of `jQuery.isFunction`
  * Deprecate use of `tagName` in the `{{t}}` helper
  * Implement pluralization logic in this project and remove
