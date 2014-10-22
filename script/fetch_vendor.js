@@ -9,13 +9,15 @@ var FILES = {
   "ember-1.0.1": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.1/ember.js",
   "ember-release": "http://builds.emberjs.com/release/ember.js",
   "ember-beta": "http://builds.emberjs.com/beta/ember.js",
+  "ember-canary": "http://builds.emberjs.com/canary/ember.js",
 
   "jquery-1.9.1": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.9.1/jquery.min.js",
   "jquery-1.11.0": "https://cdnjs.cloudflare.com/ajax/libs/jquery/1.11.0/jquery.min.js",
   "jquery-2.0.3": "https://cdnjs.cloudflare.com/ajax/libs/jquery/2.0.3/jquery.min.js",
 
   "handlebars-1.1.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.1.0/handlebars.js",
-  "handlebars-1.3.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js"
+  "handlebars-1.3.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/1.3.0/handlebars.js",
+  "handlebars-2.0.0": "https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.js"
 };
 
 function fetchAll() {

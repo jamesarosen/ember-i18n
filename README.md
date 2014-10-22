@@ -7,7 +7,7 @@ Internationalization for Ember
 Ember-I18n requires
 
  * Ember v1.x
- * Handlebars-runtime v1.x
+ * Handlebars-runtime v1.x - v2.x
  * jQuery v1.7 - v2.x
 
 Set `Ember.I18n.translations` to an object containing your translation
