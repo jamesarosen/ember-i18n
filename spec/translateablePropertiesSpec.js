@@ -7,11 +7,7 @@ describe('TranslateableProperties', function() {
     expect(subject.get('title')).to.equal('A Foobar');
   });
 
-});
-
-describe('TranslateableProperties update', function() {
-
-  it('translates ___Translation attributes on the object and updates them when set', function() {
+  it('updates translations when the upstream value changes', function() {
     var subject = Ember.Object.extend(Ember.I18n.TranslateableProperties).create({
       titleTranslation: 'foo.bar'
     });
