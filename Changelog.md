@@ -1,3 +1,16 @@
+## 3.0.0 (In Beta)
+
+ * Drop support for `CLDR.js` in favor of the included
+   `i18n-plurals.js`
+ * Always use custom compiler; drop support for
+   I18N_COMPILE_WITHOUT_HANDLEBARS; drop support for using
+   the Handlebars compiler if full Handlebars is available.
+ * `{{t}}` helper obeys Ember-1-style argument quoting;
+   unquoted arguments, including the key itself, are bound
+   references
+ * `{{t}}` helper no longer supports passing a `tagName`
+ * Drop support for `I18N_TRANSLATE_HELPER_SPAN` flag
+
 ## 2.9.0 2014-10-20
 
  * Ember-I18n 2.9+ is not compatible with Ember 1.9+
