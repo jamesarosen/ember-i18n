@@ -12,7 +12,7 @@ test_stables: jshint development_dependencies vendor_install
 	JQUERY_VERSION=2.0.3 EMBER_VERSION=release HANDLEBARS_VERSION=1.3.0 ./script/run.js
 
 test_prereleases: jshint development_dependencies vendor_install
-	JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=1.3.0 ./script/run.js
+	JQUERY_VERSION=1.11.0 EMBER_VERSION=beta HANDLEBARS_VERSION=2.0.0 ./script/run.js
 	JQUERY_VERSION=1.11.0 EMBER_VERSION=canary HANDLEBARS_VERSION=2.0.0 ./script/run.js
 
 # Run the tests against the current environment only; don't run any prerequisites like
