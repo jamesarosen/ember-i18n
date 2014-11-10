@@ -5,7 +5,7 @@
   "main": [ "lib/i18n.js" ],
   "dependencies": {
     "jquery": ">=1.7 <3",
-    "handlebars": "^1.0",
+    "handlebars": ">=1.0 <3",
     "ember": "^1.0"
   },
   "scripts": {
