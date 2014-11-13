@@ -50,6 +50,29 @@ yields
 </h2>
 ```
 
+#### A translation based on a bound key:
+```html
+<h2>{{t title_i18n_key}}</h2>
+```
+yields
+```html
+<h2>
+  <script id="metamorph-28-start"></script>
+  Add a user
+  <script id="metamorph-28-end"></script>
+</h2>
+```
+if `controller.title_i18n_key` is `'button.add_user.title'`. If
+it subsequently changes to `'user.edit.title'`, the HTML will
+become
+```html
+<h2>
+  <script id="metamorph-28-start"></script>
+  Edit User
+  <script id="metamorph-28-end"></script>
+</h2>
+```
+
 #### Set interpolated values directly:
 ```html
 <h2>{{t "user.followers.title" count="2"}}</h2>
