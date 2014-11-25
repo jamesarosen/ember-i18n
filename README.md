@@ -18,11 +18,6 @@ compiled via `Ember.I18n.compile`, which defaults to using
 translations, you'll need to include the full Handlebars, not just
 `handlebars-runtime.js` in your application.)
 
-If you want to support inflection based on `count`, you will
-also need to include Ember-I18n's pluralization support (`lib/i18n-plurals.js`)
-*after* the Ember-I18n core (`lib/i18n.js`) itself and set `Ember.I18n.locale`
-to the current locale code (e.g. "de").
-
 ### Examples
 
 Given
@@ -173,6 +168,43 @@ Em.I18n.translations = {
 };
 ```
 This format is often smaller and so makes downloading translation packs faster.
+
+### Pluralization
+
+If you want to support inflection based on `count`, you will
+also need to include Ember-I18n's pluralization support (`lib/i18n-plurals.js`)
+*after* the Ember-I18n core (`lib/i18n.js`) itself and set `Ember.I18n.locale`
+to the current locale code (e.g. "de").
+
+```javascript
+Em.I18n.locale = 'en';
+```
+
+Now whenever you pass the `count` option to the `t` function, template will be pluralized:
+
+```javascript
+Em.I18n.locale = 'en';
+
+Em.I18n.translations = {
+  'dog': {
+    'one': 'a dog',
+    'other': '{{count}} dogs'
+  }
+};
+
+Em.I18n.t('dog', { count: 1 }); // a dog
+Em.I18n.t('dog', { count: 2 }); // 2 dogs
+```
+
+The suffixes 'one' and 'other' are appended automatically.
+
+Example using pluralization in the template:
+
+```html
+{{t 'dog' count=dogs.length}} // Assuming dogs property is an array
+```
+
+Depending on the locale there could be up to 6 plural forms used, namely: 'zero', 'one', 'two', 'few', 'many', 'other'.
 
 ### Limitations
 
