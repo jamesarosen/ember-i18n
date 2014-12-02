@@ -26,6 +26,7 @@
     Ember.I18n.translations = {
       'foo.bar': 'A Foobar',
       'foo.bar.named': 'A Foobar named {{name}}',
+      'foo.bar.structured.named': 'A Foobar named {{contact.name}}',
       'foo.save.disabled': 'Saving Foo...',
       'foos.zero': 'No Foos',
       'foos.one': 'One Foo',

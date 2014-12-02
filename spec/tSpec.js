@@ -9,6 +9,12 @@ describe('Ember.I18n.t', function() {
     })).to.equal('A Foobar named Sue');
   });
 
+  it('interpolates structures correctly', function() {
+    expect(Ember.I18n.t('foo.bar.structured.named', {
+      contact: { name: 'Sue' }
+    })).to.equal('A Foobar named Sue');
+  });
+
   it('uses the "zero" form when the language calls for it', function() {
     expect(Ember.I18n.t('foos', {
       count: 0
