@@ -7,6 +7,7 @@ var fs = require('fs'),
 
 var FILES = {
   "ember-1.0.1": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.0.1/ember.js",
+  "ember-1.7.1": "https://cdnjs.cloudflare.com/ajax/libs/ember.js/1.7.1/ember.js",
   "ember-release": "http://builds.emberjs.com/release/ember.js",
   "ember-beta": "http://builds.emberjs.com/beta/ember.js",
   "ember-canary": "http://builds.emberjs.com/canary/ember.js",
