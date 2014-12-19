@@ -5,7 +5,19 @@ describe('Ember.I18n.t', function() {
 
   it('interpolates', function() {
     expect(Ember.I18n.t('foo.bar.named', {
-      name: 'Sue'
+      name: '<Sue>'
+    })).to.equal('A Foobar named <span>&lt;Sue&gt;</span>');
+  });
+
+  it('interpolates escaped', function() {
+    expect(Ember.I18n.t('foo.bar.named.noEscape', {
+      link: '<a href="#">Sue</a>'
+    })).to.equal('A Foobar named <span><a href="#">Sue</a></span>');
+  });
+
+  it('interpolates structures correctly', function() {
+    expect(Ember.I18n.t('foo.bar.named.structured', {
+      contact: { name: 'Sue' }
     })).to.equal('A Foobar named Sue');
   });
 
