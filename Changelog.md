@@ -11,6 +11,12 @@
  * `{{t}}` helper no longer supports passing a `tagName`
  * Drop support for `I18N_TRANSLATE_HELPER_SPAN` flag
 
+## 2.9.1, 2.2.3, 2.1.1 (2014-12-24)
+
+ * Handlebars-less template compiler escapes interpolations
+   by default. Use triple-stache syntax or
+   `Ember.Handlebars.SafeString` for HTML-safe interpolations.
+
 ## 2.9.0 2014-10-20
 
  * Ember-I18n 2.9+ is not compatible with Ember 1.9+
