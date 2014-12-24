@@ -35,6 +35,7 @@ vendor_install: development_dependencies
 	@echo "$(CHECK) Fetched vendor dependencies"
 
 clean:
+	@rm -rf dist/
 	@rm -f spec/suite.html
 	@echo "$(CHECK) Tidied up"
 
