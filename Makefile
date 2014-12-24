@@ -2,6 +2,13 @@ CHECK = \033[32m✓\033[m
 
 all: clean test_stables
 
+dist: development_dependencies
+	mkdir -p dist
+	cp lib/i18n.js dist/
+	cp lib/i18n-plurals.js dist/
+	node_modules/uglify/bin/uglify -s lib/i18n.js -o dist/i18n.min.js
+	node_modules/uglify/bin/uglify -s lib/i18n-plurals.js -o dist/i18n-plurals.min.js
+
 jshint: development_dependencies
 	@./node_modules/jshint/bin/jshint lib/*.js spec/*Spec.js script/*.js
 	@echo "$(CHECK) JSHint OK"
