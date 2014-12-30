@@ -21,6 +21,16 @@ describe('Ember.I18n.t', function() {
     })).to.equal('A Foobar named Sue');
   });
 
+  it('interpolates whitespaced values correctly', function() {
+    expect(Ember.I18n.t('foo.bar.named.whitespaced', {
+      name: 'Sue'
+    })).to.equal('A Foobar named Sue');
+
+    expect(Ember.I18n.t('foo.bar.named.noEscapeWhitespaced', {
+      name: 'Sue'
+    })).to.equal('A Foobar named Sue');
+  });
+
   it('uses the "zero" form when the language calls for it', function() {
     expect(Ember.I18n.t('foos', {
       count: 0

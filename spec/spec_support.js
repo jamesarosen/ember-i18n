@@ -28,6 +28,8 @@
       'foo.bar.named': 'A Foobar named <span>{{name}}</span>',
       'foo.bar.named.noEscape': 'A Foobar named <span>{{{link}}}</span>',
       'foo.bar.named.structured': 'A Foobar named {{contact.name}}',
+      'foo.bar.named.whitespaced': 'A Foobar named {{  name  }}',
+      'foo.bar.named.noEscapeWhitespaced': 'A Foobar named {{{  name  }}}',
       'foo.save.disabled': 'Saving Foo...',
       'foos.zero': 'No Foos',
       'foos.one': 'One Foo',
