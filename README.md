@@ -128,20 +128,6 @@ yields
 </button>
 ```
 
-#### Translate attributes on a plain tag:
-```html
-<a {{translateAttr title="button.add_user.title" data-disable-with="button.add_user.disabled"}}>
-  {{t "button.add_user.text"}}
-</a>
-```
-yields
-```html
-<a title="Add a user" data-disable-with="Saving...">
-  <script id="metamorph-28-start"></script>
-  Add
-  <script id="metamorph-28-end"></script>
-</a>
-```
 #### Nested Translation Syntax:
 
 The above translation data can also be expressed as nested JSON objects:
