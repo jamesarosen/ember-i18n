@@ -22,7 +22,7 @@
     "chai": "~1.6.0",
     "sinon": "1.10.3",
     "mocha-phantomjs": "~2.0.1",
-    "jshint": "~2.0.1",
+    "jshint": "~2.6",
     "handlebars": "~1.0.11",
     "uglify-js": "^2.4.16"
   }
