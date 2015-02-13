@@ -64,6 +64,14 @@ describe('Ember.I18n.t', function() {
     expect(Ember.I18n.t('nothing.here')).to.equal('there.is.nothing.here.to.see');
   });
 
+  it('warns with a custom message that includes the passed context', function() {
+    Ember.I18n.missingMessage = function(key, context) {
+      var values = Object.keys(context).map(function(key) { return context[key]; });
+      return key + ',' + (values.join(','));
+    };
+    expect(Ember.I18n.t('foo', { arg1: 'bar', arg2: 'qux' })).to.equal('foo,bar,qux');
+  });
+
   describe('missing event', function() {
     var spy;
 
