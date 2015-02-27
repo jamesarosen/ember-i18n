@@ -83,7 +83,16 @@ describe('Ember.I18n.t', function() {
       spy = sinon.spy();
       Ember.I18n.on('missing', spy);
       Ember.I18n.t('nothing.here');
-      expect(spy.calledWithExactly('nothing.here')).to.equal(true);
+      expect(spy.calledWith('nothing.here')).to.equal(true);
+    });
+
+    it('triggers missing events with the context included', function() {
+      spy = sinon.spy();
+      Ember.I18n.on('missing', spy);
+      var context = { arg1: 'bar', arg2: 'qux' };
+
+      Ember.I18n.t('nothing.here', context);
+      expect(spy.calledWithExactly('nothing.here', context)).to.equal(true);
     });
   });
 
