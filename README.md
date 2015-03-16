@@ -192,6 +192,35 @@ Example using pluralization in the template:
 
 Depending on the locale there could be up to 6 plural forms used, namely: 'zero', 'one', 'two', 'few', 'many', 'other'.
 
+### Missing translations
+
+When `t` is called with a nonexistent key, it returns the result of calling
+`Ember.I18n.missingMessage` with the key and the context as arguments. The
+default behavior is to return "Missing translation: [key]", but you can
+customize this by overriding `missingMessage`. The below example spits out the
+key along with the values of any arguments that were passed:
+
+```javascript
+Ember.I18n.missingMessage = function(key, context) {
+  var values = Object.keys(context).map(function(key) { return context[key]; });
+  return key + ': ' + (values.join(', '));
+};
+
+Ember.I18n.t('nothing.here', { arg1: 'foo', arg2: 'bar' });
+// => "nothing.here: foo, bar"
+```
+
+When a missing translation is encountered, a `missing` event is also triggered
+on `Ember.I18n`, with the key and the context as arguments. You can use this to
+execute other missing-translation behaviors unrelated to the `missingMessage`,
+such as logging the key somewhere.
+
+```javascript
+Ember.I18n.on('missing', function(key, context) {
+  Ember.Logger.warn("Missing translation: " + key);
+};
+```
+
 ### Using with Ember-cli
 
 Install ember-i18n as node module:
