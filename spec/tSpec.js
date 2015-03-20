@@ -73,12 +73,22 @@ describe('Ember.I18n.t', function() {
       expect(Ember.I18n.t('nothing.here')).to.equal('there.is.nothing.here.to.see');
     });
 
-    it('can make use of the passed context', function() {
-      Ember.I18n.missingMessage = function(key, context) {
-        var values = Object.keys(context).map(function(key) { return context[key]; });
-        return key + ',' + (values.join(','));
-      };
-      expect(Ember.I18n.t('foo', { arg1: 'bar', arg2: 'qux' })).to.equal('foo,bar,qux');
+    describe('translation context', function() {
+      beforeEach(function() {
+        Ember.I18n.missingMessage = function(key, context) {
+          var values = Object.keys(context).map(function(key) { return context[key]; });
+          return key + ':' + (values.join(','));
+        };
+      });
+
+      it('is passed to the function', function() {
+        expect(Ember.I18n.t('foo', { arg1: 'bar', arg2: 'qux' })).to.equal('foo:bar,qux');
+      });
+
+      it('is passed with new values when the translation is called again', function() {
+        Ember.I18n.t('foo', { arg1: 'bar', arg2: 'qux' });
+        expect(Ember.I18n.t('foo', { arg1: 'qux', arg2: 'baz' })).to.equal('foo:qux,baz');
+      });
     });
   });
 
