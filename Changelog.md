@@ -1,3 +1,7 @@
+## 3.0.1
+
+ * Fix a bug where `missingMessage` held on to the first `context` it was sent for a given translation key. Now it recomputes on each invocation.
+
 ## 3.0.0
 
  * Compatible with Ember 1.x. Notably, compatible with Ember 1.10+, which Ember-I18n 2.9.1 was not.
