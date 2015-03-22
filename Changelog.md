@@ -1,15 +1,17 @@
-## 3.0.0 (In Beta)
+## 3.0.0
 
- * Drop support for `CLDR.js` in favor of the included
-   `i18n-plurals.js`
- * Always use custom compiler; drop support for
-   I18N_COMPILE_WITHOUT_HANDLEBARS; drop support for using
-   the Handlebars compiler if full Handlebars is available.
- * `{{t}}` helper obeys Ember-1-style argument quoting;
-   unquoted arguments, including the key itself, are bound
-   references
- * `{{t}}` helper no longer supports passing a `tagName`
- * Drop support for `I18N_TRANSLATE_HELPER_SPAN` flag
+ * Compatible with Ember 1.x. Notably, compatible with Ember 1.10+, which Ember-I18n 2.9.1 was not.
+ * Compatible with Handlebars 1.x and 2.x.
+ * Basic Ember-CLI support. When using Ember-I18n as an Ember-CLI add-on, it installs itself as a Bower dependency and adds `i18n.js` and `i18n-plurals.js` to the app.
+ * Drop built-in support for Handlebars template compilation. Ember-I18n ships with support for very basic Handlebars-style templates like `"Hello, {{person.name}}"`. The template compilation method is part of the public API and can be overridden.
+ * Built-in translation compiler is more friendly to whitespace within interpolations.
+ * Drop support for the external `CLDR.js` definition of pluralization rules. These rules are now included as `i18n-plurals.js`
+ * `{{t}}` helper uses `registerBoundHelper`. This makes the code smaller and faster. The helper no longer supports passing `tagName`. The helper no longer obeys the `I18N_TRANSLATE_HELPER_SPAN` environment flag.
+ * `eachTranslatedAttribute` gracefully handles `null` translation keys
+ * Drop support for `{{translateAttr}}`. This helper was unbound. Instead use a sub-expression: `<img title="{{unbound (t 'my.img.title')}}>"`.
+ * Interpolations are always escaped by default. (This was the intended behavior before, but there were bugs that caused some interpolations to come through unescaped.) Use `Ember.Handlebars.SafeString` or triple-stache notation to avoid over-escaping.
+ * `TranslateableProperties` cleans up translated property observers on destroy
+ * `missingMessage` takes the context as well as the translation key so users can generate more contextually-aware "missing template" messages.
 
 ## 2.9.1, 2.2.3, 2.1.1 (2014-12-24)
 
