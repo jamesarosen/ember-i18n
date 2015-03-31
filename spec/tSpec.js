@@ -59,6 +59,21 @@ describe('Ember.I18n.t', function() {
     expect(Ember.I18n.t('nothing.here')).to.equal('Missing translation: nothing.here');
   });
 
+  describe('rtl markers', function() {
+    afterEach(function() {
+      Ember.I18n.rtl = undefined;
+    });
+
+    it('leaves markers off by default', function() {
+      expect(Ember.I18n.t('foo.bar')).to.equal('A Foobar');
+    });
+
+    it('adds rtl markers if I18n.rtl is set', function() {
+      Ember.I18n.rtl = true;
+      expect(Ember.I18n.t('foo.bar')).to.equal('\u202BA Foobar\u202C');
+    });
+  });
+
   describe('missing message', function(){
     beforeEach(function() {
       this.oldMissingMessage = Ember.I18n.missingMessage;
