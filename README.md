@@ -88,9 +88,7 @@ yields
 yields
 ```html
 <h2>
-  <script id="metamorph-28-start"></script>
   All 2 Followers
-  <script id="metamorph-28-end"></script>
 </h2>
 ```
 if `user.getPath('followers.count')` returns `2`.
@@ -122,9 +120,7 @@ Add the mixin `Em.Button.reopen(Em.I18n.TranslateableAttributes)` and use like t
 yields
 ```html
 <button title="Add a user">
-  <script id="metamorph-28-start"></script>
   Add
-  <script id="metamorph-28-end"></script>
 </button>
 ```
 
