@@ -1,0 +1,40 @@
+<h2 id="title">Welcome to Ember.js</h2>
+
+<section>
+  {{view 'select'
+         class='select-locale'
+         content=locales
+         optionLabelPath='content.name'
+         optionValuePath='content.code'
+         value=i18n.locale}}
+</section>
+
+<section>
+  <span class='no-interpolations'>{{t "no.interpolations"}}</span>
+</section>
+
+<section>
+  <span class='static-interpolations'>{{t "static.interpolations" number="two" type="static"}}</span>
+</section>
+
+<section>
+  <button class='increment' {{action "increment"}}>Increment Click Count</button>
+
+  <span class='dynamic-interpolations'>{{t "dynamic.interpolations" clicks=clickCount}}</span>
+</section>
+
+<section>
+  <span class='not-yet-translated'>{{t "not.yet.translated"}}</span>
+
+  {{#if lastMissingTranslation}}
+    <span class='last-missing-translation'>Missing: {{lastMissingTranslation}}</span>
+  {{/if}}
+</section>
+
+<section>
+  <span class='cp-macro-translation'>{{tMacroProperty}}</span>
+</section>
+
+<section>
+  <span class='pluralize-translation'>{{t "pluralized.translation" count=clickCount}}</span>
+</section>
