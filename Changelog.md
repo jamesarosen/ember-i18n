@@ -1,3 +1,16 @@
+## 4.0.0-alpha
+
+ * Restart project as a native Ember-CLI addon
+ * Translations now recompute when locale changes
+ * Move central API to `service:i18n`, which exposes `locale`, `t`, and
+   `addTranslations`
+ * Add `translationMacro` for defining translated computed properties
+ * Remove `eachTranslatedAttribute`, `TranslateableProperties`, and
+   `TranslateableAttributes`, which are better expressed as computed
+   property macros
+ * Built-in compiler now applies RTL Unicode markers *before* marking the
+   result HTML-safe. (Previously, `rtl = true` broke HTML safety.)
+
 ## 3.0.1
 
  * Fix a bug where `missingMessage` held on to the first `context` it was sent for a given translation key. Now it recomputes on each invocation.
