@@ -1,6 +1,7 @@
 import Ember from "ember";
 import Stream from "./stream";
 import Locale from "./locale";
+import eachTranslatedAttribute from "./each-translated-attribute";
 
 const get = Ember.get;
 
@@ -26,6 +27,16 @@ export default Ember.Object.extend(Ember.Evented, {
     }
 
     return template(data);
+  },
+
+  // @public
+  //
+  // Iterates over the keys in `object`, calling `fn` for each
+  // key of the form `fooTranslation`. The arguments passed will be
+  // the key minus the `Translation` suffix and the translation of
+  // the value, if present.
+  eachTranslatedAttribute: function(object, fn) {
+    eachTranslatedAttribute(this, object, fn);
   },
 
   // @public
