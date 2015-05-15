@@ -226,7 +226,7 @@ export default Ember.Object.extend(TranslateableProperties, {
 
 ```
 
-This will cause the `label` proeprty to be "Add a user".
+This will cause the `label` property to be "Add a user".
 
 #### Translate Attributes In a Component
 
