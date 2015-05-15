@@ -247,3 +247,18 @@ That's it.
 ### Building
 
 For more detail on running tests and contributing, see [CONTRIBUTING.md](https://github.com/jamesarosen/ember-i18n/blob/master/CONTRIBUTING.md).
+
+
+### Getting EmberI18n
+
+If you're using bower
+
+    bower install ember-i18n
+
+If you're using Rails
+
+    gem install ember-i18n
+
+then add to your application.js
+
+    //= i18n
