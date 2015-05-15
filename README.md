@@ -67,7 +67,7 @@ or so you can deliver only the translations you need), you can add new
 translations at runtime via the `service:i18n`:
 
 ```js
-this.i18n.addTranslations({
+this.i18n.addTranslations('en', {
   'user.profile.gravatar.help': 'Manage your avatar at gravatar.com.'
 });
 ```
@@ -167,19 +167,19 @@ if `user.get('followers.count')` returns `2`.
 makes it easy to define translated computed properties. For example,
 
 ```js
-import translation from "ember-i18n/translation-macro";
+import { translationMacro as t } from "ember-i18n";
 
 export default Ember.Component.extend({
 
   // A simple translation.
-  title: translation("user.edit.title"),
+  title: t("user.edit.title"),
 
   followersCount: 1,
 
   // A translation with interpolations. This computed property
   // depends on `count` and will send `{ count: this.get('count') }`
   // in to the translation.
-  followersTitle: translation("user.followers.title", { count: "followersCount" })
+  followersTitle: t("user.followers.title", { count: "followersCount" })
 
 });
 ```
@@ -218,7 +218,7 @@ The `ember-i18n/translateable-properties` mixin automatically translates
 any property ending in `"Translation"`:
 
 ```js
-import TranslateableProperties from "ember-i18n/translateable-properties";
+import { TranslateableProperties } from "ember-i18n";
 
 export default Ember.Object.extend(TranslateableProperties, {
   labelTranslation: 'button.add_user.title'
@@ -236,7 +236,7 @@ HTML attributes ending in `"Translation"`.
 Mix it in to your Component:
 
 ```js
-import TranslateableAttributes from "ember-i18n/translateable-attriubtes";
+import { TranslateableAttributes } from "ember-i18n";
 
 export default Ember.Component.extend(TranslateableAttributes, {
   tagName: 'span'
@@ -299,11 +299,12 @@ export default function pluralForm(n) {
 }
 ```
 
-### Translation Compiler
+### Default Translation Compiler
 
 ember-i18n includes a default compiler that acts mostly like (unbound) Handlebars.
-It supports interpolations with dots in them. It treats interpolated values as
-HTML-*unsafe* by default. You can get HTML-safe interpolations in two ways:
+It supports interpolations with dots in them. It emits strings that are marked as
+HTML-safe. It treats interpolated values as HTML-*unsafe* by default. You can get
+HTML-safe interpolations in two ways:
 
 Mark the interpolated value as HTML-safe:
 ```js
@@ -327,6 +328,30 @@ export default {
 In general, the first method is preferred because it makes it more difficult
 to accidentally introduce an XSS vulnerability.
 
+
+### Overriding the Compiler
+
+You can override the compiler by defining `util:i18n/compile-translation`.
+For example, if your translation templates use `%{}` to indicate an
+interpolation, you might do
+
+```js
+// app/utils/i18n/compile-translation.js
+
+const interp = /%\{([^\}]+)\}/g;
+const escape = Ember.Handlebars.Utils.escapeExpression;
+const get = Ember.get;
+
+export default function compile(template) {
+  return function(context) {
+    return template
+      .replace(interp, function(i, match) {
+        return escape(get(context, match));
+      });
+  };
+}
+```
+
 ### Missing translations
 
 When `t` is called with a nonexistent key, it returns the result of calling
@@ -338,7 +363,7 @@ key along with the values of any arguments that were passed:
 ```js
 // app/utils/i18n/missing-translation:
 
-export default function(key, context) {
+export default function(locale, key, context) {
   var values = Object.keys(context).map(function(key) { return context[key]; });
   return key + ': ' + (values.join(', '));
 }
@@ -354,7 +379,7 @@ on the `i18n` service, with the key and the context as arguments. You can use th
 to execute other missing-translation behavior such as logging the key somewhere.
 
 ```js
-i18n.on('missing', function(key, context) {
+i18n.on('missing', function(locale, key, context) {
   Ember.Logger.warn("Missing translation: " + key);
 };
 ```
