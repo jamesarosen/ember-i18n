@@ -67,6 +67,27 @@ describe('{{t}}', function() {
       expect(view.$().text()).to.equal('All 4 Bars');
     });
   });
+
+  it('compose keys from arguments', function() {
+    var view = this.renderTemplate('{{t "foo" "bar"}}');
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('A Foobar');
+    });
+  });
+
+  it('compose keys from arguments that bound properties', function() {
+    var view = this.renderTemplate('{{t "foo" view.prop}}');
+
+    Ember.run(function() {
+      view.rerender();
+      view.set('prop', 'bar');
+    });
+
+    Ember.run(function() {
+      expect(view.$().text()).to.equal('A Foobar');
+    });
+  });
 });
 
 describe('{{{t}}}', function() {
