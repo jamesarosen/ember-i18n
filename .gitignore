@@ -6,3 +6,4 @@
 /vendor/ember*
 /vendor/handlebars*
 /vendor/jquery*
+/bower_components
