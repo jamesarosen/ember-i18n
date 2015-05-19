@@ -1,6 +1,6 @@
 {
   "name": "ember-i18n",
-  "version": "3.1.1",
+  "version": "3.1.2",
   "licence": "APLv2",
   "description": "Internationalization for Ember",
   "keywords": [
@@ -28,6 +28,7 @@
     "mocha-phantomjs": "~2.0.1",
     "jshint": "~2.6",
     "handlebars": "~1.0.11",
-    "uglify-js": "^2.4.16"
+    "uglify-js": "^2.4.16",
+    "ember-cli": "0.2.5"
   }
 }

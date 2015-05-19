@@ -1,0 +1,11 @@
+{
+  "name": "ember",
+  "version": "1.12.0",
+  "main": [
+    "./ember.debug.js",
+    "./ember-template-compiler.js"
+  ],
+  "dependencies": {
+    "jquery": ">= 1.7.0 < 2.2.0"
+  }
+}
