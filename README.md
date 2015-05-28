@@ -8,11 +8,16 @@ The following documentation is for v4.0, which has not yet been released.
 For documentation on the most recent release, see
 [the v3.1.1 README](https://github.com/jamesarosen/ember-i18n/blob/v3.1.1/README.md).
 
+**This version does not yet work with Glimmer or Ember v1.13**. See
+the [stateful helpers RFC](https://github.com/emberjs/rfcs/pull/53) and
+the [helper registration RFC](https://github.com/emberjs/rfcs/pull/58)
+for more information.
+
 ### Requirements
 
 Ember-I18n v4 requires
 
- * Ember v1.10+
+ * Ember v1.10 - v1.12
  * Ember-CLI
  * jQuery v1.7 - v2.x
 
