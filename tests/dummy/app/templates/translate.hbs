@@ -1,0 +1,13 @@
+<section>
+  <span class='no-interpolations'>{{t "no.interpolations"}}</span>
+</section>
+
+<section>
+  <span class='static-interpolations'>{{t "with.interpolations" clicks="45"}}</span>
+</section>
+
+<section>
+  <button class='increment' {{action "increment"}}>Increment Click Count</button>
+
+  <span class='dynamic-interpolations'>{{t "with.interpolations" clicks=clickCount}}</span>
+</section>
