@@ -11,7 +11,10 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "",
+ "repository": {
+    "type": "git",
+    "url": "http://github.com/jamesarosen/ember-i18n.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
