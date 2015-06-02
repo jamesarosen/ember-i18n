@@ -13,16 +13,22 @@ moduleFor('service:i18n', 'translationMacro', {
 
       numberClicks: 9,
 
-      tMacroProperty: t('with.interpolations', { clicks: 'numberClicks' }),
+      tMacroProperty1: t('no.interpolations'),
+
+      tMacroProperty2: t('with.interpolations', { clicks: 'numberClicks' }),
     }).create();
   }
 });
 
-test('defines a computed property that translates', function(assert) {
-  assert.equal(this.object.get('tMacroProperty'), 'Clicks: 9');
+test('defines a computed property that translates without interpolations', function(assert) {
+  assert.equal(this.object.get('tMacroProperty1'), 'text with no interpolations');
+});
+
+test('defines a computed property that translates with interpolations', function(assert) {
+  assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 9');
 });
 
 test('defines a computed property with dependencies', function(assert) {
   Ember.run(this.object, 'set', 'numberClicks', 13);
-  assert.equal(this.object.get('tMacroProperty'), 'Clicks: 13');
+  assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 13');
 });
