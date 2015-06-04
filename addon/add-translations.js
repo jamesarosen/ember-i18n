@@ -8,7 +8,7 @@ export default function addTranslations(locale, newTranslations, container) {
     existingTranslations = {};
     // CRUFT: there's no public API for registering factories at runtime.
     // See http://discuss.emberjs.com/t/whats-the-correct-way-to-register-new-factories-at-runtime/8018
-    this.container._registry.register(key, existingTranslations);
+    container._registry.register(key, existingTranslations);
   }
 
   Ember.merge(existingTranslations, newTranslations);

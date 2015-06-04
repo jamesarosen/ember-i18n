@@ -51,3 +51,16 @@ test('adds translations to an unrelated locale', function(assert) {
   const after = i18n.t('defined.at.runtime.three');
   assert.equal(after, 'Defined at Runtime');
 });
+
+test('adds translations to a locale that has not yet been defined', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  Ember.run(i18n, 'addTranslations', 'en-xyz', {
+    'defined.at': { 'runtime.four': 'Defined at Runtime' }
+  });
+
+  Ember.run(i18n, 'set', 'locale', 'en-xyz');
+
+  const after = i18n.t('defined.at.runtime.four');
+  assert.equal(after, 'Defined at Runtime');
+});
