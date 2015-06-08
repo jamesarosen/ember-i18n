@@ -1,6 +1,5 @@
 import Ember from "ember";
 
-const map = Ember.EnumerableUtils.map;
 const keys = Ember.keys;
 const get = Ember.get;
 
@@ -14,7 +13,7 @@ export default function createTranslatedComputedProperty(key, interpolations = {
 }
 
 function values(object) {
-  return map(keys(object), (key) => object[key]);
+  return keys(object).map((key) => object[key]);
 }
 
 function mapPropertiesByHash(object, hash) {
