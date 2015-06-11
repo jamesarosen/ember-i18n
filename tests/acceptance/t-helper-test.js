@@ -23,6 +23,18 @@ test('renders with static interpolations', function(assert) {
   assert.textIs('.static-interpolations', 'Clicks: 45');
 });
 
+test('renders translations of dynamic keys', function(assert) {
+  assert.textIs('.dynamic-key', 'text with no interpolations');
+});
+
+test('updates translations of dynamic keys', function(assert) {
+  assert.textIs('.dynamic-key', 'text with no interpolations');
+
+  click('.change-dynamic-key');
+
+  assert.textIs('.dynamic-key', 'another text without interpolations');
+});
+
 test('updates when dynamic interpolations change', function(assert) {
   assert.textIs('.dynamic-interpolations', 'Clicks: 0');
 

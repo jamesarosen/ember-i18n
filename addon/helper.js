@@ -8,7 +8,8 @@ export default function t(params, hash, options, env) {
   const i18nKey = params[0];
 
   var out = new Stream(function() {
-    return i18n.t(i18nKey, readHash(hash));
+    const value = i18nKey.isStream ? i18nKey.value() : i18nKey;
+    return value === undefined ? '' : i18n.t(value, readHash(hash));
   });
 
   // observe any hash arguments that are streams:
