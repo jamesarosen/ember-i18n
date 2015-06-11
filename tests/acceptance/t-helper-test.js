@@ -34,5 +34,5 @@ test('updates when dynamic interpolations change', function(assert) {
 test('updates when the locale changes', function(assert) {
   visit('/in/es');
 
-  assert.textIs('.no-interpolations', 'texto sin interpolaciónes');
+  assert.textIs('.no-interpolations', 'texto sin interpolaciones');
 });
