@@ -59,10 +59,10 @@ export default {
 };
 ```
 
-The `translations` generator will generate a new translations file for you:
+The `locale` generator will generate a new translations file for you:
 
 ```bash
-$ ember generate translations es
+$ ember generate locale es
 ```
 
 ### `i18n` Service
