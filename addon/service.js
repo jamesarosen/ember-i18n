@@ -25,20 +25,11 @@ export default Parent.extend(Ember.Evented, {
   t: function(key, data = {}) {
     const locale = this.get('_locale');
     Ember.assert("I18n: Cannot translate when locale is null", locale);
-    const fallbacks = get(data, 'fallbacks');
+    const fallbacks = get(data, 'fallbacks') || [];
     const count = get(data, 'count');
 
-    let template = locale.getCompiledTemplate(key, count);
-
-    if (template._isMissing && fallbacks) {
-      for (let i = 0; i < fallbacks.length; i++) {
-        const fallbackTemplate = locale.getCompiledTemplate(fallbacks[i], count);
-        if (!fallbackTemplate._isMissing) {
-          template = fallbackTemplate;
-          break;
-        }
-      }
-    }
+    fallbacks.unshift(key);
+    let template = locale.getCompiledTemplate(fallbacks, count);
 
     if (template._isMissing) {
       this.trigger('missing', this.get('locale'), key, data);
