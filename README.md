@@ -72,7 +72,7 @@ injected into every Route, Controller and Component in your app. If you need it
 elsewhere, you can register your own injection:
 
 ```js
-// app/initializers/i18n.js
+// app/instance-initializers/i18n.js
 
 export default {
   name: 'i18n',
@@ -91,6 +91,21 @@ export default Ember.Object.extend({
   i18n: Ember.inject.service()
 });
 ```
+
+If you want to use i18n from within an initializer you need to make sure that it runs after the
+`ember-i18n` initializer has been executed.
+
+```js
+// app/instance-initializers/my-initializer.js
+
+export default {
+  name: 'my-initializer',
+  after: 'ember-i18n',
+  initialize: function({ container }) {
+    let i18n = container.lookup('service:i18n');
+    i18n.t('some.translation');
+  }
+};
 
 #### Adding Translations at Runtime
 
