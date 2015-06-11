@@ -8,6 +8,10 @@ export default Ember.Controller.extend({
   actions: {
     increment: function() {
       this.incrementProperty('clickCount');
+    },
+
+    changeDynamicKey(newKey) {
+      this.set('dynamicKey', newKey);
     }
   }
 
