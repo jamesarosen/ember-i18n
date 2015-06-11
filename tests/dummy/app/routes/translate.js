@@ -10,6 +10,7 @@ export default Ember.Route.extend({
 
   afterModel: function(locale) {
     this.set('i18n.locale', locale);
+    this.set('dynamicKey', 'no.interpolations');
   }
 
 });
