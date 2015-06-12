@@ -55,10 +55,11 @@ test("applies custom pluralization rules", function(assert) {
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
-test("applies provided fallbacks only if they exist", function(assert) {
+test("applies provided default translation in cascade when main one is not found", function(assert) {
   const i18n = this.subject({ locale: 'en' });
-  const fallbacks = ['with.pretty-good-interpolations', 'with.interpolations'];
+  const defaultsChain = ['with.pretty-good-interpolations', 'with.interpolations'];
 
-  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, fallbacks: fallbacks }), 'Clicks: 8');
-  assert.equal(i18n.t('not.yet.translated', { clicks: 8, fallbacks: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
+  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: defaultsChain }), 'Clicks: 8', 'default can be an array');
+  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: 'with.interpolations' }), 'Clicks: 8', 'default can be an string');
+  assert.equal(i18n.t('not.yet.translated', { clicks: 8, default: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
 });
