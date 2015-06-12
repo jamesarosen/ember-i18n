@@ -14,8 +14,5 @@ export default {
     instance.container.lookup('service:i18n').set('locale', defaultLocale);
 
     Ember.HTMLBars._registerHelper('t', helper);
-    instance.registry.injection('component', 'i18n', 'service:i18n');
-    instance.registry.injection('controller', 'i18n', 'service:i18n');
-    instance.registry.injection('route', 'i18n', 'service:i18n');
   }
 };

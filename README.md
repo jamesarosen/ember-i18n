@@ -67,29 +67,35 @@ $ ember generate translations es
 
 ### `i18n` Service
 
-Many pieces of ember-i18n rely on the `service:i18n`. This service is automatically
-injected into every Route, Controller and Component in your app. If you need it
-elsewhere, you can register your own injection:
+Many pieces of ember-i18n rely on the `service:i18n`. Ask for it wherever you
+need (likely in `Route`s and `Component`s):
 
 ```js
-// app/initializers/i18n.js
+// app/routes/post.js
+
+export default Ember.Object.extend({
+  i18n: Ember.inject.service(),
+
+  afterModel: function(post) {
+    document.title = this.get('i18n').t('title.post', { post: post });
+  }
+});
+```
+
+If you find yourself needing it in many places, you can declare an injection:
+
+```js
+// app/instance-initializers/i18n.js
 
 export default {
   name: 'i18n',
+
+  after: 'ember-i18n',
+
   initialize: function(app) {
     app.inject('model', 'i18n', 'service:i18n')
   }
 };
-```
-
-or you can ask for the service on a case-by-case basis:
-
-```js
-// app/services/session.js
-
-export default Ember.Object.extend({
-  i18n: Ember.inject.service()
-});
 ```
 
 #### Adding Translations at Runtime
@@ -99,7 +105,7 @@ or so you can deliver only the translations you need), you can add new
 translations at runtime via the `service:i18n`:
 
 ```js
-this.i18n.addTranslations('en', {
+this.get('i18n').addTranslations('en', {
   'user.profile.gravatar.help': 'Manage your avatar at gravatar.com.'
 });
 ```
@@ -216,8 +222,8 @@ The first argument is the translation key. The second is a hash where the keys
 are interpolations in the translation and the values are paths to the values
 relative to `this`.
 
-The macro relies on `this.i18n` being the `service:i18n`. See "i18n Service"
-docs for more information on where it is available.
+The macro relies on `this.get('i18n')` being the `service:i18n`. See
+"i18n Service" docs for more information on where it is available.
 
 #### `i18n.t`
 
@@ -231,9 +237,9 @@ export default Ember.Component.extend({
   // translated value to be recomputed when the user changes their locale.
   title: Ember.computed('i18n.locale', 'user.isAdmin', function() {
     if (this.get('user.isAdmin')) {
-      return this.i18n.t('admin.edit.title');
+      return this.get('i18n').t('admin.edit.title');
     } else {
-      return this.i18n.t('user.edit.title');
+      return this.get('i18n').t('user.edit.title');
     }
   })
 
@@ -301,7 +307,7 @@ HTML-safe interpolations in two ways:
 seeUserMessage: Ember.computed('i18n.locale', 'user.id', function() {
   var userLink = '<a href="/users/' + user.get('id') + '">' + user.get('name') + '</a>';
 
-  return this.i18n.t('info.see-other-user', {
+  return this.get('i18n').t('info.see-other-user', {
     userLink: Ember.String.htmlSafe(userLink)
   });
 })
