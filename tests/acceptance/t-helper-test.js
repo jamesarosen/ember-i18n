@@ -7,7 +7,7 @@ var app;
 module('Acceptance: {{t}} Helper', {
   beforeEach: function() {
     app = startApp();
-    visit('/in/en');
+    visit('/');
   },
 
   afterEach: function() {
@@ -44,7 +44,9 @@ test('updates when dynamic interpolations change', function(assert) {
 });
 
 test('updates when the locale changes', function(assert) {
-  visit('/in/es');
+  click('.switch-to-es');
 
-  assert.textIs('.no-interpolations', 'texto sin interpolaciones');
+  andThen(function() {
+    assert.textIs('.no-interpolations', 'texto sin interpolaciones');
+  });
 });
