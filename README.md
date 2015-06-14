@@ -102,8 +102,8 @@ export default {
   name: 'my-initializer',
   after: 'ember-i18n',
   initialize: function({ container }) {
-    let i18n = container.lookup('service:i18n');
-    i18n.t('some.translation');
+    const i18n = container.lookup('service:i18n');
+    document.title = i18n.t('some.translation');
   }
 };
 
