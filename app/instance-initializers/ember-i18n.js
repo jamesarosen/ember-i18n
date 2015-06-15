@@ -21,9 +21,5 @@ export default {
     if (Helper != null) {
       instance.registry.register('helper:t', Helper);
     }
-
-    instance.registry.injection('component', 'i18n', 'service:i18n');
-    instance.registry.injection('controller', 'i18n', 'service:i18n');
-    instance.registry.injection('route', 'i18n', 'service:i18n');
   }
 };
