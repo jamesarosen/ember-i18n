@@ -4,9 +4,10 @@ import Locale from "./locale";
 import addTranslations from "./add-translations";
 
 const get = Ember.get;
+const Parent = Ember.Service || Ember.Object;
 
 // @public
-export default Ember.Object.extend(Ember.Evented, {
+export default Parent.extend(Ember.Evented, {
 
   // @public
   // The user's locale.
