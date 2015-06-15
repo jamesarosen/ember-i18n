@@ -1,33 +1,23 @@
 import Ember from "ember";
-import Stream from "./stream";
-import { readHash } from "./stream";
 
-// @public
-export default function t(params, hash, options, env) {
-  const i18n = env.data.view.container.lookup('service:i18n');
-  const i18nKey = params[0];
+var Helper = null;
 
-  var out = new Stream(function() {
-    const value = i18nKey.isStream ? i18nKey.value() : i18nKey;
-    return value === undefined ? '' : i18n.t(value, readHash(hash));
+if (Ember.Helper) {
+  Helper = Ember.Helper.extend({
+    i18n: Ember.inject.service(),
+
+    _locale: Ember.computed.readOnly('i18n.locale'),
+
+    compute: function(params, interpolations) {
+      const key = params[0];
+      const i18n = this.get('i18n');
+      return i18n.t(key, interpolations);
+    },
+
+    _recomputeOnLocaleChange: Ember.observer('_locale', function() {
+      this.recompute();
+    })
   });
-
-  // observe any hash arguments that are streams:
-  Ember.keys(hash).forEach(function(key) {
-    const value = hash[key];
-
-    if (value && value.isStream) {
-      value.subscribe(out.notify, out);
-    }
-  });
-
-  // observe the locale:
-  i18n.localeStream.subscribe(out.notify, out);
-
-  // if the i18n key itself is dynamic, observe it:
-  if (i18nKey.isStream) {
-    i18nKey.subscribe(out.notify, out);
-  }
-
-  return out;
 }
+
+export default Helper;
