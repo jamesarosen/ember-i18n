@@ -86,7 +86,7 @@ function getFlattenedTranslations(id, container) {
     Ember.merge(result, getFlattenedTranslations(parentId, container));
   }
 
-  const translations = container.lookupFactory(`translations:locales/${id}`) || {};
+  const translations = container.lookupFactory(`locale:${id}/translations`) || {};
   Ember.merge(result, withFlattenedKeys(translations));
 
   return result;
@@ -94,7 +94,7 @@ function getFlattenedTranslations(id, container) {
 
 // Walk up confiugration objects from most specific to least.
 function walkConfigs(id, container, fn) {
-  const appConfig = container.lookupFactory(`config:locales/${id}`);
+  const appConfig = container.lookupFactory(`locale:${id}/config`);
   if (appConfig) { fn(appConfig); }
 
   const addonConfig = container.lookupFactory(`ember-i18n@config:${id}`);

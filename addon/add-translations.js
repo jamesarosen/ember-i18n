@@ -1,7 +1,7 @@
 import Ember from "ember";
 
 export default function addTranslations(locale, newTranslations, container) {
-  const key = `translations:locales/${locale}`;
+  const key = `locale:${locale}/translations`;
   var existingTranslations = container.lookupFactory(key);
 
   if (existingTranslations == null) {

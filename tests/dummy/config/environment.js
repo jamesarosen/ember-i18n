@@ -3,6 +3,7 @@
 module.exports = function(environment) {
   var ENV = {
     modulePrefix: 'dummy',
+    podModulePrefix: process.env.POD_MODULE_PREFIX,
     environment: environment,
     baseURL: '/',
     i18n: { defaultLocale: 'en' },
