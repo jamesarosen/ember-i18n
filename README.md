@@ -80,14 +80,14 @@ export default Ember.Object.extend({
 If you find yourself needing it in many places, you can declare an injection:
 
 ```js
-// app/instance-initializers/i18n.js
+// app/initializers/i18n.js
 
 export default {
   name: 'i18n',
 
   after: 'ember-i18n',
 
-  initialize: function(app) {
+  initialize: function(_, app) {
     app.inject('model', 'i18n', 'service:i18n')
   }
 };
