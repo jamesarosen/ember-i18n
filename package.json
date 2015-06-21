@@ -1,7 +1,7 @@
 {
   "name": "ember-i18n",
   "version": "4.0.0",
-  "description": "The default blueprint for ember-cli addons.",
+  "description": "Internationalization for Ember",
   "directories": {
     "doc": "doc",
     "test": "tests"
