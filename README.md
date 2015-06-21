@@ -4,8 +4,8 @@ Internationalization for Ember
 
 ### NOTE
 
-The following documentation is for v4.0, which has not yet been released.
-For documentation on the most recent release, see
+The following documentation is for v4.0.
+For documentation on the previous release, see
 [the v3.1.1 README](https://github.com/jamesarosen/ember-i18n/blob/v3.1.1/README.md).
 
 ### Requirements
