@@ -105,6 +105,14 @@ this.get('i18n').addTranslations('en', {
 });
 ```
 
+#### Listing the Locales
+
+Get a list of available locales:
+
+```js
+var locales = this.get('i18n.locales');
+```
+
 #### Setting the Locale
 
 Set the default locale in `config/environment.js`:
