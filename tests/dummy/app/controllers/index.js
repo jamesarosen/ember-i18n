@@ -5,6 +5,7 @@ export default Ember.Controller.extend({
 
   i18n: Ember.inject.service(),
   clickCount: 0,
+  showSubexpressionExample: true,
   dynamicKey: 'no.interpolations',
 
   actions: {
@@ -18,6 +19,10 @@ export default Ember.Controller.extend({
 
     switchLocale(locale) {
       this.set('i18n.locale', locale);
+    },
+    
+    toggleSubexpressionExample: function() {
+      this.toggleProperty('showSubexpressionExample');
     }
   }
 
