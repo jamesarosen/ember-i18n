@@ -50,3 +50,14 @@ test('updates when the locale changes', function(assert) {
     assert.textIs('.no-interpolations', 'texto sin interpolaciones');
   });
 });
+
+test('properly tears down subexpression translations', function(assert) {
+  try {
+    // Click twice to make sure toggle happened
+    click('.toggle-subexpression-example');
+    click('.toggle-subexpression-example');
+    assert.ok(true, "No exception raised");
+  } catch(e) {
+    assert.ok(false, "Threw an exception: " + e);
+  }
+});
