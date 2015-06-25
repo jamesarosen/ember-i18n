@@ -10,3 +10,4 @@ Documentation is in the [wiki](https://github.com/jamesarosen/ember-i18n/wiki). 
  * [Pluralization](https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Pluralization)
  * The [Translation Compiler](https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Translation-Compiler)
  * [Missing Translations](https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Missing-Translations)
+ * [Testing with ember-i18n](https://github.com/jamesarosen/ember-i18n/wiki/Doc:-Testing)
