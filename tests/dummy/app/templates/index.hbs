@@ -21,3 +21,10 @@
 <section>
   <button class='switch-to-es' {{action "switchLocale" "es"}}>Switch to Spanish</button>
 </section>
+
+<section>
+   <button class='toggle-subexpression-example' {{action "toggleSubexpressionExample"}}>Toggle Subexpression Example</button>
+  {{#if showSubexpressionExample}}
+    {{input name="email" placeholder=(t "email.placeholder")}}
+  {{/if}}
+</section>
