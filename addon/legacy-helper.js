@@ -15,6 +15,11 @@ if (Ember.Helper == null) {
       return value === undefined ? '' : i18n.t(value, readHash(hash));
     });
 
+    // Once the view is destroyed destroy the steam as well
+    env.data.view.one('willDestroyElement', out, function() {
+      this.destroy();
+    });
+
     // observe any hash arguments that are streams:
     Ember.keys(hash).forEach(function(key) {
       const value = hash[key];
