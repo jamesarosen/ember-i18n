@@ -54,3 +54,17 @@ test("applies custom pluralization rules", function(assert) {
   assert.equal(i18n.t('pluralized.translation', { count: 1 }), 'One Click');
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
+
+test("applies provided default translation in cascade when main one is not found", function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+  const defaultsChain = ['with.pretty-good-interpolations', 'with.interpolations'];
+  const calls = [];
+  function spy() { calls.push(arguments); }
+  i18n.on('missing', spy);
+  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: defaultsChain }), 'Clicks: 8', 'default can be an array');
+  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: 'with.interpolations' }), 'Clicks: 8', 'default can be an string');
+  assert.equal(calls.length, 0, 'The missing event is not fired when a fallback translation is found');
+  assert.equal(i18n.t('not.yet.translated', { clicks: 8, default: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
+  assert.equal(calls[0][1], 'not.yet.translated', 'When the "missing" event is fired, it\'s fired with the provided key');
+});
+
