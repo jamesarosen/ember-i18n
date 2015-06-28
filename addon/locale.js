@@ -35,9 +35,9 @@ export default class Locale {
   getCompiledTemplate(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
 
-    var result;
-
-    for (let i = 0; i < fallbackChain.length; i++) {
+    let result;
+    let i;
+    for (i = 0; i < fallbackChain.length; i++) {
       let key = fallbackChain[i];
       if (count != null) {
         const inflection = this.pluralForm(count);
@@ -61,7 +61,7 @@ export default class Locale {
       result = this._defineMissingTranslationTemplate(fallbackChain[0]);
     }
 
-    Ember.assert(`Template for ${fallbackChain[0]} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
+    Ember.assert(`Template for ${fallbackChain[i]} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
 
     return result;
   }

@@ -4,7 +4,7 @@ import Locale from "./locale";
 import addTranslations from "./add-translations";
 import getLocales from "./get-locales";
 
-const { get, isArray } = Ember;
+const { get, isArray, makeArray } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
@@ -27,10 +27,7 @@ export default Parent.extend(Ember.Evented, {
     Ember.assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
 
-    let defaults = get(data, 'default') || [];
-    if (!isArray(defaults)) {
-      defaults = [defaults];
-    }
+    let defaults = makeArray(get(data, 'default'));
 
     defaults.unshift(key);
     let template = locale.getCompiledTemplate(defaults, count);
