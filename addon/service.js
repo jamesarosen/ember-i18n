@@ -4,7 +4,7 @@ import Locale from "./locale";
 import addTranslations from "./add-translations";
 import getLocales from "./get-locales";
 
-const { get, isArray, makeArray } = Ember;
+const { get, makeArray } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
