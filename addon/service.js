@@ -2,6 +2,7 @@ import Ember from "ember";
 import Stream from "./stream";
 import Locale from "./locale";
 import addTranslations from "./add-translations";
+import getLocales from "./get-locales";
 
 const get = Ember.get;
 const Parent = Ember.Service || Ember.Object;
@@ -12,6 +13,10 @@ export default Parent.extend(Ember.Evented, {
   // @public
   // The user's locale.
   locale: null,
+
+  // @public
+  // A list of found locales.
+  locales: Ember.computed(getLocales),
 
   // @public
   //
