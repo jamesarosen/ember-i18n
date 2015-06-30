@@ -109,6 +109,10 @@ function walkConfigs(id, container, fn) {
 
   const parentId = parentLocale(id);
   if (parentId) { walkConfigs(parentId, container, fn); }
+  
+  // Fallback to en at the end, so that even if the locale is not conigured no failure will happen
+  const enConfig = container.lookupFactory(`ember-i18n@config:en`);
+  if (enConfig) { fn(enConfig); }
 }
 
 function parentLocale(id) {
