@@ -20,15 +20,25 @@ export default class Locale {
 
   rebuild() {
     this.translations = getFlattenedTranslations(this.id, this.container);
-
+    this._setConfig();
+  }
+  
+  _setConfig() {
     walkConfigs(this.id, this.container, (config) => {
       if (this.rtl === undefined) { this.rtl = config.rtl; }
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
-
-    if (this.rtl === undefined) { this.rtl = false; }
+  
+    const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
+  
+    if (this.rtl === undefined) {
+      Ember.warn('ember-i18n: No RTL configuration found for ${this.id}.');
+      this.rtl = defaultConfig.rtl;
+    }
+  
     if (this.pluralForm === undefined) {
-      throw new Error(`No pluralForm found for ${this.id}`);
+      Ember.warn('ember-i18n: No pluralForm configuration found for ${this.id}.');
+      this.pluralForm = defaultConfig.pluralForm;
     }
   }
 
@@ -109,10 +119,6 @@ function walkConfigs(id, container, fn) {
 
   const parentId = parentLocale(id);
   if (parentId) { walkConfigs(parentId, container, fn); }
-  
-  // Fallback to en at the end, so that even if the locale is not conigured no failure will happen
-  const enConfig = container.lookupFactory(`ember-i18n@config:en`);
-  if (enConfig) { fn(enConfig); }
 }
 
 function parentLocale(id) {
