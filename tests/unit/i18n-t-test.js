@@ -67,3 +67,9 @@ test("applies provided default translation in cascade when main one is not found
   assert.equal(i18n.t('not.yet.translated', { clicks: 8, default: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
   assert.equal(calls[0][1], 'not.yet.translated', 'When the "missing" event is fired, it\'s fired with the provided key');
 });
+
+
+test("check unknown locale", function(assert) {
+  const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {});
+  assert.equal('Missing translation: not.yet.translated', result);
+});
