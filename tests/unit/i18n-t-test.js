@@ -70,6 +70,6 @@ test("applies provided default translation in cascade when main one is not found
 
 
 test("check unknown locale", function(assert) {
-  const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {});
+  const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
