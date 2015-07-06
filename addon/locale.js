@@ -129,13 +129,13 @@ function parentLocale(id) {
 function withFlattenedKeys(object) {
   const result = {};
 
-  Ember.keys(object).forEach(function(key) {
+  Object.keys(object).forEach(function(key) {
     var value = object[key];
 
     if (Ember.typeOf(value) === 'object') {
       value = withFlattenedKeys(value);
 
-      Ember.keys(value).forEach(function(suffix) {
+      Object.keys(value).forEach(function(suffix) {
         result[`${key}.${suffix}`] = value[suffix];
       });
     } else {
