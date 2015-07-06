@@ -21,7 +21,7 @@ if (Ember.Helper == null) {
     });
 
     // observe any hash arguments that are streams:
-    Ember.keys(hash).forEach(function(key) {
+    Object.keys(hash).forEach(function(key) {
       const value = hash[key];
 
       if (value && value.isStream) {

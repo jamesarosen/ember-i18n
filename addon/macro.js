@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const keys = Ember.keys;
+const keys = Object.keys;
 const get = Ember.get;
 
 // @public
