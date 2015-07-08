@@ -1,3 +1,47 @@
+## 4.1.0
+
+ * `service:i18n` now has a `locales` property that lists available locales
+ * support passing an `Array` of fallback keys via `default: [...]`
+ * if the app specifies an unknown locale, fall back to the configuration for
+   `zh` and print a warning instead of throwing an exception
+ * use `Object.keys`, not `Ember.keys` for enumerating properties
+ * destroy the `Stream` created in the legacy helper (pre-Glimmer) when its
+   view is destroyed
+ * test against Ember 1.12
+
+## 4.0.0
+
+ * declare a valid SPDX license (no change in license, just in the
+   string representation)
+ * support apps with `podModuleSuffix`
+
+## 4.0.0-beta.4
+
+ * relax ember dependency to `>=1.12.0 <1.13.0 || >=1.13.1 <3.0.0`, which is
+   "1.12.x, 1.13.x except 1.13.0, and 2.x".
+
+## 4.0.0-beta.3
+
+ * Support Ember 1.13.1+ and 2.0+. **Note** this release is not compatible with
+   v1.13.0 and never will be.
+ * Stop auto-injecting `service:i18n` into Components, Controllers, and Routes.
+   Clients should instead use `i18n: Ember.inject.service()` as needed.
+ * Fix Spanish spelling.
+ * Fix `{{t}}` helper with dynamic keys.
+ * Add `locale` blueprint
+ * Use `Ember.Helper` if available (Ember >= 1.13)
+ * Use `Ember.Service` if available (Ember >= 1.13)
+ * Remove dependency on `Ember.EnumerableUtils.map` as that will be removed in
+   Ember 2.0.
+
+## 4.0.0-beta.2
+
+ * add repository to `package.json`
+ * use get to look up i18n service
+ * `t` macro works without passing an interpolations map
+ * fix bug in `add-translations` when there were no existing translations
+   for the locale
+
 ## 4.0.0-alpha
 
  * Restart project as a native Ember-CLI addon
