@@ -32,12 +32,12 @@ export default class Locale {
     const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
-      Ember.warn('ember-i18n: No RTL configuration found for ${this.id}.');
+      Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
       this.rtl = defaultConfig.rtl;
     }
 
     if (this.pluralForm === undefined) {
-      Ember.warn('ember-i18n: No pluralForm configuration found for ${this.id}.');
+      Ember.warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
       this.pluralForm = defaultConfig.pluralForm;
     }
   }
