@@ -1,6 +1,8 @@
 import { ONE, FEW, MANY, OTHER } from './constants';
 
 export default {
+  rtl: false,
+
   pluralForm: function(n) {
     const mod1 = n % 1;
     const mod10 = n % 10;
