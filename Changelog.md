@@ -1,3 +1,8 @@
+## 4.1.1
+
+ * prevent warnings about missing `rtl` definition for included locales
+ * improve warning about missing `rtl` for app-defined locales
+
 ## 4.1.0
 
  * `service:i18n` now has a `locales` property that lists available locales
