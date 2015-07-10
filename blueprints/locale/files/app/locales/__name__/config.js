@@ -13,4 +13,4 @@ export default {
   //   if (count >= 5) { return 'many'; }
   //   return 'other';
   // }
-}
+};
