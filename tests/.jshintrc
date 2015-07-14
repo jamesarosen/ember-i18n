@@ -22,7 +22,9 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "t",
+    "expectTranslation"
   ],
   "node": false,
   "browser": false,
