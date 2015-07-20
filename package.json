@@ -19,7 +19,7 @@
     "node": ">= 0.10.0"
   },
   "author": "",
-  "license": "Apache License 2.0",
+  "license": "Apache-2.0",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
     "ember-cli": "0.2.7",

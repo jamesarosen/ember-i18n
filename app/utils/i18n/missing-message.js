@@ -1,2 +1,1 @@
-import missingMessage from "ember-i18n/missing-message";
-export default missingMessage;
+export { default } from 'ember-i18n/utils/i18n/missing-message';

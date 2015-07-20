@@ -1,8 +1,8 @@
 import Ember from "ember";
-import Stream from "./stream";
-import Locale from "./locale";
-import addTranslations from "./add-translations";
-import getLocales from "./get-locales";
+import Stream from "../stream";
+import Locale from "../utils/locale";
+import addTranslations from "../utils/add-translations";
+import getLocales from "../utils/get-locales";
 
 const { get, makeArray } = Ember;
 const Parent = Ember.Service || Ember.Object;
