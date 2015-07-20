@@ -43,6 +43,23 @@ export default class Locale {
   }
 
   getCompiledTemplate(fallbackChain, count) {
+    let translation = this.findTranslation(fallbackChain, count);
+    let result = translation.result;
+
+    if (Ember.typeOf(result) === 'string') {
+      result = this._compileTemplate(translation.key, result);
+    }
+
+    if (result == null) {
+      result = this._defineMissingTranslationTemplate(fallbackChain[0]);
+    }
+
+    Ember.assert(`Template for ${translation.key} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
+
+    return result;
+  }
+
+  findTranslation(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
 
     let result;
@@ -58,22 +75,15 @@ export default class Locale {
         result = this.translations[key];
       }
 
-      if (Ember.typeOf(result) === 'string') {
-        result = this._compileTemplate(key, result);
-      }
-
       if (result) {
         break;
       }
     }
 
-    if (result == null) {
-      result = this._defineMissingTranslationTemplate(fallbackChain[0]);
-    }
-
-    Ember.assert(`Template for ${fallbackChain[i]} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
-
-    return result;
+    return {
+      key: fallbackChain[i],
+      result: result
+    };
   }
 
   _defineMissingTranslationTemplate(key) {

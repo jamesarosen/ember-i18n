@@ -40,6 +40,16 @@ export default Parent.extend(Ember.Evented, {
   },
 
   // @public
+  exists: function(key, data = {}) {
+    const locale = this.get('_locale');
+    Ember.assert("I18n: Cannot check existance when locale is null", locale);
+    const count = get(data, 'count');
+
+    const translation = locale.findTranslation(makeArray(key), count);
+    return Ember.typeOf(translation.result) !== 'undefined';
+  },
+
+  // @public
   addTranslations: function(locale, translations) {
     addTranslations(locale, translations, this.container);
 
