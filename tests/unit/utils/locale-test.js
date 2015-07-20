@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:i18n', 'I18nService#locales', {

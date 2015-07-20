@@ -19,6 +19,6 @@ test("t test helper", function(assert) {
   assert.equal(t("pluralized.translation", { count: 1 }), "One Click", "test-helpers t returns translation");
 });
 
-test("expectTranslation test helper", function(assert) {
+test("expectTranslation test helper", function() {
   expectTranslation('.no-interpolations', 'no.interpolations');
 });
