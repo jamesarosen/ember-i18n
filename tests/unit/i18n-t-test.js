@@ -1,4 +1,3 @@
-import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
 moduleFor('service:i18n', 'I18nService#t', {
@@ -33,7 +32,7 @@ test('emits "missing" events', function(assert) {
 });
 
 test('adds RTL markers if the locale calls for it', function(assert) {
-  const i18n = this.subject({ locale: 'en-bw' });
+  this.subject({ locale: 'en-bw' });
   const result = this.subject().t('no.interpolations');
 
   assert.equal(result, '\u202Bsnoitalopretni on htiw txet\u202C');
