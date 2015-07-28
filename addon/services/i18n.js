@@ -4,7 +4,7 @@ import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { get, makeArray } = Ember;
+const { get, makeArray, computed } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
@@ -16,7 +16,7 @@ export default Parent.extend(Ember.Evented, {
 
   // @public
   // A list of found locales.
-  locales: Ember.computed(getLocales),
+  locales: computed(getLocales),
 
   // @public
   //
@@ -52,10 +52,18 @@ export default Parent.extend(Ember.Evented, {
   // @public
   addTranslations: function(locale, translations) {
     addTranslations(locale, translations, this.container);
+    this._addLocale(locale);
 
     if (this.get('locale').indexOf(locale) === 0) {
       this.get('_locale').rebuild();
     }
+  },
+
+  // @private
+  // 
+  // adds a runtime locale to the array of locales on disk
+  _addLocale(locale) {
+    this.get('locales').addObject(locale);
   },
 
   _locale: Ember.computed('locale', function() {
