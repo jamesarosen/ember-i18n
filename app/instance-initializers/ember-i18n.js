@@ -1,6 +1,5 @@
 import Ember from "ember";
 import legacyHelper from "ember-i18n/legacy-helper";
-import Helper from "ember-i18n/helper";
 import ENV from '../config/environment';
 
 export default {
@@ -16,10 +15,6 @@ export default {
 
     if (legacyHelper != null) {
       Ember.HTMLBars._registerHelper('t', legacyHelper);
-    }
-
-    if (Helper != null) {
-      instance.registry.register('helper:t', Helper);
     }
   }
 };
