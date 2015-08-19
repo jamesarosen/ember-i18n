@@ -1,6 +1,6 @@
 {
   "name": "ember-i18n",
-  "version": "4.1.1",
+  "version": "4.1.2",
   "description": "Internationalization for Ember",
   "directories": {
     "doc": "doc",

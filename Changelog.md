@@ -1,3 +1,7 @@
+## 4.1.2
+
+ * Ember 2.1 compatibility
+
 ## 4.1.1
 
  * prevent warnings about missing `rtl` definition for included locales
