@@ -11,7 +11,9 @@ export default {
       Ember.warn('ember-i18n did not find a default locale; falling back to "en".');
       defaultLocale = 'en';
     }
-    instance.container.lookup('service:i18n').set('locale', defaultLocale);
+    const key = 'service:i18n';
+    const i18n = instance.lookup ? instance.lookup(key) : instance.container.lookup(key);
+    i18n.set('locale', defaultLocale);
 
     if (legacyHelper != null) {
       Ember.HTMLBars._registerHelper('t', legacyHelper);
