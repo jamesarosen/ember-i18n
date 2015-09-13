@@ -4,11 +4,11 @@ import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { get, makeArray, computed, on, warn } = Ember;
+const { assert, computed, get, Evented, makeArray, observer, on, typeOf, warn } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
-export default Parent.extend(Ember.Evented, {
+export default Parent.extend(Evented, {
 
   // @public
   // The user's locale.
@@ -24,7 +24,7 @@ export default Parent.extend(Ember.Evented, {
   // in the current `locale`.
   t: function(key, data = {}) {
     const locale = this.get('_locale');
-    Ember.assert("I18n: Cannot translate when locale is null", locale);
+    assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
 
     const defaults = makeArray(get(data, 'default'));
@@ -42,11 +42,11 @@ export default Parent.extend(Ember.Evented, {
   // @public
   exists: function(key, data = {}) {
     const locale = this.get('_locale');
-    Ember.assert("I18n: Cannot check existance when locale is null", locale);
+    assert("I18n: Cannot check existance when locale is null", locale);
     const count = get(data, 'count');
 
     const translation = locale.findTranslation(makeArray(key), count);
-    return Ember.typeOf(translation.result) !== 'undefined';
+    return typeOf(translation.result) !== 'undefined';
   },
 
   // @public
@@ -80,7 +80,7 @@ export default Parent.extend(Ember.Evented, {
     this.get('locales').addObject(locale);
   },
 
-  _locale: Ember.computed('locale', function() {
+  _locale: computed('locale', function() {
     const locale = this.get('locale');
     return locale ? new Locale(this.get('locale'), this.container) : null;
   }),
@@ -91,7 +91,7 @@ export default Parent.extend(Ember.Evented, {
     });
   }),
 
-  _notifyLocaleStream: Ember.observer('locale', function() {
+  _notifyLocaleStream: observer('locale', function() {
     this.localeStream.value(); // force the stream to be dirty
     this.localeStream.notify();
   })
