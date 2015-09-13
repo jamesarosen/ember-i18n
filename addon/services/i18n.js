@@ -4,11 +4,11 @@ import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { get, makeArray, computed } = Ember;
+const { assert, computed, get, Evented, makeArray, observer, on, typeOf, warn } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
-export default Parent.extend(Ember.Evented, {
+export default Parent.extend(Evented, {
 
   // @public
   // The user's locale.
@@ -24,7 +24,7 @@ export default Parent.extend(Ember.Evented, {
   // in the current `locale`.
   t: function(key, data = {}) {
     const locale = this.get('_locale');
-    Ember.assert("I18n: Cannot translate when locale is null", locale);
+    assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
 
     const defaults = makeArray(get(data, 'default'));
@@ -42,11 +42,11 @@ export default Parent.extend(Ember.Evented, {
   // @public
   exists: function(key, data = {}) {
     const locale = this.get('_locale');
-    Ember.assert("I18n: Cannot check existance when locale is null", locale);
+    assert("I18n: Cannot check existance when locale is null", locale);
     const count = get(data, 'count');
 
     const translation = locale.findTranslation(makeArray(key), count);
-    return Ember.typeOf(translation.result) !== 'undefined';
+    return typeOf(translation.result) !== 'undefined';
   },
 
   // @public
@@ -60,24 +60,38 @@ export default Parent.extend(Ember.Evented, {
   },
 
   // @private
-  // 
+  _initDefaults: on('init', function() {
+    const ENV = this.container.lookupFactory('config:environment');
+
+    if (this.get('locale') == null) {
+      var defaultLocale = (ENV.i18n || {}).defaultLocale;
+      if (defaultLocale == null) {
+        warn('ember-i18n did not find a default locale; falling back to "en".');
+        defaultLocale = 'en';
+      }
+      this.set('locale', defaultLocale);
+    }
+  }),
+
+  // @private
+  //
   // adds a runtime locale to the array of locales on disk
   _addLocale(locale) {
     this.get('locales').addObject(locale);
   },
 
-  _locale: Ember.computed('locale', function() {
+  _locale: computed('locale', function() {
     const locale = this.get('locale');
     return locale ? new Locale(this.get('locale'), this.container) : null;
   }),
 
-  _buildLocaleStream: Ember.on('init', function() {
+  _buildLocaleStream: on('init', function() {
     this.localeStream = new Stream(() => {
       return this.get('locale');
     });
   }),
 
-  _notifyLocaleStream: Ember.observer('locale', function() {
+  _notifyLocaleStream: observer('locale', function() {
     this.localeStream.value(); // force the stream to be dirty
     this.localeStream.notify();
   })
