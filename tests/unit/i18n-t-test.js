@@ -7,7 +7,7 @@ moduleFor('service:i18n', 'I18nService#t', {
 test('falls back to parent locale', function(assert) {
   const i18n = this.subject({ locale: 'en-ps' });
 
-  assert.equal(i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
+  assert.equal('' + i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
   assert.equal(i18n.t('with.interpolations', { clicks: 8 }), 'Clicks: 8');
 });
 

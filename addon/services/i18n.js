@@ -4,7 +4,7 @@ import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { get, makeArray, computed } = Ember;
+const { get, makeArray, computed, on, warn } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
@@ -60,7 +60,21 @@ export default Parent.extend(Ember.Evented, {
   },
 
   // @private
-  // 
+  _initDefaults: on('init', function() {
+    const ENV = this.container.lookupFactory('config:environment');
+
+    if (this.get('locale') == null) {
+      var defaultLocale = (ENV.i18n || {}).defaultLocale;
+      if (defaultLocale == null) {
+        warn('ember-i18n did not find a default locale; falling back to "en".');
+        defaultLocale = 'en';
+      }
+      this.set('locale', defaultLocale);
+    }
+  }),
+
+  // @private
+  //
   // adds a runtime locale to the array of locales on disk
   _addLocale(locale) {
     this.get('locales').addObject(locale);
@@ -71,7 +85,7 @@ export default Parent.extend(Ember.Evented, {
     return locale ? new Locale(this.get('locale'), this.container) : null;
   }),
 
-  _buildLocaleStream: Ember.on('init', function() {
+  _buildLocaleStream: on('init', function() {
     this.localeStream = new Stream(() => {
       return this.get('locale');
     });
