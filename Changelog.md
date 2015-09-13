@@ -1,3 +1,7 @@
+## 4.1.3
+
+ * More Ember 2.1 compatibility
+
 ## 4.1.2
 
  * Ember 2.1 compatibility
