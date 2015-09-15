@@ -15,93 +15,93 @@ export default function Locale(id, container) {
   this.id = id;
   this.container = container;
 
-  this.rebuild = function() {
-    this.translations = getFlattenedTranslations(this.id, this.container);
-    this._setConfig();
-  };
+}
 
-  this._setConfig = function() {
-    walkConfigs(this.id, this.container, (config) => {
-      if (this.rtl === undefined) { this.rtl = config.rtl; }
-      if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
-    });
+Locale.prototype.rebuild = function() {
+  this.translations = getFlattenedTranslations(this.id, this.container);
+  this._setConfig();
+};
 
-    const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
+Locale.prototype._setConfig = function() {
+  walkConfigs(this.id, this.container, (config) => {
+    if (this.rtl === undefined) { this.rtl = config.rtl; }
+    if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
+  });
 
-    if (this.rtl === undefined) {
-      Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
-      this.rtl = defaultConfig.rtl;
-    }
+  const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
 
-    if (this.pluralForm === undefined) {
-      Ember.warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
-      this.pluralForm = defaultConfig.pluralForm;
-    }
-  };
+  if (this.rtl === undefined) {
+    Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
+    this.rtl = defaultConfig.rtl;
+  }
 
-  this.getCompiledTemplate = function(fallbackChain, count) {
-    let translation = this.findTranslation(fallbackChain, count);
-    let result = translation.result;
+  if (this.pluralForm === undefined) {
+    Ember.warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
+    this.pluralForm = defaultConfig.pluralForm;
+  }
+};
 
-    if (Ember.typeOf(result) === 'string') {
-      result = this._compileTemplate(translation.key, result);
+Locale.prototype.getCompiledTemplate = function(fallbackChain, count) {
+  let translation = this.findTranslation(fallbackChain, count);
+  let result = translation.result;
+
+  if (Ember.typeOf(result) === 'string') {
+    result = this._compileTemplate(translation.key, result);
+  }
+
+  if (result == null) {
+    result = this._defineMissingTranslationTemplate(fallbackChain[0]);
+  }
+
+  Ember.assert(`Template for ${translation.key} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
+
+  return result;
+};
+
+Locale.prototype.findTranslation = function(fallbackChain, count) {
+  if (this.translations === undefined) { this.rebuild(); }
+
+  let result;
+  let i;
+  for (i = 0; i < fallbackChain.length; i++) {
+    let key = fallbackChain[i];
+    if (count != null) {
+      const inflection = this.pluralForm(count);
+      result = this.translations[`${key}.${inflection}`];
     }
 
     if (result == null) {
-      result = this._defineMissingTranslationTemplate(fallbackChain[0]);
+      result = this.translations[key];
     }
 
-    Ember.assert(`Template for ${translation.key} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
-
-    return result;
-  };
-
-  this.findTranslation = function(fallbackChain, count) {
-    if (this.translations === undefined) { this.rebuild(); }
-
-    let result;
-    let i;
-    for (i = 0; i < fallbackChain.length; i++) {
-      let key = fallbackChain[i];
-      if (count != null) {
-        const inflection = this.pluralForm(count);
-        result = this.translations[`${key}.${inflection}`];
-      }
-
-      if (result == null) {
-        result = this.translations[key];
-      }
-
-      if (result) {
-        break;
-      }
+    if (result) {
+      break;
     }
+  }
 
-    return {
-      key: fallbackChain[i],
-      result: result
-    };
+  return {
+    key: fallbackChain[i],
+    result: result
   };
+};
 
-  this._defineMissingTranslationTemplate = function(key) {
-    const missingMessage = this.container.lookupFactory('util:i18n/missing-message');
-    const locale = this.id;
+Locale.prototype._defineMissingTranslationTemplate = function(key) {
+  const missingMessage = this.container.lookupFactory('util:i18n/missing-message');
+  const locale = this.id;
 
-    function missingTranslation(data) { return missingMessage(locale, key, data); }
+  function missingTranslation(data) { return missingMessage(locale, key, data); }
 
-    missingTranslation._isMissing = true;
-    this.translations[key] = missingTranslation;
-    return missingTranslation;
-  };
+  missingTranslation._isMissing = true;
+  this.translations[key] = missingTranslation;
+  return missingTranslation;
+};
 
-  this._compileTemplate = function(key, string) {
-    const compile = this.container.lookupFactory('util:i18n/compile-template');
-    const template = compile(string, this.rtl);
-    this.translations[key] = template;
-    return template;
-  };
-
-}
+Locale.prototype._compileTemplate = function(key, string) {
+  const compile = this.container.lookupFactory('util:i18n/compile-template');
+  const template = compile(string, this.rtl);
+  this.translations[key] = template;
+  return template;
+};
 
 
 function getFlattenedTranslations(id, container) {
