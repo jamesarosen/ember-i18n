@@ -32,3 +32,9 @@ test('defines a computed property with dependencies', function(assert) {
   Ember.run(this.object, 'set', 'numberClicks', 13);
   assert.equal(this.object.get('tMacroProperty2'), 'Clicks: 13');
 });
+
+test('defines a computed property that depends on the locale', function(assert) {
+  assert.equal(this.object.get('tMacroProperty1'), 'text with no interpolations');
+  Ember.run(this.object, 'set', 'i18n.locale', 'es');
+  assert.equal(this.object.get('tMacroProperty1'), 'texto sin interpolaciones');
+});
