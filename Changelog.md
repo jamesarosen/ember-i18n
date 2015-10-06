@@ -1,3 +1,10 @@
+## 4.1.4
+
+ * fix incompatibility with Ember 2.2 `Stream` class
+ * `I18nService#locales` are now sorted
+ * `t` macro adds `i18n.locale` as a dependency so macro-defined
+   properties update when the locale changes
+
 ## 4.1.3
 
  * More Ember 2.1 compatibility
