@@ -1,10 +1,9 @@
 import Ember from "ember";
-import Stream from "../stream";
 import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { assert, computed, get, Evented, makeArray, observer, on, typeOf, warn } = Ember;
+const { assert, computed, get, Evented, makeArray, on, typeOf, warn } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
@@ -83,17 +82,6 @@ export default Parent.extend(Evented, {
   _locale: computed('locale', function() {
     const locale = this.get('locale');
     return locale ? new Locale(this.get('locale'), this.container) : null;
-  }),
-
-  _buildLocaleStream: on('init', function() {
-    this.localeStream = new Stream(() => {
-      return this.get('locale');
-    });
-  }),
-
-  _notifyLocaleStream: observer('locale', function() {
-    this.localeStream.value(); // force the stream to be dirty
-    this.localeStream.notify();
   })
 
 });
