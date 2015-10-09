@@ -29,7 +29,7 @@ export default class Locale {
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
 
-    const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
+    const defaultConfig = this.container.lookup('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
       Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
