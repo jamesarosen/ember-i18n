@@ -29,7 +29,7 @@ export default class Locale {
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
 
-    const defaultConfig = this.container.lookup('ember-i18n@config:zh');
+    const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
       Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
@@ -87,7 +87,7 @@ export default class Locale {
   }
 
   _defineMissingTranslationTemplate(key) {
-    const I18n = this.container.lookupFactory('service:i18n');
+    const I18n = this.container.lookup('service:i18n');
     const missingMessage = this.container.lookupFactory('util:i18n/missing-message');
     const locale = this.id;
 
