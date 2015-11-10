@@ -1,4 +1,5 @@
 import Ember from "ember";
+const { assert, merge, typeOf, warn } = Ember;
 
 // @private
 //
@@ -32,12 +33,12 @@ export default class Locale {
     const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
-      Ember.warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
+      warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
       this.rtl = defaultConfig.rtl;
     }
 
     if (this.pluralForm === undefined) {
-      Ember.warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
+      warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
       this.pluralForm = defaultConfig.pluralForm;
     }
   }
@@ -46,7 +47,7 @@ export default class Locale {
     let translation = this.findTranslation(fallbackChain, count);
     let result = translation.result;
 
-    if (Ember.typeOf(result) === 'string') {
+    if (typeOf(result) === 'string') {
       result = this._compileTemplate(translation.key, result);
     }
 
@@ -54,7 +55,7 @@ export default class Locale {
       result = this._defineMissingTranslationTemplate(fallbackChain[0]);
     }
 
-    Ember.assert(`Template for ${translation.key} in ${this.id} is not a function`, Ember.typeOf(result) === 'function');
+    assert(`Template for ${translation.key} in ${this.id} is not a function`, typeOf(result) === 'function');
 
     return result;
   }
@@ -110,11 +111,11 @@ function getFlattenedTranslations(id, container) {
 
   const parentId = parentLocale(id);
   if (parentId) {
-    Ember.merge(result, getFlattenedTranslations(parentId, container));
+    merge(result, getFlattenedTranslations(parentId, container));
   }
 
   const translations = container.lookupFactory(`locale:${id}/translations`) || {};
-  Ember.merge(result, withFlattenedKeys(translations));
+  merge(result, withFlattenedKeys(translations));
 
   return result;
 }
@@ -142,7 +143,7 @@ function withFlattenedKeys(object) {
   Object.keys(object).forEach(function(key) {
     var value = object[key];
 
-    if (Ember.typeOf(value) === 'object') {
+    if (typeOf(value) === 'object') {
       value = withFlattenedKeys(value);
 
       Object.keys(value).forEach(function(suffix) {
