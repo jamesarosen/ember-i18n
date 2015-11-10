@@ -42,14 +42,14 @@ test("applies pluralization rules from the locale", function(assert) {
   const i18n = this.subject({ locale: 'en' });
 
   assert.equal(i18n.t('pluralized.translation', { count: 0 }), '0 Clicks');
-  assert.equal(i18n.t('pluralized.translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.translation', { count: '1' }), 'One Click');
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
 test("applies custom pluralization rules", function(assert) {
   const i18n = this.subject({ locale: 'en-wz' });
 
-  assert.equal(i18n.t('pluralized.translation', { count: 0 }), 'Zero Clicks');
+  assert.equal(i18n.t('pluralized.translation', { count: '0' }), 'Zero Clicks');
   assert.equal(i18n.t('pluralized.translation', { count: 1 }), 'One Click');
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
