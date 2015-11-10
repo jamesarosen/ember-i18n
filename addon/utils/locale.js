@@ -68,7 +68,7 @@ export default class Locale {
     for (i = 0; i < fallbackChain.length; i++) {
       let key = fallbackChain[i];
       if (count != null) {
-        const inflection = this.pluralForm(count);
+        const inflection = this.pluralForm(+count);
         result = this.translations[`${key}.${inflection}`];
       }
 
