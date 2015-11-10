@@ -4,8 +4,7 @@ const { assert, merge, typeOf, warn } = Ember;
 // @private
 //
 // This class is the work-horse of localization look-up.
-export default class Locale {
-
+function Locale(id, container) {
   // On Construction:
   //  1. look for translations in the locale (e.g. pt-BR) and all parent
   //     locales (e.g. pt), flatten any nested keys, and then merge them.
@@ -13,16 +12,16 @@ export default class Locale {
   //     and use the first value for `rtl` and `pluralForm`
   //  3. Default `rtl` to `false`
   //  4. Ensure `pluralForm` is defined
-  constructor(id, container) {
-    this.id = id;
-    this.container = container;
-    this.rebuild();
-  }
+  this.id = id;
+  this.container = container;
+  this.rebuild();
+}
 
+Locale.prototype = {
   rebuild() {
     this.translations = getFlattenedTranslations(this.id, this.container);
     this._setConfig();
-  }
+  },
 
   _setConfig() {
     walkConfigs(this.id, this.container, (config) => {
@@ -41,7 +40,7 @@ export default class Locale {
       warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-plural-form' });
       this.pluralForm = defaultConfig.pluralForm;
     }
-  }
+  },
 
   getCompiledTemplate(fallbackChain, count) {
     let translation = this.findTranslation(fallbackChain, count);
@@ -58,7 +57,7 @@ export default class Locale {
     assert(`Template for ${translation.key} in ${this.id} is not a function`, typeOf(result) === 'function');
 
     return result;
-  }
+  },
 
   findTranslation(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
@@ -85,7 +84,7 @@ export default class Locale {
       key: fallbackChain[i],
       result: result
     };
-  }
+  },
 
   _defineMissingTranslationTemplate(key) {
     const i18n = this.container.lookup('service:i18n');
@@ -97,7 +96,7 @@ export default class Locale {
     missingTranslation._isMissing = true;
     this.translations[key] = missingTranslation;
     return missingTranslation;
-  }
+  },
 
   _compileTemplate(key, string) {
     const compile = this.container.lookupFactory('util:i18n/compile-template');
@@ -105,7 +104,7 @@ export default class Locale {
     this.translations[key] = template;
     return template;
   }
-}
+};
 
 function getFlattenedTranslations(id, container) {
   const result = {};
@@ -157,3 +156,5 @@ function withFlattenedKeys(object) {
 
   return result;
 }
+
+export default Locale;
