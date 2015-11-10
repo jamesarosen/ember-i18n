@@ -88,10 +88,11 @@ export default class Locale {
   }
 
   _defineMissingTranslationTemplate(key) {
+    const I18n = this.container.lookup('service:i18n');
     const missingMessage = this.container.lookupFactory('util:i18n/missing-message');
     const locale = this.id;
 
-    function missingTranslation(data) { return missingMessage(locale, key, data); }
+    function missingTranslation(data) { return missingMessage.call(I18n, locale, key, data); }
 
     missingTranslation._isMissing = true;
     this.translations[key] = missingTranslation;
