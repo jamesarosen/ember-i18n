@@ -33,12 +33,12 @@ export default class Locale {
     const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
-      warn(`ember-i18n: No RTL configuration found for ${this.id}.`);
+      warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
       this.rtl = defaultConfig.rtl;
     }
 
     if (this.pluralForm === undefined) {
-      warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`);
+      warn(`ember-i18n: No pluralForm configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-plural-form' });
       this.pluralForm = defaultConfig.pluralForm;
     }
   }
