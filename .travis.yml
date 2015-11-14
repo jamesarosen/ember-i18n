@@ -14,6 +14,8 @@ env:
   - EMBER_TRY_SCENARIO=default POD_MODULE_PREFIX="dummy/pods"
   - EMBER_TRY_SCENARIO=ember-1-12
   - EMBER_TRY_SCENARIO=ember-1-13
+  - EMBER_TRY_SCENARIO=ember-2-0
+  - EMBER_TRY_SCENARIO=ember-2-1
   - EMBER_TRY_SCENARIO=ember-release
   - EMBER_TRY_SCENARIO=ember-beta
   - EMBER_TRY_SCENARIO=ember-canary
