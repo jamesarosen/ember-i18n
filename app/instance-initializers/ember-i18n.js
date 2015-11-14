@@ -8,6 +8,7 @@ export default {
 
   initialize(appOrAppInstance) {
     if (legacyHelper != null) {
+      // Used for Ember < 1.13
       const i18n = appOrAppInstance.container.lookup('service:i18n');
 
       i18n.localeStream = new Stream(function() {

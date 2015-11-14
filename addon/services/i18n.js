@@ -1,4 +1,5 @@
 import Ember from "ember";
+import getOwner from 'ember-getowner-polyfill';
 import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
@@ -50,7 +51,7 @@ export default Parent.extend(Evented, {
 
   // @public
   addTranslations: function(locale, translations) {
-    addTranslations(locale, translations, this.container);
+    addTranslations(locale, translations, getOwner(this));
     this._addLocale(locale);
 
     if (this.get('locale').indexOf(locale) === 0) {
@@ -60,7 +61,7 @@ export default Parent.extend(Evented, {
 
   // @private
   _initDefaults: on('init', function() {
-    const ENV = this.container.lookupFactory('config:environment');
+    const ENV = getOwner(this)._lookupFactory('config:environment');
 
     if (this.get('locale') == null) {
       var defaultLocale = (ENV.i18n || {}).defaultLocale;
@@ -81,7 +82,7 @@ export default Parent.extend(Evented, {
 
   _locale: computed('locale', function() {
     const locale = this.get('locale');
-    return locale ? new Locale(this.get('locale'), this.container) : null;
+    return locale ? new Locale(this.get('locale'), getOwner(this)) : null;
   })
 
 });

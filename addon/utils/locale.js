@@ -4,7 +4,7 @@ const { assert, merge, typeOf, warn } = Ember;
 // @private
 //
 // This class is the work-horse of localization look-up.
-function Locale(id, container) {
+function Locale(id, owner) {
   // On Construction:
   //  1. look for translations in the locale (e.g. pt-BR) and all parent
   //     locales (e.g. pt), flatten any nested keys, and then merge them.
@@ -13,23 +13,23 @@ function Locale(id, container) {
   //  3. Default `rtl` to `false`
   //  4. Ensure `pluralForm` is defined
   this.id = id;
-  this.container = container;
+  this.owner = owner;
   this.rebuild();
 }
 
 Locale.prototype = {
   rebuild() {
-    this.translations = getFlattenedTranslations(this.id, this.container);
+    this.translations = getFlattenedTranslations(this.id, this.owner);
     this._setConfig();
   },
 
   _setConfig() {
-    walkConfigs(this.id, this.container, (config) => {
+    walkConfigs(this.id, this.owner, (config) => {
       if (this.rtl === undefined) { this.rtl = config.rtl; }
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
 
-    const defaultConfig = this.container.lookupFactory('ember-i18n@config:zh');
+    const defaultConfig = this.owner._lookupFactory('ember-i18n@config:zh');
 
     if (this.rtl === undefined) {
       warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
@@ -87,8 +87,8 @@ Locale.prototype = {
   },
 
   _defineMissingTranslationTemplate(key) {
-    const i18n = this.container.lookup('service:i18n');
-    const missingMessage = this.container.lookupFactory('util:i18n/missing-message');
+    const i18n = this.owner.lookup('service:i18n');
+    const missingMessage = this.owner._lookupFactory('util:i18n/missing-message');
     const locale = this.id;
 
     function missingTranslation(data) { return missingMessage.call(i18n, locale, key, data); }
@@ -99,37 +99,37 @@ Locale.prototype = {
   },
 
   _compileTemplate(key, string) {
-    const compile = this.container.lookupFactory('util:i18n/compile-template');
+    const compile = this.owner._lookupFactory('util:i18n/compile-template');
     const template = compile(string, this.rtl);
     this.translations[key] = template;
     return template;
   }
 };
 
-function getFlattenedTranslations(id, container) {
+function getFlattenedTranslations(id, owner) {
   const result = {};
 
   const parentId = parentLocale(id);
   if (parentId) {
-    merge(result, getFlattenedTranslations(parentId, container));
+    merge(result, getFlattenedTranslations(parentId, owner));
   }
 
-  const translations = container.lookupFactory(`locale:${id}/translations`) || {};
+  const translations = owner._lookupFactory(`locale:${id}/translations`) || {};
   merge(result, withFlattenedKeys(translations));
 
   return result;
 }
 
 // Walk up confiugration objects from most specific to least.
-function walkConfigs(id, container, fn) {
-  const appConfig = container.lookupFactory(`locale:${id}/config`);
+function walkConfigs(id, owner, fn) {
+  const appConfig = owner._lookupFactory(`locale:${id}/config`);
   if (appConfig) { fn(appConfig); }
 
-  const addonConfig = container.lookupFactory(`ember-i18n@config:${id}`);
+  const addonConfig = owner._lookupFactory(`ember-i18n@config:${id}`);
   if (addonConfig) { fn(addonConfig); }
 
   const parentId = parentLocale(id);
-  if (parentId) { walkConfigs(parentId, container, fn); }
+  if (parentId) { walkConfigs(parentId, owner, fn); }
 }
 
 function parentLocale(id) {
