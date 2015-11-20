@@ -1,3 +1,14 @@
+## 4.2.0
+
+ * remove `Stream` awareness from `service:i18n` to ensure streamless
+   operation on Ember 1.13+
+ * correct Polish pluralization
+ * pass ID to `Ember.warn` to prevent deprecation warnings
+ * `missingMessage` gets called on the `service:i18n` instance
+ * coerce `count` to a number
+ * don't use ES2015 classes to ensure IE8 compatibility
+ * use public `getOwner` API for container / registry functions
+
 ## 4.1.4
 
  * fix incompatibility with Ember 2.2 `Stream` class
