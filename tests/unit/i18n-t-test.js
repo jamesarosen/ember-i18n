@@ -1,4 +1,7 @@
+import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
+
+const { run } = Ember;
 
 moduleFor('service:i18n', 'I18nService#t', {
   integration: true
@@ -9,6 +12,23 @@ test('falls back to parent locale', function(assert) {
 
   assert.equal('' + i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
   assert.equal(i18n.t('with.interpolations', { clicks: 8 }), 'Clicks: 8');
+});
+
+test('supports changing locales', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
+
+  run(i18n, 'set', 'locale', 'en-ps');
+  assert.equal('' + i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
+
+  run(i18n, 'set', 'locale', 'en');
+  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
+
+  run(i18n, 'set', 'locale', 'es');
+  assert.equal('' + i18n.t('no.interpolations'), 'texto sin interpolaciones');
+
+  run(i18n, 'set', 'locale', 'en');
+  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
 });
 
 test('returns "missing translation" translations', function(assert) {
