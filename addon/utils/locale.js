@@ -1,5 +1,6 @@
 import Ember from "ember";
-const { assert, merge, typeOf, warn } = Ember;
+const { assert, typeOf, warn } = Ember;
+const assign = Ember.assign || Ember.merge;
 
 // @private
 //
@@ -111,11 +112,11 @@ function getFlattenedTranslations(id, owner) {
 
   const parentId = parentLocale(id);
   if (parentId) {
-    merge(result, getFlattenedTranslations(parentId, owner));
+    assign(result, getFlattenedTranslations(parentId, owner));
   }
 
   const translations = owner._lookupFactory(`locale:${id}/translations`) || {};
-  merge(result, withFlattenedKeys(translations));
+  assign(result, withFlattenedKeys(translations));
 
   return result;
 }

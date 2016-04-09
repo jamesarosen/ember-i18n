@@ -1,5 +1,7 @@
 import Ember from "ember";
 
+const assign = Ember.assign || Ember.merge;
+
 export default function addTranslations(locale, newTranslations, owner) {
   const key = `locale:${locale}/translations`;
   var existingTranslations = owner._lookupFactory(key);
@@ -9,5 +11,5 @@ export default function addTranslations(locale, newTranslations, owner) {
     owner.register(key, existingTranslations);
   }
 
-  Ember.merge(existingTranslations, newTranslations);
+  assign(existingTranslations, newTranslations);
 }
