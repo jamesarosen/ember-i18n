@@ -3,11 +3,13 @@ import Application from '../../app';
 import config from '../../config/environment';
 import './ember-i18n/test-helpers';
 
+const assign = Ember.assign || Ember.merge;
+
 export default function startApp(attrs) {
   var application;
 
-  var attributes = Ember.merge({}, config.APP);
-  attributes = Ember.merge(attributes, attrs); // use defaults, but you can override;
+  var attributes = assign({}, config.APP);
+  attributes = assign(attributes, attrs); // use defaults, but you can override;
 
   Ember.run(function() {
     application = Application.create(attributes);
