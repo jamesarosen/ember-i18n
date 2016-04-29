@@ -1,3 +1,8 @@
+## 4.2.1
+
+ * use `Ember.assign` instead of `Ember.merge` if available
+ * add `no` locale support
+
 ## 4.2.0
 
  * remove `Stream` awareness from `service:i18n` to ensure streamless
