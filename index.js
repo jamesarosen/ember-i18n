@@ -2,5 +2,7 @@
 'use strict';
 
 module.exports = {
-  name: 'ember-i18n'
+  name: 'ember-i18n',
+
+  isLocalizationFramework: true
 };
