@@ -1,3 +1,10 @@
+## 4.2.2
+
+ * set `isLocalizationFramework` for other addons
+ * change `Stream` import to support latest Ember (even though
+   ember-i18n doesn't _rely_ on `Stream` for Ember 1.13+, it needs
+   to _import_ it)
+
 ## 4.2.1
 
  * use `Ember.assign` instead of `Ember.merge` if available
