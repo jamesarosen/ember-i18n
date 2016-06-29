@@ -9,7 +9,6 @@ const Parent = Ember.Service || Ember.Object;
 
 // @public
 export default Parent.extend(Evented, {
-
   // @public
   // The user's locale.
   locale: null,
@@ -22,7 +21,15 @@ export default Parent.extend(Evented, {
   //
   // Returns the translation `key` interpolated with `data`
   // in the current `locale`.
-  t: function(key, data = {}) {
+  t(key, data = {}) {
+    Ember.deprecate('locale is a reserved attribute', !data.hasOwnProperty('locale'), {
+      id: 'ember-i18n.reserve-locale'
+    });
+
+    Ember.deprecate('htmlSafe is a reserved attribute', !data.hasOwnProperty('htmlSafe'), {
+      id: 'ember-i18n.reserve-htmlSafe'
+    });
+
     const locale = this.get('_locale');
     assert("I18n: Cannot translate when locale is null", locale);
     const count = get(data, 'count');
@@ -40,7 +47,7 @@ export default Parent.extend(Evented, {
   },
 
   // @public
-  exists: function(key, data = {}) {
+  exists(key, data = {}) {
     const locale = this.get('_locale');
     assert("I18n: Cannot check existance when locale is null", locale);
     const count = get(data, 'count');
@@ -50,7 +57,7 @@ export default Parent.extend(Evented, {
   },
 
   // @public
-  addTranslations: function(locale, translations) {
+  addTranslations(locale, translations) {
     addTranslations(locale, translations, getOwner(this));
     this._addLocale(locale);
 
@@ -66,7 +73,10 @@ export default Parent.extend(Evented, {
     if (this.get('locale') == null) {
       var defaultLocale = (ENV.i18n || {}).defaultLocale;
       if (defaultLocale == null) {
-        warn('ember-i18n did not find a default locale; falling back to "en".', false, { id: 'ember-i18n.default-locale' });
+        warn('ember-i18n did not find a default locale; falling back to "en".', false, {
+          id: 'ember-i18n.default-locale'
+        });
+
         defaultLocale = 'en';
       }
       this.set('locale', defaultLocale);
@@ -82,7 +92,7 @@ export default Parent.extend(Evented, {
 
   _locale: computed('locale', function() {
     const locale = this.get('locale');
+
     return locale ? new Locale(this.get('locale'), getOwner(this)) : null;
   })
-
 });
