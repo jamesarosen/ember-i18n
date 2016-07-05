@@ -1,10 +1,14 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
-const { run } = Ember;
+const { run, deprecate:originalDeprecate } = Ember;
 
 moduleFor('service:i18n', 'I18nService#t', {
-  integration: true
+  integration: true,
+
+  afterEach() {
+    Ember.deprecate = originalDeprecate;
+  }
 });
 
 test('falls back to parent locale', function(assert) {
@@ -34,6 +38,31 @@ test('supports changing locales', function(assert) {
 test('returns "missing translation" translations', function(assert) {
   const result = this.subject({ locale: 'en' }).t('not.yet.translated', {});
   assert.equal('Missing translation: not.yet.translated', result);
+});
+
+test('warns on the presence of htmlSafe and locale', function(assert) {
+  const service = this.subject();
+  let deprecations = 0;
+
+  Ember.deprecate = function(message, predicate, options = {}) {
+    if (predicate) { return; }
+
+    const { id } = options;
+
+    if (id === 'ember-i18n.reserve-htmlSafe' || id === 'ember-i18n.reserve-locale') {
+      deprecations += 1;
+    }
+  };
+
+  service.t('not.yet.translated', { htmlSafe: true });
+  assert.equal(deprecations, 1);
+
+  service.t('not.yet.translated', { locale: true });
+  assert.equal(deprecations, 2);
+
+  service.t('not.yet.translated');
+  service.t('not.yet.translated', { some: 'other key' });
+  assert.equal(deprecations, 2);
 });
 
 test('emits "missing" events', function(assert) {
