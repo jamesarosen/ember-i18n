@@ -103,6 +103,25 @@ test("applies custom pluralization rules", function(assert) {
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
+test("deterministic behaviour for custom pluralization rules and missing translations", function(assert) {
+  let i18n = this.subject({ locale: 'en-wz' });
+  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
+
+  // reset locale translations cache
+  i18n.get('_locale').rebuild();
+  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
+  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
+
+  // reset locale translations cache
+  i18n.get('_locale').rebuild();
+  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
+  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
+});
+
 test("applies provided default translation in cascade when main one is not found", function(assert) {
   const i18n = this.subject({ locale: 'en' });
   const defaultsChain = ['with.pretty-good-interpolations', 'with.interpolations'];
