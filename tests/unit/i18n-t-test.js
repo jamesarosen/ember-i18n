@@ -103,6 +103,18 @@ test("applies custom pluralization rules", function(assert) {
   assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
+test("applies custom pluralization rules with undefined count value", function(assert) {
+  const i18n = this.subject({locale: 'en-wz'});
+
+  // all variants defined for pluralized.translation string
+  assert.equal(i18n.t('pluralized.undefined-count'), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.undefined-count', {count: null}), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.undefined-count', {count: undefined}), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.undefined-count', {count: 0}), 'Zero Clicks');
+  assert.equal(i18n.t('pluralized.undefined-count', {count: 1}), 'One Click');
+  assert.equal(i18n.t('pluralized.undefined-count', {count: '2'}), '2 Clicks');
+});
+
 test("deterministic behaviour for custom pluralization rules and missing translations", function(assert) {
   let i18n = this.subject({ locale: 'en-wz' });
   assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
