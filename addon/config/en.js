@@ -2,9 +2,10 @@ import { ONE, OTHER } from "./constants";
 
 export default {
   rtl: false,
+  defaultPluralForm: OTHER,
 
   pluralForm: function(n) {
     if (n === 1) { return ONE; }
-    return OTHER;
+    return this.defaultPluralForm;
   }
 };
