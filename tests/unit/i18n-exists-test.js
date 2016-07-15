@@ -19,7 +19,7 @@ test('returns false when the key does not exist', function(assert) {
 test('works with interpolations', function(assert) {
   const i18n = this.subject({ locale: 'en' });
 
-  assert.equal(i18n.exists('with.interpolations', { count: 2 }), true);
+  assert.equal(i18n.exists('with.interpolations', { clicks: 2 }), true);
 });
 
 test('reports false when the key does not exist, but the fallback does', function(assert) {

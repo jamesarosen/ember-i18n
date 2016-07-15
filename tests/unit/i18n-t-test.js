@@ -125,21 +125,21 @@ test("applies custom pluralization rules with undefined count value", function(a
 
 test("deterministic behaviour of custom pluralization rules and missing translations", function(assert) {
   let i18n = this.subject({ locale: 'en-wz' });
-  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
-  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
-  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
 
   // reset locale translations cache
   i18n.get('_locale').rebuild();
-  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
-  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
-  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
 
   // reset locale translations cache
   i18n.get('_locale').rebuild();
-  assert.equal(i18n.t('pluralized.short-translation', { count: '0' }), '0 Clicks');
-  assert.equal(i18n.t('pluralized.short-translation', { count: 1 }), 'One Click');
-  assert.equal(i18n.t('pluralized.short-translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
 });
 
 test("applies provided default translation in cascade when main one is not found", function(assert) {

@@ -5,7 +5,7 @@ export default {
     other: '{{count}} Clicks'
   },
 
-  'pluralized.short-translation': {
+  'pluralized.missing-translation': {
     one: 'One Click',
     other: '{{count}} Clicks'
   },
