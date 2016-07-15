@@ -2,7 +2,6 @@ import { ZERO, ONE, TWO, FEW, MANY, OTHER } from './constants';
 
 export default {
   rtl: true,
-  defaultPluralForm: OTHER,
 
   pluralForm: function(n) {
     const mod100 = n % 100;
@@ -12,6 +11,6 @@ export default {
     if (n === 2) { return TWO; }
     if (mod100 >= 3 && mod100 <= 10) { return FEW; }
     if (mod100 >= 11 && mod100 <= 99) { return MANY; }
-    return this.defaultPluralForm;
+    return OTHER;
   }
 };

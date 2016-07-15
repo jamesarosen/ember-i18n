@@ -27,7 +27,6 @@ Locale.prototype = {
   _setConfig() {
     walkConfigs(this.id, this.owner, (config) => {
       if (this.rtl === undefined) { this.rtl = config.rtl; }
-      if (this.defaultPluralForm === undefined) { this.defaultPluralForm = config.defaultPluralForm; }
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
 
@@ -36,11 +35,6 @@ Locale.prototype = {
     if (this.rtl === undefined) {
       warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
       this.rtl = defaultConfig.rtl;
-    }
-
-    if (this.defaultPluralForm === undefined) {
-      warn(`ember-i18n: No defaultPluralForm configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-default-form' });
-      this.defaultPluralForm = defaultConfig.defaultPluralForm;
     }
 
     if (this.pluralForm === undefined) {
@@ -69,30 +63,14 @@ Locale.prototype = {
   findTranslation(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
 
-    let result, lastKey;
-    let i;
-    for (i = 0; i < fallbackChain.length; i++) {
-      let key = fallbackChain[i];
+    let key, result;
+    for (let i = 0; i < fallbackChain.length; i++) {
+      key = fallbackChain[i];
       if (count != null) {
-        let inflectionVariants = [].concat(this.pluralForm(+count));
-        // variants should contain default plural form key, if not, add it
-        if (inflectionVariants.indexOf(this.defaultPluralForm) < 0) {
-          inflectionVariants.push(this.defaultPluralForm);
-        }
-        for (let inflection of inflectionVariants) {
-          lastKey = `${key}.${inflection}`;
-          result = this.translations[lastKey];
-
-          if (result != null) {
-            break;
-          }
-        }
+        const inflection = this.pluralForm(+count);
+        key = `${key}.${inflection}`;
       }
-
-      if (result == null) {
-        lastKey = key;
-        result = this.translations[key];
-      }
+      result = this.translations[key];
 
       if (result) {
         break;
@@ -100,7 +78,7 @@ Locale.prototype = {
     }
 
     return {
-      key: lastKey,
+      key: key,
       result: result
     };
   },

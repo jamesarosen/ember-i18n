@@ -6,7 +6,6 @@ import { ONE, FEW, MANY, OTHER } from "./constants";
  */
 export default {
   rtl: false,
-  defaultPluralForm: OTHER,
 
   pluralForm: function(n) {
     const absN = Math.abs(n);
@@ -16,6 +15,6 @@ export default {
     // check if number contains fractional part
     if (absN % 1 > 0) { return MANY; }
 
-    return this.defaultPluralForm;
-  }
+    return OTHER;
+}
 };
