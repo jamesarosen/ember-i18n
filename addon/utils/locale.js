@@ -52,7 +52,7 @@ Locale.prototype = {
     }
 
     if (result == null) {
-      result = this._defineMissingTranslationTemplate(fallbackChain[0]);
+      result = this._defineMissingTranslationTemplate(translation.key);
     }
 
     assert(`Template for ${translation.key} in ${this.id} is not a function`, typeOf(result) === 'function');
@@ -63,7 +63,7 @@ Locale.prototype = {
   findTranslation(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
 
-    let key, result;
+    let key, result, defaultResult;
     for (let i = 0; i < fallbackChain.length; i++) {
       key = fallbackChain[i];
       if (count != null) {
@@ -72,15 +72,24 @@ Locale.prototype = {
       }
       result = this.translations[key];
 
+      if (!defaultResult) {
+        // use the first { key, result } object as return value if nothing will be found for a whole fallbackChain
+        defaultResult = {
+          key: key,
+          result: result
+        };
+      }
+
       if (result) {
-        break;
+        // if something found
+        return {
+          key: key,
+          result: result
+        };
       }
     }
 
-    return {
-      key: key,
-      result: result
-    };
+    return defaultResult;
   },
 
   _defineMissingTranslationTemplate(key) {
