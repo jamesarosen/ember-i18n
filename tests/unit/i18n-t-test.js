@@ -121,23 +121,32 @@ test("applies custom pluralization rules with undefined count value", function(a
   assert.equal(i18n.t('pluralized.undefined-count', {count: 0}), 'Zero Clicks');
   assert.equal(i18n.t('pluralized.undefined-count', {count: 1}), 'One Click');
   assert.equal(i18n.t('pluralized.undefined-count', {count: '2'}), '2 Clicks');
+
+  // test when pluralized.undefined-count is string
+  assert.equal(i18n.t('pluralized.missing-other'), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.missing-other', {count: null}), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.missing-other', {count: undefined}), 'No clicks number provided');
+  assert.equal(i18n.t('pluralized.missing-other', {count: 0}), 'Zero Clicks');
+  assert.equal(i18n.t('pluralized.missing-other', {count: 1}), 'One Click');
+  assert.equal(i18n.t('pluralized.missing-other', {count: '2'}), 'Missing translation: pluralized.missing-other.other');
+
 });
 
 test("deterministic behaviour of custom pluralization rules and missing translations", function(assert) {
   let i18n = this.subject({ locale: 'en-wz' });
   assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
   assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
-  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation.zero');
 
   // reset locale translations cache
   i18n.get('_locale').rebuild();
   assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
-  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation.zero');
   assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
 
   // reset locale translations cache
   i18n.get('_locale').rebuild();
-  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation');
+  assert.equal(i18n.t('pluralized.missing-translation', { count: '0' }), 'Missing translation: pluralized.missing-translation.zero');
   assert.equal(i18n.t('pluralized.missing-translation', { count: 1 }), 'One Click');
   assert.equal(i18n.t('pluralized.missing-translation', { count: 2 }), '2 Clicks');
 });
@@ -157,5 +166,5 @@ test("applies provided default translation in cascade when main one is not found
 
 test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
-  assert.equal('Missing translation: not.yet.translated', result);
+  assert.equal(result, 'Missing translation: not.yet.translated.other');
 });
