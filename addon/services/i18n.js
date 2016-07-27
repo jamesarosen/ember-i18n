@@ -53,7 +53,7 @@ export default Parent.extend(Evented, {
     const count = get(data, 'count');
 
     const translation = locale.findTranslation(makeArray(key), count);
-    return typeOf(translation.result) !== 'undefined';
+    return typeOf(translation.result) !== 'undefined' && !translation.result._isMissing;
   },
 
   // @public
