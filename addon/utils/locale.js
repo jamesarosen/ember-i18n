@@ -20,7 +20,7 @@ function Locale(id, owner) {
 
 Locale.prototype = {
   rebuild() {
-    this.translations = getFlattenedTranslations(this.id, this.owner);
+    this.translations = getFlattenedTranslations(this.id, this.owner, true);
     this._setConfig();
   },
 
@@ -107,12 +107,17 @@ Locale.prototype = {
   }
 };
 
-function getFlattenedTranslations(id, owner) {
+function getFlattenedTranslations(id, owner, includeDefault=true) {
   const result = {};
+
+  if (includeDefault) {
+    const translations = owner._lookupFactory(`locale:translations`) || {};
+    assign(result, withFlattenedKeys(translations));
+  }
 
   const parentId = parentLocale(id);
   if (parentId) {
-    assign(result, getFlattenedTranslations(parentId, owner));
+    assign(result, getFlattenedTranslations(parentId, owner, false));
   }
 
   const translations = owner._lookupFactory(`locale:${id}/translations`) || {};

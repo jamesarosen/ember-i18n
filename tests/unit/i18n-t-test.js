@@ -120,3 +120,9 @@ test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
+
+test('falls back to default translations', function(assert) {
+  assert.equal(this.subject({ locale: 'en' }).t('defined.in.default', {}), 'Defined in default');
+  assert.equal(this.subject({ locale: 'es' }).t('defined.in.default', {}), 'Defined in default');
+  assert.equal(this.subject({ locale: 'en-ps' }).t('defined.in.default', {}), 'Defined in default');
+});
