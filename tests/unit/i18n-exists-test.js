@@ -34,10 +34,10 @@ test('fallsback to the parent locale', function(assert) {
   assert.equal(i18n.exists('no.interpolations.either'), true);
 });
 
-test('non-existing translations when checked twice do not exist', function (assert) {
+test('non-existing translation does not exists all the time [#380]', function (assert) {
   const i18n = this.subject({ locale: 'en' });
 
-  assert.equal(i18n.exists('not.existing'), false);
-  assert.equal(i18n.t('not.existing'), 'Missing translation: not.existing');
-  assert.equal(i18n.exists('not.existing'), false);
+  assert.equal(i18n.exists('not.yet.translated'), false);
+  assert.equal(i18n.t('not.yet.translated'), 'Missing translation: not.yet.translated');
+  assert.equal(i18n.exists('not.yet.translated'), false);
 });
