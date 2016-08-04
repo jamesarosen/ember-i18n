@@ -31,6 +31,11 @@ if (Ember.Helper == null) {
 
     // observe the locale:
     i18n.localeStream.subscribe(out.notify, out);
+	
+	// un-observe the locale on destruction of the associated view
+	env.data.view.one('willDestroyElement', this, function(){
+		i18n.localeStream.unsubscribe(out.notify, out);
+	});
 
     // if the i18n key itself is dynamic, observe it:
     if (i18nKey.isStream) {
