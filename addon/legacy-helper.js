@@ -14,6 +14,11 @@ if (Ember.Helper == null) {
       const value = i18nKey.isStream ? i18nKey.value() : i18nKey;
       return value === undefined ? '' : i18n.t(value, readHash(hash));
     });
+    
+    // Once the view is destroyed destroy the steam as well
+    env.data.view.one('willDestroyElement', out, function() {
+      this.destroy();
+    });
 
     // Once the view is destroyed destroy the steam as well
     env.data.view.one('willDestroyElement', out, function() {
