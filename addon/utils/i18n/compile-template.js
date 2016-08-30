@@ -1,6 +1,6 @@
 import Ember from "ember";
 
-const SafeString = Ember.Handlebars.SafeString;
+const htmlSafe = Ember.String.htmlSafe;
 const get = Ember.get;
 const escapeExpression = Ember.Handlebars.Utils.escapeExpression;
 const tripleStache = /\{\{\{\s*(.*?)\s*\}\}\}/g;
@@ -21,6 +21,6 @@ export default function compileTemplate(template, rtl = false) {
 
     const wrapped = rtl ? `\u202B${result}\u202C` : result;
 
-    return new SafeString(wrapped);
+    return htmlSafe(wrapped);
   };
 }
