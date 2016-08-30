@@ -1,6 +1,7 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import { compileTemplate } from 'ember-i18n';
+import isHTMLSafe from 'ember-string-ishtmlsafe-polyfill';
 
 module('compile-template');
 
@@ -55,7 +56,7 @@ test('it treats triple-stache interpolations as HTML-safe', function(assert) {
 
 test('it returns HTML-safe strings', function(assert) {
   const result = compileAndEval('Roast the hazelnuts');
-  assert.ok(result instanceof Ember.Handlebars.SafeString);
+  assert.ok(isHTMLSafe(result));
 });
 
 // Right-to-Left Support
