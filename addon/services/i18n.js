@@ -23,11 +23,13 @@ export default Parent.extend(Evented, {
   // in the current `locale`.
   t(key, data = {}) {
     Ember.deprecate('locale is a reserved attribute', !data.hasOwnProperty('locale'), {
-      id: 'ember-i18n.reserve-locale'
+      id: 'ember-i18n.reserve-locale',
+      until: '5.0.0'
     });
 
     Ember.deprecate('htmlSafe is a reserved attribute', !data.hasOwnProperty('htmlSafe'), {
-      id: 'ember-i18n.reserve-htmlSafe'
+      id: 'ember-i18n.reserve-htmlSafe',
+      until: '5.0.0'
     });
 
     const locale = this.get('_locale');
