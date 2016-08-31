@@ -54,6 +54,16 @@ module.exports = {
       resolutions: {
         'ember': 'canary'
       }
+    },
+    {
+      name: 'ember-alpha',
+      allowedToFail: true,
+      dependencies: {
+        'ember': 'alpha'
+      },
+      resolutions: {
+        'ember': 'alpha'
+      }
     }
   ]
 };
