@@ -43,7 +43,9 @@
     "ember-addon"
   ],
   "dependencies": {
+    "broccoli-funnel": "^1.0.6",
     "ember-cli-babel": "^5.0.0",
+    "ember-cli-version-checker": "^1.1.6",
     "ember-getowner-polyfill": "^1.0.0"
   },
   "ember-addon": {
