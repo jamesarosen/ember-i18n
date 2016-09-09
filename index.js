@@ -10,7 +10,7 @@ module.exports = {
   config: function() {
     var checker = new VersionChecker(this);
     var dep = checker.for('ember', 'bower');
-    this.hasEmberHelper = dep.satisfies('>= 1.13.0');
+    this.hasEmberHelper = !dep.lt('1.13.0');
     return this._super.config.apply(this, arguments);
   },
 
