@@ -1,3 +1,17 @@
+## 4.3.0
+
+ * Include Ember 1.12 support only on Ember 1.12. This project now
+   uses ember-cli-version-checker and broccoli-funnel to selectively
+   include library files based on the Ember version.
+ * Support Glimmer2 by allowing `namedArgs` to be an `EmptyObject`
+ * use `Ember.String.htmlSafe` instead of
+   `new Ember.Handlebars.SafeString`
+ * Check the `_isMissing` flag on generated translations so
+   missing translations _stay missing_
+ * Reserve `locale` and `htmlSafe` attributes for future library use
+ * Ignore `.ember-cli` so developers can customize their setup
+ * Don't use QUnit 2+ for tests
+
 ## 4.2.2
 
  * set `isLocalizationFramework` for other addons
