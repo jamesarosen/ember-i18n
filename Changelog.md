@@ -1,3 +1,10 @@
+## 4.3.1
+
+ * Define no-op `ember-i18n` initializer and instance-initializer.
+   These were removed in 4.3.0 because they are no longer needed,
+   but some applications were declaring their own initialization
+   `before` or `after` those initializers.
+
 ## 4.3.0
 
  * Include Ember 1.12 support only on Ember 1.12. This project now
