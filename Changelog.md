@@ -1,3 +1,8 @@
+## 4.3.2
+
+ * `index.js` does _has Ember.Helper_ check in `init` rather than
+   `config` so the build _reliably_ includes the right helper code
+
 ## 4.3.1
 
  * Define no-op `ember-i18n` initializer and instance-initializer.
