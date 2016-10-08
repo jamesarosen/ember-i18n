@@ -1,13 +1,23 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
 
-const { run, deprecate:originalDeprecate } = Ember;
+const { run, deprecate:originalDeprecate, warn:originalWarn } = Ember;
+const warnings = Ember.A();
 
 moduleFor('service:i18n', 'I18nService#t', {
   integration: true,
 
+  beforeEach() {
+    Ember.warn = function(message, test, options) {
+      if (!test) { warnings.pushObject(message); }
+      originalWarn(message, test, options);
+    };
+  },
+
   afterEach() {
     Ember.deprecate = originalDeprecate;
+    Ember.warn = originalWarn;
+    warnings.clear();
   }
 });
 
@@ -40,7 +50,7 @@ test('returns "missing translation" translations', function(assert) {
   assert.equal('Missing translation: not.yet.translated', result);
 });
 
-test('warns on the presence of htmlSafe and locale', function(assert) {
+test('warns on the presence of htmlSafe', function(assert) {
   const service = this.subject();
   let deprecations = 0;
 
@@ -49,7 +59,7 @@ test('warns on the presence of htmlSafe and locale', function(assert) {
 
     const { id } = options;
 
-    if (id === 'ember-i18n.reserve-htmlSafe' || id === 'ember-i18n.reserve-locale') {
+    if (id === 'ember-i18n.reserve-htmlSafe') {
       deprecations += 1;
     }
   };
@@ -57,12 +67,9 @@ test('warns on the presence of htmlSafe and locale', function(assert) {
   service.t('not.yet.translated', { htmlSafe: true });
   assert.equal(deprecations, 1);
 
-  service.t('not.yet.translated', { locale: true });
-  assert.equal(deprecations, 2);
-
   service.t('not.yet.translated');
   service.t('not.yet.translated', { some: 'other key' });
-  assert.equal(deprecations, 2);
+  assert.equal(deprecations, 1);
 });
 
 test('emits "missing" events', function(assert) {
@@ -119,4 +126,43 @@ test("applies provided default translation in cascade when main one is not found
 test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
+});
+
+test("locale can be overridden and warns by default", function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  const result = i18n.t('no.interpolations', { locale: 'es' });
+  assert.equal(result, 'texto sin interpolaciones');
+  assert.equal(warnings.length, 1);
+});
+
+test("locale can be overridden and does not warn if allowLocaleOverride is true", function(assert) {
+  const i18n = this.subject({ locale: 'en', allowLocaleOverride: true });
+
+  const result = i18n.t('no.interpolations', { locale: 'es' });
+  assert.equal(result, 'texto sin interpolaciones');
+  assert.equal(warnings.length, 0);
+});
+
+test("locale can be used as an interpolation key if allowLocaleOverride is false", function(assert) {
+  const i18n = this.subject({ locale: 'en', allowLocaleOverride: false });
+
+  const result = i18n.t('with.locale.interpolation', { locale: 'es' });
+  assert.equal(result, 'Locale: es');
+  assert.equal(warnings.length, 0);
+});
+
+test('emits "missing" events with an overridden locale', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+  const calls = [];
+  function spy() { calls.push(arguments); }
+  i18n.on('missing', spy);
+
+  i18n.t('not.yet.translated', { some: 'data', locale: 'es' });
+
+  assert.equal(calls.length, 1);
+  assert.equal(calls[0].length, 3);
+  assert.equal(calls[0][0], 'es');
+  assert.equal(calls[0][1], 'not.yet.translated');
+  assert.equal(calls[0][2].some, 'data');
 });

@@ -41,3 +41,9 @@ test('non-existing translations when checked twice do not exist', function (asse
   assert.equal(i18n.t('not.existing'), 'Missing translation: not.existing');
   assert.equal(i18n.exists('not.existing'), false);
 });
+
+test('allows overriding the locale', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  assert.equal(i18n.exists('no.interpolations.either', { locale: 'es' }), false);
+});

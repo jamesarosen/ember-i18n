@@ -3,7 +3,8 @@ export default {
   'no.interpolations.either': 'another text without interpolations',
 
   'with': {
-    interpolations: 'Clicks: {{clicks}}'
+    interpolations: 'Clicks: {{clicks}}',
+    'locale.interpolation': 'Locale: {{locale}}'
   },
 
   'pluralized.translation': {

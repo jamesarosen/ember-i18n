@@ -50,3 +50,7 @@ test('updates when the locale changes', function(assert) {
     assert.textIs('.no-interpolations', 'texto sin interpolaciones');
   });
 });
+
+test('can override the target locale', function(assert) {
+  assert.textIs('.locale-override', 'texto sin interpolaciones');
+});
