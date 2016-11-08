@@ -68,6 +68,11 @@ export default Parent.extend(Evented, {
     }
   },
 
+  // @public
+  buildLocale(id) {
+    return new Locale(id, getOwner(this));
+  },
+
   // @private
   _initDefaults: on('init', function() {
     const ENV = getOwner(this)._lookupFactory('config:environment');
@@ -95,6 +100,6 @@ export default Parent.extend(Evented, {
   _locale: computed('locale', function() {
     const locale = this.get('locale');
 
-    return locale ? new Locale(this.get('locale'), getOwner(this)) : null;
+    return locale ? this.buildLocale(locale) : null;
   })
 });

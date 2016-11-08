@@ -60,6 +60,11 @@ Locale.prototype = {
     return result;
   },
 
+  getPluralKey(key, count) {
+    const inflection = this.pluralForm(+count);
+    return `${key}.${inflection}`;
+  },
+
   findTranslation(fallbackChain, count) {
     if (this.translations === undefined) { this._init(); }
 
@@ -68,8 +73,7 @@ Locale.prototype = {
     for (i = 0; i < fallbackChain.length; i++) {
       let key = fallbackChain[i];
       if (count != null) {
-        const inflection = this.pluralForm(+count);
-        result = this.translations[`${key}.${inflection}`];
+        result = this.translations[this.getPluralKey(key, count)];
       }
 
       if (result == null) {
