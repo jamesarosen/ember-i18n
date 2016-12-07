@@ -1,10 +1,9 @@
 import Ember from "ember";
-import getOwner from 'ember-getowner-polyfill';
 import Locale from "../utils/locale";
 import addTranslations from "../utils/add-translations";
 import getLocales from "../utils/get-locales";
 
-const { assert, computed, get, Evented, makeArray, on, typeOf, warn } = Ember;
+const { assert, computed, get, Evented, makeArray, on, typeOf, warn, getOwner } = Ember;
 const Parent = Ember.Service || Ember.Object;
 
 // @public
