@@ -1,19 +1,33 @@
 import Stream from "./stream";
 import { readHash } from "./stream";
+import Ember from 'ember';
 
-export default function tHelper(params, hash, options, env) {
+const assign = Ember.assign || Ember.merge;
+
+export default function tHelper([i18nKey, contextObject = { value: () => {} }], hash, options, env) {
   const i18n = env.data.view.container.lookup('service:i18n');
-  const i18nKey = params[0];
+
+
 
   var out = new Stream(function() {
     const value = i18nKey.isStream ? i18nKey.value() : i18nKey;
-    return value === undefined ? '' : i18n.t(value, readHash(hash));
+
+    const contextObjectValue = contextObject.value();
+    const mergedHash = {};
+    assign(mergedHash, contextObjectValue);
+    assign(mergedHash, hash);
+
+    return value === undefined ? '' : i18n.t(value, readHash(mergedHash));
   });
 
   // Once the view is destroyed destroy the steam as well
   env.data.view.one('willDestroyElement', out, function() {
     this.destroy();
   });
+
+  if (contextObject && contextObject.isStream) {
+    contextObject.subscribe(out.notify, out);
+  }
 
   // observe any hash arguments that are streams:
   Object.keys(hash).forEach(function(key) {

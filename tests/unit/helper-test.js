@@ -61,6 +61,61 @@ test('interpolations', function(assert) {
   assert.equal(this.$().text(), 'A bowl of clam chowder');
 });
 
+test('interpolations with passed context', function(assert) {
+  this.addTranslations('en', { 'bowl of soup': 'A bowl of {{soup}}' });
+  this.set('soup', 'bisque');
+
+  this.set('contextObject', Ember.computed('soup', function() {
+    return {
+      soup: this.get('soup')
+    };
+  }));
+
+  this.render(hbs`{{t 'bowl of soup' contextObject}}`);
+  assert.equal(this.$().text(), 'A bowl of bisque');
+
+  run(this, 'set', 'soup', 'clam chowder');
+  assert.equal(this.$().text(), 'A bowl of clam chowder');
+});
+
+test('interpolations with passed context and a hash', function(assert) {
+  this.addTranslations('en', { 'bowl of soup': 'A bowl of {{soup}} or {{salad}}' });
+  this.set('soup', 'bisque');
+  this.set('salad', 'mixed greens');
+
+  this.set('contextObject', Ember.computed('soup', function() {
+    return {
+      soup: this.get('soup')
+    };
+  }));
+
+  this.render(hbs`{{t 'bowl of soup' contextObject salad=salad}}`);
+  assert.equal(this.$().text(), 'A bowl of bisque or mixed greens');
+
+  run(this, 'set', 'soup', 'clam chowder');
+  run(this, 'set', 'salad', 'cobb salad');
+  assert.equal(this.$().text(), 'A bowl of clam chowder or cobb salad');
+});
+
+test('interpolations with passed context and a hash - hash overrides context', function(assert) {
+  this.addTranslations('en', { 'A delicious entree': 'A delicious {{entree}}' });
+  this.set('entreeFromContext', 'steak');
+  this.set('entreeFromHash', 'pasta');
+
+  this.set('contextObject', Ember.computed('entreeFromContext', function() {
+    return {
+      soup: this.get('entreeFromContext')
+    };
+  }));
+
+  this.render(hbs`{{t 'A delicious entree' contextObject entree=entreeFromHash}}`);
+  assert.equal(this.$().text(), 'A delicious pasta');
+
+  run(this, 'set', 'entreeFromContext', 'burger');
+  run(this, 'set', 'entreeFromHash', 'pizza');
+  assert.equal(this.$().text(), 'A delicious pizza');
+});
+
 test('locale change', function(assert) {
   this.addTranslations('en', { soup: 'Soup' });
   this.addTranslations('zh', { soup: '湯' });
