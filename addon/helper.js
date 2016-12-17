@@ -2,10 +2,11 @@ import Ember from "ember";
 
 const { get, inject, Helper, Object: EmberObject, observer } = Ember;
 
-function mergedContext(contextObject, contextHash) {
+function mergedContext(objectContext, hashContext) {
   return EmberObject.extend({
     unknownProperty(key) {
-      return get(contextHash, key) || get(contextObject, key);
+      const fromHash = get(hashContext, key);
+      return fromHash === undefined ? get(objectContext, key) : fromHash;
     }
   }).create();
 }
