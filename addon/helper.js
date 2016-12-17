@@ -1,15 +1,23 @@
 import Ember from "ember";
 
-const { assign, get, inject, Helper, observer } = Ember;
+const { get, inject, Helper, Object: EmberObject, observer } = Ember;
 
-export default Ember.Helper.extend({
+function mergedContext(contextObject, contextHash) {
+  return EmberObject.extend(contextHash, {
+    unknownProperty(key) {
+      return get(contextObject, key);
+    }
+  }).create();
+}
+
+export default Helper.extend({
   i18n: inject.service(),
 
-  compute([key, interpolationHash = {}, ...rest], interpolations) {
-    assign(interpolations, interpolationHash);
-    
+  compute([key, contextObject = {}, ...rest], interpolations) {
+    const mergedInterpolations = mergedContext(contextObject, interpolations);
+
     const i18n = get(this, 'i18n');
-    return i18n.t(key, interpolations);
+    return i18n.t(key, mergedInterpolations);
   },
 
   _recomputeOnLocaleChange: observer('i18n.locale', function() {
