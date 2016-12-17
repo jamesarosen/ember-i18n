@@ -43,6 +43,14 @@ test('updates when dynamic interpolations change', function(assert) {
   assert.textIs('.dynamic-interpolations', 'Clicks: 1');
 });
 
+test('updates when dynamic interpolations change from a passed context object', function(assert) {
+  assert.textIs('.dynamic-interpolations-context-object', 'Clicks: 0, Clicks from hash: 72');
+
+  click('.increment-context-object');
+
+  assert.textIs('.dynamic-interpolations-context-object', 'Clicks: 1, Clicks from hash: 72');
+});
+
 test('updates when the locale changes', function(assert) {
   click('.switch-to-es');
 

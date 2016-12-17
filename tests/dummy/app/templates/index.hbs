@@ -13,6 +13,16 @@
 </section>
 
 <section>
+  <button class='increment-context-object' {{action "incrementContextObject"}}>
+    Increment For Context Object Click Count
+  </button>
+
+  <span class='dynamic-interpolations-context-object'>
+    {{~ t "with.interpolationsWithContextObject" contextObject staticClicks=72 ~}}
+  </span>
+</section>
+
+<section>
   <button class='change-dynamic-key' {{action "changeDynamicKey" "no.interpolations.either"}}>Change dynamic key</button>
 
   <span class='dynamic-key'>{{t dynamicKey}}</span>
