@@ -18,9 +18,34 @@
   </button>
 
   <span class='dynamic-interpolations-context-object'>
-    {{~ t "with.interpolationsWithContextObject" contextObject staticClicks=72 ~}}
+    {{~ t "with.interpolationsWithContextObject" contextObject otherClicks=72 ~}}
   </span>
 </section>
+
+<section>
+  <button class='increment-context-object-with-hash' {{action "incrementContextObjectWithHash"}}>
+    Increment For Context Object Click Count - Test 2
+  </button>
+
+  <button class='increment-hash' {{action "incrementContextHash"}}>
+    Increment For Hash Click Count - Test 2
+  </button>
+
+  <span class='dynamic-interpolations-override'>
+    {{~ t "with.interpolationsWithContextObject"
+      contextObjectWithHash
+      clicks=hashClickCount
+      otherClicks=72
+    ~}}
+  </span>
+  <span class='dynamic-interpolations-context-and-hash'>
+    {{~ t "with.interpolationsWithContextObject"
+      contextObjectWithHash
+      otherClicks=hashClickCount
+    ~}}
+  </span>
+
+ </section>
 
 <section>
   <button class='change-dynamic-key' {{action "changeDynamicKey" "no.interpolations.either"}}>Change dynamic key</button>

@@ -4,7 +4,7 @@ export default {
 
   'with': {
     interpolations: 'Clicks: {{clicks}}',
-    interpolationsWithContextObject: 'Clicks: {{clicks}}, Clicks from hash: {{staticClicks}}'
+    interpolationsWithContextObject: 'Clicks: {{clicks}}, Clicks from hash: {{otherClicks}}'
   },
 
   'pluralized.translation': {

@@ -51,6 +51,21 @@ test('updates when dynamic interpolations change from a passed context object', 
   assert.textIs('.dynamic-interpolations-context-object', 'Clicks: 1, Clicks from hash: 72');
 });
 
+test('updates from hash when dynamic interpolations change from a passed context object and a hash', function(assert) {
+  assert.textIs('.dynamic-interpolations-override', 'Clicks: 0, Clicks from hash: 72');
+  assert.textIs('.dynamic-interpolations-context-and-hash', 'Clicks: 0, Clicks from hash: 0');
+
+  click('.increment-context-object-with-hash');
+
+  assert.textIs('.dynamic-interpolations-override', 'Clicks: 0, Clicks from hash: 72');
+  assert.textIs('.dynamic-interpolations-context-and-hash', 'Clicks: 1, Clicks from hash: 0');
+
+  click('.increment-hash');
+
+  assert.textIs('.dynamic-interpolations-override', 'Clicks: 1, Clicks from hash: 72');
+  assert.textIs('.dynamic-interpolations-context-and-hash', 'Clicks: 1, Clicks from hash: 1');
+});
+
 test('updates when the locale changes', function(assert) {
   click('.switch-to-es');
 
