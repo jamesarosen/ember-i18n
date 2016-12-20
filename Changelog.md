@@ -1,3 +1,9 @@
+## 4.4.0
+
+ * Do not observe computed properties that are not consumed
+ * Update use of `ember-getowner-polyfill` to match the true polyfill changes
+   made to the addon.
+
 ## 4.3.2
 
  * `index.js` does _has Ember.Helper_ check in `init` rather than
