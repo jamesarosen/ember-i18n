@@ -1,3 +1,8 @@
+## 4.5.0
+
+ * `{{t}}` helper supports a context object as a second ordered argument;
+   named (hash) arguments override context object ones when interpolating
+
 ## 4.4.0
 
  * Do not observe computed properties that are not consumed
