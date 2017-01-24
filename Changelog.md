@@ -1,3 +1,127 @@
+## 4.5.0
+
+ * `{{t}}` helper supports a context object as a second ordered argument;
+   named (hash) arguments override context object ones when interpolating
+
+## 4.4.0
+
+ * Do not observe computed properties that are not consumed
+ * Update use of `ember-getowner-polyfill` to match the true polyfill changes
+   made to the addon.
+
+## 4.3.2
+
+ * `index.js` does _has Ember.Helper_ check in `init` rather than
+   `config` so the build _reliably_ includes the right helper code
+
+## 4.3.1
+
+ * Define no-op `ember-i18n` initializer and instance-initializer.
+   These were removed in 4.3.0 because they are no longer needed,
+   but some applications were declaring their own initialization
+   `before` or `after` those initializers.
+
+## 4.3.0
+
+ * Include Ember 1.12 support only on Ember 1.12. This project now
+   uses ember-cli-version-checker and broccoli-funnel to selectively
+   include library files based on the Ember version.
+ * Support Glimmer2 by allowing `namedArgs` to be an `EmptyObject`
+ * use `Ember.String.htmlSafe` instead of
+   `new Ember.Handlebars.SafeString`
+ * Check the `_isMissing` flag on generated translations so
+   missing translations _stay missing_
+ * Reserve `locale` and `htmlSafe` attributes for future library use
+ * Ignore `.ember-cli` so developers can customize their setup
+ * Don't use QUnit 2+ for tests
+
+## 4.2.2
+
+ * set `isLocalizationFramework` for other addons
+ * change `Stream` import to support latest Ember (even though
+   ember-i18n doesn't _rely_ on `Stream` for Ember 1.13+, it needs
+   to _import_ it)
+
+## 4.2.1
+
+ * use `Ember.assign` instead of `Ember.merge` if available
+ * add `no` locale support
+
+## 4.2.0
+
+ * remove `Stream` awareness from `service:i18n` to ensure streamless
+   operation on Ember 1.13+
+ * correct Polish pluralization
+ * pass ID to `Ember.warn` to prevent deprecation warnings
+ * `missingMessage` gets called on the `service:i18n` instance
+ * coerce `count` to a number
+ * don't use ES2015 classes to ensure IE8 compatibility
+ * use public `getOwner` API for container / registry functions
+
+## 4.1.4
+
+ * fix incompatibility with Ember 2.2 `Stream` class
+ * `I18nService#locales` are now sorted
+ * `t` macro adds `i18n.locale` as a dependency so macro-defined
+   properties update when the locale changes
+
+## 4.1.3
+
+ * More Ember 2.1 compatibility
+
+## 4.1.2
+
+ * Ember 2.1 compatibility
+
+## 4.1.1
+
+ * prevent warnings about missing `rtl` definition for included locales
+ * improve warning about missing `rtl` for app-defined locales
+
+## 4.1.0
+
+ * `service:i18n` now has a `locales` property that lists available locales
+ * support passing an `Array` of fallback keys via `default: [...]`
+ * if the app specifies an unknown locale, fall back to the configuration for
+   `zh` and print a warning instead of throwing an exception
+ * use `Object.keys`, not `Ember.keys` for enumerating properties
+ * destroy the `Stream` created in the legacy helper (pre-Glimmer) when its
+   view is destroyed
+ * test against Ember 1.12
+
+## 4.0.0
+
+ * declare a valid SPDX license (no change in license, just in the
+   string representation)
+ * support apps with `podModuleSuffix`
+
+## 4.0.0-beta.4
+
+ * relax ember dependency to `>=1.12.0 <1.13.0 || >=1.13.1 <3.0.0`, which is
+   "1.12.x, 1.13.x except 1.13.0, and 2.x".
+
+## 4.0.0-beta.3
+
+ * Support Ember 1.13.1+ and 2.0+. **Note** this release is not compatible with
+   v1.13.0 and never will be.
+ * Stop auto-injecting `service:i18n` into Components, Controllers, and Routes.
+   Clients should instead use `i18n: Ember.inject.service()` as needed.
+ * Fix Spanish spelling.
+ * Fix `{{t}}` helper with dynamic keys.
+ * Add `locale` blueprint
+ * Use `Ember.Helper` if available (Ember >= 1.13)
+ * Use `Ember.Service` if available (Ember >= 1.13)
+ * Remove dependency on `Ember.EnumerableUtils.map` as that will be removed in
+   Ember 2.0.
+
+## 4.0.0-beta.2
+
+ * add repository to `package.json`
+ * use get to look up i18n service
+ * `t` macro works without passing an interpolations map
+ * fix bug in `add-translations` when there were no existing translations
+   for the locale
+
 ## 4.0.0-alpha
 
  * Restart project as a native Ember-CLI addon

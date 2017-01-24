@@ -1,23 +1,27 @@
 import Ember from "ember";
 
-var Helper = null;
+const { get, inject, Helper, Object: EmberObject, observer } = Ember;
 
-if (Ember.Helper) {
-  Helper = Ember.Helper.extend({
-    i18n: Ember.inject.service(),
-
-    _locale: Ember.computed.readOnly('i18n.locale'),
-
-    compute: function(params, interpolations) {
-      const key = params[0];
-      const i18n = this.get('i18n');
-      return i18n.t(key, interpolations);
-    },
-
-    _recomputeOnLocaleChange: Ember.observer('_locale', function() {
-      this.recompute();
-    })
-  });
+function mergedContext(objectContext, hashContext) {
+  return EmberObject.extend({
+    unknownProperty(key) {
+      const fromHash = get(hashContext, key);
+      return fromHash === undefined ? get(objectContext, key) : fromHash;
+    }
+  }).create();
 }
 
-export default Helper;
+export default Helper.extend({
+  i18n: inject.service(),
+
+  compute([key, contextObject = {}, ...rest], interpolations) {
+    const mergedInterpolations = mergedContext(contextObject, interpolations);
+
+    const i18n = get(this, 'i18n');
+    return i18n.t(key, mergedInterpolations);
+  },
+
+  _recomputeOnLocaleChange: observer('i18n.locale', function() {
+    this.recompute();
+  })
+});

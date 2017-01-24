@@ -1,3 +1,1 @@
-import Service from "ember-i18n/service";
-export default Service;
-
+export { default } from 'ember-i18n/services/i18n';

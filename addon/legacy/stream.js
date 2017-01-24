@@ -8,4 +8,4 @@ import Ember from 'ember';
 // See https://github.com/dockyard/ember-cli-i18n/blob/v0.0.6/addon/utils/stream.js
 
 export default Ember.__loader.require('ember-metal/streams/stream')['default'];
-export var readHash = Ember.__loader.require('ember-metal/streams/utils').readHash;
+export const readHash = Ember.__loader.require('ember-metal/streams/utils').readHash;

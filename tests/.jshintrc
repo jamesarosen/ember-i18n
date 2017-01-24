@@ -22,7 +22,9 @@
     "andThen",
     "currentURL",
     "currentPath",
-    "currentRouteName"
+    "currentRouteName",
+    "t",
+    "expectTranslation"
   ],
   "node": false,
   "browser": false,
@@ -48,5 +50,6 @@
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true
+  "esnext": true,
+  "unused": true
 }
