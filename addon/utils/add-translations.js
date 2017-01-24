@@ -4,7 +4,8 @@ const assign = Ember.assign || Ember.merge;
 
 export default function addTranslations(locale, newTranslations, owner) {
   const key = `locale:${locale}/translations`;
-  var existingTranslations = owner._lookupFactory(key);
+  let factory = owner.factoryFor(key);
+  let existingTranslations = factory && factory.class;
 
   if (existingTranslations == null) {
     existingTranslations = {};

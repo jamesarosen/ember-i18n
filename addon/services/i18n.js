@@ -69,7 +69,8 @@ export default Parent.extend(Evented, {
 
   // @private
   _initDefaults: on('init', function() {
-    const ENV = getOwner(this)._lookupFactory('config:environment');
+    let owner = getOwner(this);
+    let ENV = owner.factoryFor('config:environment').class;
 
     if (this.get('locale') == null) {
       var defaultLocale = (ENV.i18n || {}).defaultLocale;
