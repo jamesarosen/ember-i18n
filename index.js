@@ -11,7 +11,7 @@ module.exports = {
     this._super.init && this._super.init.apply(this, arguments);
 
     var checker = new VersionChecker(this);
-    var dep = checker.for('ember', 'bower');
+    var dep = checker.forEmber();
     this.hasEmberHelper = !dep.lt('1.13.0');
   },
 
