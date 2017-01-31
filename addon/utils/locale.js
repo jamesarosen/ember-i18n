@@ -30,7 +30,13 @@ Locale.prototype = {
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
 
-    const defaultConfig = this.owner._lookupFactory('ember-i18n@config:zh');
+    let defaultConfig;
+    if (owner.factoryFor) {
+      let maybeDefaultConfig = this.owner.factoryFor('ember-i18n@config:zh');
+      defaultConfig = maybeDefaultConfig && maybeDefaultConfig.class;
+    } else {
+      defaultConfig = this.owner._lookupFactory('ember-i18n@config:zh');
+    }
 
     if (this.rtl === undefined) {
       warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
@@ -89,8 +95,14 @@ Locale.prototype = {
 
   _defineMissingTranslationTemplate(key) {
     const i18n = this.owner.lookup('service:i18n');
-    const missingMessage = this.owner._lookupFactory('util:i18n/missing-message');
     const locale = this.id;
+    let missingMessage;
+    if (owner.factoryFor) {
+      let maybeMissingMessage = this.owner.factoryFor('util:i18n/missing-message');
+      missingMessage = maybeMissingMessage && maybeMissingMessage.class;
+    } else {
+      missingMessage = this.owner._lookupFactory('util:i18n/missing-message');
+    }
 
     function missingTranslation(data) { return missingMessage.call(i18n, locale, key, data); }
 
@@ -100,7 +112,13 @@ Locale.prototype = {
   },
 
   _compileTemplate(key, string) {
-    const compile = this.owner._lookupFactory('util:i18n/compile-template');
+    let compile;
+    if (owner.factoryFor) {
+      let maybeCompile = this.owner.factoryFor('util:i18n/compile-template');
+      compile = maybeCompile && maybeCompile.class;
+    } else {
+      compile = this.owner._lookupFactory('util:i18n/compile-template');
+    }
     const template = compile(string, this.rtl);
     this.translations[key] = template;
     return template;
@@ -123,11 +141,22 @@ function getFlattenedTranslations(id, owner) {
 
 // Walk up confiugration objects from most specific to least.
 function walkConfigs(id, owner, fn) {
-  const appConfig = owner._lookupFactory(`locale:${id}/config`);
-  if (appConfig) { fn(appConfig); }
+  if (owner.factoryFor) {
+    let maybeAppConfig = owner.factoryFor(`locale:${id}/config`);
+    let appConfig = maybeAppConfig && maybeAppConfig.class;
+    if (appConfig) { fn(appConfig); }
 
-  const addonConfig = owner._lookupFactory(`ember-i18n@config:${id}`);
-  if (addonConfig) { fn(addonConfig); }
+    let maybeAddonConfig = owner.factoryFor(`ember-i18n@config:${id}`);
+    let addonConfig = maybeAddonConfig && maybeAddonConfig.class;
+    if (addonConfig) { fn(addonConfig); }
+  } else {
+    let appConfig = owner._lookupFactory(`locale:${id}/config`);
+    if (appConfig) { fn(appConfig); }
+
+    let addonConfig = owner._lookupFactory(`ember-i18n@config:${id}`);
+    if (addonConfig) { fn(addonConfig); }
+  }
+
 
   const parentId = parentLocale(id);
   if (parentId) { walkConfigs(parentId, owner, fn); }
