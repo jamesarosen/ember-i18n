@@ -7,7 +7,7 @@ module.exports = {
   name: 'ember-i18n',
   isLocalizationFramework: true,
 
-  init: function() {
+  init() {
     this._super.init && this._super.init.apply(this, arguments);
 
     var checker = new VersionChecker(this);
@@ -15,7 +15,7 @@ module.exports = {
     this.hasEmberHelper = !dep.lt('1.13.0');
   },
 
-  treeFor: function(name) {
+  treeFor(name) {
     var result = this._super.treeFor.apply(this, arguments);
 
     if (this.hasEmberHelper) {
