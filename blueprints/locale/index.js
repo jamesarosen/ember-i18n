@@ -1,7 +1,7 @@
 module.exports = {
   description: 'Generates new i18n locale directory with config and translations files.',
 
-  beforeInstall: function(options) {
+  beforeInstall(options) {
     if (options.args.length < 2) {
       throw new Error("ember-i18n locale generator requires a locale name.");
     }

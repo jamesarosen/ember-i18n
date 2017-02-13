@@ -5,7 +5,7 @@ import { translationMacro as t } from 'ember-i18n';
 moduleFor('service:i18n', 'translationMacro', {
   integration: true,
 
-  beforeEach: function() {
+  beforeEach() {
     const i18n = this.subject({ locale: 'en' });
 
     this.object = Ember.Object.extend({

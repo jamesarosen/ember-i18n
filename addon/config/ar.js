@@ -3,7 +3,7 @@ import { ZERO, ONE, TWO, FEW, MANY, OTHER } from './constants';
 export default {
   rtl: true,
 
-  pluralForm: function(n) {
+  pluralForm(n) {
     const mod100 = n % 100;
 
     if (n === 0) { return ZERO; }
