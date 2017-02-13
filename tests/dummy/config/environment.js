@@ -5,13 +5,17 @@ module.exports = function(environment) {
     modulePrefix: 'dummy',
     podModulePrefix: process.env.POD_MODULE_PREFIX,
     environment: environment,
-    baseURL: '/',
+    rootURL: '/',
     i18n: { defaultLocale: 'en' },
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
         // e.g. 'with-controller': true
+      },
+      EXTEND_PROTOTYPES: {
+        // Prevent Ember Data from overriding Date.parse.
+        Date: false
       }
     },
 

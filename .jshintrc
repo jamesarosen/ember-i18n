@@ -1,9 +1,9 @@
 {
   "predef": [
     "document",
+    "requirejs",
     "window",
-    "-Promise",
-    "requirejs"
+    "-Promise"
   ],
   "browser": true,
   "boss": true,
@@ -28,6 +28,6 @@
   "strict": false,
   "white": false,
   "eqnull": true,
-  "esnext": true,
+  "esversion": 6,
   "unused": true
 }
