@@ -1,3 +1,7 @@
+## 5.0.0
+- [BREAKING] Dropped support for Ember 1.X
+- Use new `owner.factoryFor` (thanks to `ember-getowner-polyfill`) to fix deprecations in Ember 2.12
+
 ## 4.5.0
 
  * `{{t}}` helper supports a context object as a second ordered argument;
