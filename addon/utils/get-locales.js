@@ -11,5 +11,6 @@ export default function getLocales() {
       }
       return locales;
     }, Ember.A())
+    .uniq()
     .sort();
 }
