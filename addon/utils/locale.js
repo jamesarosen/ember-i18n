@@ -29,7 +29,14 @@ Locale.prototype = {
       if (this.rtl === undefined) { this.rtl = config.rtl; }
       if (this.pluralForm === undefined) { this.pluralForm = config.pluralForm; }
     });
-    let defaultConfig = this.owner.factoryFor('ember-i18n@config:zh').class;
+
+    // Exit early if we already have an RTL and pluralForm config set
+    if (this.rtl !== undefined && this.pluralForm !== undefined) {
+      return;
+    }
+
+    let defaultConfigFactory = this.owner.factoryFor('ember-i18n@config:zh');
+    let defaultConfig = defaultConfigFactory ? defaultConfigFactory.class : null;
 
     if (this.rtl === undefined) {
       warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
