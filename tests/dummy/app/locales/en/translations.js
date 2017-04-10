@@ -9,5 +9,8 @@ export default {
   'pluralized.translation': {
     one: 'One Click',
     other: '{{count}} Clicks'
-  }
+  },
+
+  'default1.US': 'default1.US',
+  'default2.default': 'default2.default'
 };

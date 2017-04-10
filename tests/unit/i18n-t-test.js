@@ -120,3 +120,11 @@ test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
+
+test("applies countryCode defaults", function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+  run(i18n, 'set', 'countryCode', 'US');
+
+  assert.equal('' + i18n.t('default1'), 'default1.US');
+  assert.equal('' + i18n.t('default2'), 'default2.default');
+});

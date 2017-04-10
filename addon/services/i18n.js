@@ -13,6 +13,17 @@ export default Parent.extend(Evented, {
   locale: null,
 
   // @public
+  countryCode: Ember.computed({
+    set(key, value) {
+      if(Ember.isBlank(value) || value.length !== 2 || value !== value.toUpperCase()) {
+        throw new Error('Invalid countryCode, expected a two-character uppercase string e.g. "US"');
+      }
+      this.set('_countryCode', value);
+      return value;
+    }
+  }),
+
+  // @public
   // A list of found locales.
   locales: computed(getLocales),
 
@@ -36,8 +47,14 @@ export default Parent.extend(Evented, {
     const count = get(data, 'count');
 
     const defaults = makeArray(get(data, 'default'));
+    const countryCode = this.get('_countryCode');
 
-    defaults.unshift(key);
+    if (defaults.length === 0 && Ember.isPresent(countryCode)) {
+      defaults.push(`${key}.${countryCode}`, `${key}.default`, key);
+    } else {
+      defaults.unshift(key);
+    }
+
     const template = locale.getCompiledTemplate(defaults, count);
 
     if (template._isMissing) {
