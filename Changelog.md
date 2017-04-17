@@ -1,6 +1,11 @@
+## 5.0.1
+ * More ES6 syntax
+ * Turkish `pluralForm` always returns `ONE`
+ * Fix null-pointer-exception for `ember-i18n@config:zh` introduced in v5.0.0
+
 ## 5.0.0
-- [BREAKING] Dropped support for Ember 1.X
-- Use new `owner.factoryFor` (thanks to `ember-getowner-polyfill`) to fix deprecations in Ember 2.12
+ * [BREAKING] Dropped support for Ember 1.X
+ * Use new `owner.factoryFor` (thanks to `ember-getowner-polyfill`) to fix deprecations in Ember 2.12
 
 ## 4.5.0
 
