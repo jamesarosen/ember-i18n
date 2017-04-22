@@ -1,7 +1,8 @@
 import Ember from 'ember';
 import { module, test } from 'qunit';
 import { compileTemplate } from 'ember-i18n';
-import isHTMLSafe from 'ember-string-ishtmlsafe-polyfill';
+
+const { htmlSafe, isHTMLSafe } = Ember.String;
 
 module('compile-template');
 
@@ -42,7 +43,7 @@ test('it treats interpolations as HTML-unsafe', function(assert) {
 
 test('it obeys interpolations marked as HTML-safe', function(assert) {
   const result = compileAndEval('Heat oil over {{temp}} heat.', {
-    temp: Ember.String.htmlSafe('<strong>medium</strong>')
+    temp: htmlSafe('<strong>medium</strong>')
   });
   assert.equal(result, 'Heat oil over <strong>medium</strong> heat.');
 });
