@@ -5,7 +5,7 @@ const assign = Ember.assign || Ember.merge;
 // @private
 //
 // This class is the work-horse of localization look-up.
-function Locale(id, owner) {
+function Locale(id, owner, inlineMode) {
   // On Construction:
   //  1. look for translations in the locale (e.g. pt-BR) and all parent
   //     locales (e.g. pt), flatten any nested keys, and then merge them.
@@ -15,6 +15,11 @@ function Locale(id, owner) {
   //  4. Ensure `pluralForm` is defined
   this.id = id;
   this.owner = owner;
+  this.inlineMode = inlineMode;
+  this.store = {
+    count: 0,
+    translations: {},
+  }
   this.rebuild();
 }
 
@@ -57,7 +62,9 @@ Locale.prototype = {
       result = this._compileTemplate(translation.key, result);
     }
 
-    if (result == null) {
+    if (this.inlineMode && result === undefined) {
+      result = this._compileInlineTemplate(fallbackChain);
+    } else if (result == null) {
       result = this._defineMissingTranslationTemplate(fallbackChain[0]);
     }
 
@@ -96,6 +103,7 @@ Locale.prototype = {
   _defineMissingTranslationTemplate(key) {
     const i18n = this.owner.lookup('service:i18n');
     const locale = this.id;
+
     let missingMessage = this.owner.factoryFor('util:i18n/missing-message').class;
 
     function missingTranslation(data) { return missingMessage.call(i18n, locale, key, data); }
@@ -109,6 +117,19 @@ Locale.prototype = {
     let compile = this.owner.factoryFor('util:i18n/compile-template').class;
     const template = compile(string, this.rtl);
     this.translations[key] = template;
+    return template;
+  },
+
+  _compileInlineTemplate(fallbackChain) {
+    let self = this;
+    let compile = this.owner.factoryFor('util:i18n/compile-template').class;
+    let element = `
+      <div><div contenteditable class="i18n-inline-block">${fallbackChain[0]}</div>
+      <button class="i18n-inline-save" data-inlinetranslation="${fallbackChain[0]}">Save</button></div>
+    `;
+
+    const template = compile(element, this.rtl);
+
     return template;
   }
 };

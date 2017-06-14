@@ -17,6 +17,17 @@ export default Parent.extend(Evented, {
   locales: computed(getLocales),
 
   // @public
+  // Inline translating mode.
+  inlineMode: false,
+
+  // @public
+  // Translation store
+  translationStore: {
+    count: 0,
+    store: {},
+  },
+
+  // @public
   //
   // Returns the translation `key` interpolated with `data`
   // in the current `locale`.
@@ -83,7 +94,46 @@ export default Parent.extend(Evented, {
       }
       this.set('locale', defaultLocale);
     }
+
+    this.set('inlineMode', (ENV.i18n || {}).inlineMode && this._getParameterByName('i18nInlineMode'));
+
+    if (this.get('inlineMode')) {
+      $('body').append(`
+        <div class="i18n-inline-bar">
+          <span>Inline Translating Mode: ON</span> /
+          <span>Translated labels in current session: <span class="i18n-inline-bar_count">${this.get('translationStore.count')}</span></span>
+          <button data-inline-translation-send class="i18n-inline-bar_submit">Send translations</button>
+        </div>
+      `);
+
+      $('.ember-application').on('click', '[data-inline-translation-send]', () => {
+        console.log(this.get('_locale.store'))
+      });
+
+      var self = this;
+
+      $('.ember-application').on('click', '[data-inlinetranslation]', function() {
+        let translation = $(this).prev().text();
+        self.set(`_locale.store.translations.${this.dataset.inlinetranslation}`, translation);
+        let count = Object.keys(self.get('_locale.store.translations')).length;
+        self.set('_locale.store.count', count);
+        $('.i18n-inline-bar_count').html(count);
+      });
+    }
   }),
+
+  // @private
+  //
+  // scans query params
+  _getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return false;
+    if (!results[2]) return true;
+    return true;
+  },
 
   // @private
   //
@@ -94,7 +144,6 @@ export default Parent.extend(Evented, {
 
   _locale: computed('locale', function() {
     const locale = this.get('locale');
-
-    return locale ? new Locale(this.get('locale'), getOwner(this)) : null;
+    return locale ? new Locale(this.get('locale'), getOwner(this), this.get('inlineMode')) : null;
   })
 });
