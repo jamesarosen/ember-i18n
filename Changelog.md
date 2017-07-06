@@ -1,4 +1,4 @@
-## Unreleased
+## 5.0.2
  * Add Danish language config.
 
 ## 5.0.1
