@@ -1,3 +1,6 @@
+## Unreleased
+ * Add Danish language config.
+
 ## 5.0.1
  * More ES6 syntax
  * Turkish `pluralForm` always returns `ONE`
