@@ -53,7 +53,7 @@
     "broccoli-funnel": "^1.0.6",
     "ember-cli-babel": "^5.1.7",
     "ember-cli-version-checker": "^1.2.0",
-    "ember-getowner-polyfill": "^1.2.2"
+    "ember-getowner-polyfill": "^2.0.1"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
