@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 var Funnel = require('broccoli-funnel');
 var VersionChecker = require('ember-cli-version-checker');
@@ -15,7 +15,7 @@ module.exports = {
     this.hasEmberHelper = !dep.lt('1.13.0');
   },
 
-  treeFor(name) {
+  treeFor() {
     var result = this._super.treeFor.apply(this, arguments);
 
     if (this.hasEmberHelper) {
