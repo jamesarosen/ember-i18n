@@ -1,0 +1,31 @@
+.i18n-inline-block {
+  border: 2px dotted orange;
+}
+
+.i18n-inline-save {
+  background: orange;
+  border: 1px solid #ccc;
+  font-weight: bold;
+  border-bottom-right-radius: 5px;
+  border-bottom-left-radius: 5px;
+  cursor: pointer;
+  padding: 5px 10px;
+  position: relative;
+}
+
+.i18n-inline-bar {
+  font-family: Arial;
+  font-size: 13px;
+  padding: 10px;
+  background: orange;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.i18n-inline-bar_submit {
+  font-weight: bold;
+  float: right;
+  cursor: pointer;
+}

@@ -6,7 +6,10 @@ module.exports = function(environment) {
     podModulePrefix: process.env.POD_MODULE_PREFIX,
     environment: environment,
     rootURL: '/',
-    i18n: { defaultLocale: 'en' },
+    i18n: {
+      defaultLocale: 'en',
+      inlineMode: true,
+    },
     locationType: 'auto',
     EmberENV: {
       FEATURES: {
