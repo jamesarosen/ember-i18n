@@ -23,16 +23,15 @@
   "devDependencies": {
     "broccoli-asset-rev": "^2.4.5",
     "ember-ajax": "^2.4.1",
-    "ember-cli": "^2.11.0",
+    "ember-cli": "^2.16.2",
     "ember-cli-app-version": "^2.0.0",
     "ember-cli-dependency-checker": "^1.3.0",
-    "ember-cli-htmlbars": "^1.1.1",
-    "ember-cli-htmlbars-inline-precompile": "^0.3.3",
+    "ember-cli-htmlbars": "2.0.3",
+    "ember-cli-htmlbars-inline-precompile": "1.0.2",
     "ember-cli-inject-live-reload": "^1.4.1",
     "ember-cli-jshint": "^2.0.1",
     "ember-cli-qunit": "^3.0.1",
     "ember-cli-release": "^0.2.9",
-    "ember-cli-shims": "^1.0.2",
     "ember-cli-sri": "^2.1.0",
     "ember-cli-test-loader": "^1.1.0",
     "ember-cli-uglify": "^1.2.0",
@@ -43,7 +42,7 @@
     "ember-string-ishtmlsafe-polyfill": "^1.1.0",
     "ember-source": "^2.11.0",
     "ember-welcome-page": "^2.0.2",
-    "loader.js": "^4.0.10"
+    "loader.js": "^4.6.0"
   },
   "keywords": [
     "ember-addon",
@@ -51,7 +50,7 @@
   ],
   "dependencies": {
     "broccoli-funnel": "^1.0.6",
-    "ember-cli-babel": "^5.1.7",
+    "ember-cli-babel": "6.8.0",
     "ember-cli-version-checker": "^1.2.0",
     "ember-getowner-polyfill": "^2.0.1"
   },
