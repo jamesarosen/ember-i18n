@@ -1,3 +1,5 @@
+/* globals QUnit, expect */
+
 import Ember from 'ember';
 
 // example usage: find(`.header:contains(${t('welcome_message')})`)

@@ -14,7 +14,7 @@ function mergedContext(objectContext, hashContext) {
 export default Helper.extend({
   i18n: inject.service(),
 
-  compute([key, contextObject = {}, ...rest], interpolations) {
+  compute([key, contextObject = {}], interpolations) {
     const mergedInterpolations = mergedContext(contextObject, interpolations);
 
     const i18n = get(this, 'i18n');
