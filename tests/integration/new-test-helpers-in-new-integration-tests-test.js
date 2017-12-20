@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
-import { t } from 'ember-i18n/test-support/helpers';
+import { t } from 'ember-i18n/test-support';
 import hbs from 'htmlbars-inline-precompile';
 
 module('Integration | {{t}} Helper', function (hooks) {

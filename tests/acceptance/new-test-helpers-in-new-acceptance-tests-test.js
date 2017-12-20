@@ -1,6 +1,6 @@
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
-import { t } from 'ember-i18n/test-support/helpers';
+import { t } from 'ember-i18n/test-support';
 
 module('Acceptance | {{t}} Helper', function(hooks) {
   setupApplicationTest(hooks);
