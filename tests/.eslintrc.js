@@ -3,7 +3,7 @@ module.exports = {
     embertest: true
   },
   globals: {
-    t: true,
-    expectTranslation: true
+    t: false,
+    expectTranslation: false
   }
 };
