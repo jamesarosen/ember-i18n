@@ -1,4 +1,4 @@
-/* jshint node: true */
+/* eslint-env node */
 'use strict';
 var Funnel = require('broccoli-funnel');
 var VersionChecker = require('ember-cli-version-checker');
