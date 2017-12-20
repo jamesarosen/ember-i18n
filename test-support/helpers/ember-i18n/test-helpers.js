@@ -1,7 +1,7 @@
 /* globals QUnit, expect */
 
 import { registerHelper } from '@ember/test';
-import { _t } from 'ember-i18n/test-support/helpers';
+import _t from 'ember-i18n/test-support/-private/t';
 
 // example usage: find(`.header:contains(${t('welcome_message')})`)
 registerHelper('t', function(app, key, interpolations) {
