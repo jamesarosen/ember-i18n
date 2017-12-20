@@ -1,3 +1,5 @@
+## 5.1.0
+ * Expose test helpers in `addon-test-support/`, which is now standard for Ember addons
 ## 5.0.2
  * Add Danish language config.
 
