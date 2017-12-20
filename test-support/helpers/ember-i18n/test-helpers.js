@@ -1,15 +1,15 @@
 /* globals QUnit, expect */
 
-import Ember from 'ember';
+import { registerHelper } from '@ember/test';
+import { _t } from 'ember-i18n/test-support/helpers';
 
 // example usage: find(`.header:contains(${t('welcome_message')})`)
-Ember.Test.registerHelper('t', function(app, key, interpolations){
-  const i18n = app.__container__.lookup('service:i18n');
-  return i18n.t(key, interpolations);
+registerHelper('t', function(app, key, interpolations) {
+  return _t(app.__container__, key, interpolations);
 });
 
 // example usage: expectTranslation('.header', 'welcome_message');
-Ember.Test.registerHelper('expectTranslation', function(app, element, key, interpolations){
+registerHelper('expectTranslation', function(app, element, key, interpolations){
   const text = app.testHelpers.t(key, interpolations);
 
   assertTranslation(element, key, text);

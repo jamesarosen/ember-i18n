@@ -37,9 +37,10 @@
     "ember-disable-prototype-extensions": "^1.1.2",
     "ember-export-application-global": "^2.0.0",
     "ember-load-initializers": "^1.0.0",
+    "ember-maybe-import-regenerator-for-testing": "^1.0.0",
     "ember-resolver": "^4.0.0",
-    "ember-string-ishtmlsafe-polyfill": "^2.0.0",
     "ember-source": "~2.17.0",
+    "ember-string-ishtmlsafe-polyfill": "^2.0.0",
     "loader.js": "^4.2.3"
   },
   "keywords": [
