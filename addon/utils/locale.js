@@ -72,7 +72,7 @@ Locale.prototype = {
     let result;
     let i;
     for (i = 0; i < fallbackChain.length; i++) {
-      let key = fallbackChain[i];
+      let key = fallbackChain[i].toLowerCase();
       if (count != null) {
         const inflection = this.pluralForm(+count);
         result = this.translations[`${key}.${inflection}`];
