@@ -1,2 +1,5 @@
 import en from './en';
-export default en;
+
+export default {
+  rtl: true
+};
