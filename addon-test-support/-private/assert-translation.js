@@ -3,7 +3,7 @@
 export default (function() {
   if (typeof QUnit !== 'undefined' && typeof QUnit.assert.ok === 'function') {
     return function(element, key, text) {
-      QUnit.assert.ok(find(`${element}:contains(${text})`).length, `Found translation key ${key} in ${element}`);
+      QUnit.assert.ok(document.querySelector(element).innerHTML.indexOf(text) != -1, `Found translation key ${key} in ${element}`);
     };
   } else if (typeof expect === 'function') {
     return function(element, key, text) {

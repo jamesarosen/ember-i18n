@@ -10,5 +10,5 @@ export function t(key, interpolations) {
 export function expectTranslation(element, key, interpolations) {
   let { owner } = getContext();
   let text = _t(owner, key, interpolations);
-  return _assertTranslation(element, key, text);
+  _assertTranslation(element, key, text);
 }
