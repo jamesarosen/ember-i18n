@@ -7,7 +7,7 @@ export default (function() {
     };
   } else if (typeof expect === 'function') {
     return function(element, key, text) {
-      const found = !!(document.querySelector(element).innerHTML.indexOf(text) !== -1);
+      const found = !!(document.querySelector(element).textContent.indexOf(text) !== -1);
       expect(found).to.equal(true);
     };
   } else {
