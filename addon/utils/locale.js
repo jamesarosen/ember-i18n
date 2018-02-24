@@ -121,6 +121,16 @@ function getFlattenedTranslations(id, owner) {
     assign(result, getFlattenedTranslations(parentId, owner));
   }
 
+  let envConfig = owner.factoryFor('config:environment').class;
+  let ENV = (envConfig.i18n || {});
+  let defaultLocale = ENV.defaultLocale;
+  let defaultFallback = ENV.defaultFallback;
+  if (defaultFallback && defaultLocale && defaultLocale !== id) {
+    let defaultFactory = owner.factoryFor(`locale:${defaultLocale}/translations`);
+    let defaultTranslations = defaultFactory && defaultFactory.class;
+    assign(result, withFlattenedKeys(defaultTranslations || {}));
+  }
+
   let factory = owner.factoryFor(`locale:${id}/translations`);
   let translations = factory && factory.class;
   assign(result, withFlattenedKeys(translations || {}));
