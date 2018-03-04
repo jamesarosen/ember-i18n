@@ -120,3 +120,80 @@ test("check unknown locale", function(assert) {
   const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
+
+test('provided default translation works as expected when locale is default', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: true
+    }
+  });
+  const i18n = this.subject({ locale: 'en' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+});
+
+test('falls back to default translation when label not found for locale', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: true
+    }
+  });
+  const i18n = this.subject({ locale: 'es' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+});
+
+test('falls back to default translation when label not found and locale not found', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: true
+    }
+  });
+  const i18n = this.subject({ locale: 'foobz' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+});
+
+test('does not fall back to default translation when configuration true but defaultLocale falsy', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: '',
+      defaultFallback: true
+    }
+  });
+  const i18n = this.subject({ locale: 'es' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+});
+
+test('does not fall back to default translation when configuration false', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: false
+    }
+  });
+  const i18n = this.subject({ locale: 'es' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+});
+
+test('does not fall back to default translation when configuration null', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: null
+    }
+  });
+  const i18n = this.subject({ locale: 'es' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+});
+
+test('does not fall back to default translation when configuration undefined', function(assert) {
+  this.register('config:environment', {
+    i18n: {
+      defaultLocale: 'en',
+      defaultFallback: undefined
+    }
+  });
+  const i18n = this.subject({ locale: 'es' });
+  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+});
