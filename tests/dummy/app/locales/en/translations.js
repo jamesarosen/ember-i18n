@@ -6,7 +6,8 @@ export default {
   'no.interpolations.either': 'another text without interpolations',
 
   'with': {
-    interpolations: 'Clicks: {{clicks}}'
+    interpolations: 'Clicks: {{clicks}}',
+    number: 3
   },
 
   'pluralized.translation': {
