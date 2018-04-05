@@ -53,6 +53,10 @@ Locale.prototype = {
     let translation = this.findTranslation(fallbackChain, count);
     let result = translation.result;
 
+    if (typeOf(result) === 'number') {
+      result = result.toString();
+    }
+
     if (typeOf(result) === 'string') {
       result = this._compileTemplate(translation.key, result);
     }

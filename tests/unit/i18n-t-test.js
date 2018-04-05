@@ -18,6 +18,12 @@ test('falls back to parent locale', function(assert) {
   assert.equal(i18n.t('with.interpolations', { clicks: 8 }), 'Clicks: 8');
 });
 
+test('allows number values in translations', function(assert) {
+  const i18n = this.subject({ locale: 'en' });
+
+  assert.equal(i18n.t('with.number'), "3");
+});
+
 test('supports changing locales', function(assert) {
   const i18n = this.subject({ locale: 'en' });
   assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
