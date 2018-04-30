@@ -35,7 +35,7 @@ Locale.prototype = {
       return;
     }
 
-    let defaultConfigFactory = this.owner.factoryFor('ember-i18n@config:zh');
+    let defaultConfigFactory = this.owner.factoryFor('ember-i18n@config:x-i18n');
     let defaultConfig = defaultConfigFactory ? defaultConfigFactory.class : null;
 
     if (this.rtl === undefined) {
