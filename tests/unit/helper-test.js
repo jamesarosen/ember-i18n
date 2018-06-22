@@ -7,11 +7,6 @@ moduleForComponent('no-such-component', 't helper', {
   integration: true,
 
   beforeEach() {
-    if (Ember.Helper == null) {
-      const initializer = this.container.lookupFactory('initializer:ember-i18n-legacy-helper');
-      initializer.initialize(this.registry);
-    }
-
     const i18n = this.i18n = this.container.lookup('service:i18n');
     i18n.set('locale', 'en');
 
