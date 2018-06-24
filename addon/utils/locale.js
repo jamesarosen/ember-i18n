@@ -35,8 +35,9 @@ Locale.prototype = {
       return;
     }
 
-    let defaultConfigFactory = this.owner.factoryFor('ember-i18n@config:x-i18n');
-    let defaultConfig = defaultConfigFactory ? defaultConfigFactory.class : null;
+
+    let defaultConfigFactory = window.require('ember-i18n/config/x-i18n')
+    let defaultConfig = defaultConfigFactory ? defaultConfigFactory.default : null;
 
     if (this.rtl === undefined) {
       warn(`ember-i18n: No RTL configuration found for ${this.id}.`, false, { id: 'ember-i18n.no-rtl-configuration' });
@@ -100,7 +101,7 @@ Locale.prototype = {
   _defineMissingTranslationTemplate(key) {
     const i18n = this.owner.lookup('service:i18n');
     const locale = this.id;
-    let missingMessage = this.owner.factoryFor('util:i18n/missing-message').class;
+    let missingMessage = window.require('ember-i18n/utils/i18n/missing-message').default;
 
     function missingTranslation(data) { return missingMessage.call(i18n, locale, key, data); }
 
@@ -110,7 +111,7 @@ Locale.prototype = {
   },
 
   _compileTemplate(key, string) {
-    let compile = this.owner.factoryFor('util:i18n/compile-template').class;
+    let compile = window.require('ember-i18n/utils/i18n/compile-template').default;
     const template = compile(string, this.rtl);
     this.translations[key] = template;
     return template;
@@ -125,18 +126,19 @@ function getFlattenedTranslations(id, owner) {
     assign(result, getFlattenedTranslations(parentId, owner));
   }
 
-  let envConfig = owner.factoryFor('config:environment').class;
+  const envConfig = window.require(`${owner.application.modulePrefix}/config/environment`).default;
+  const applicationName = envConfig.modulePrefix;
   let ENV = (envConfig.i18n || {});
   let defaultLocale = ENV.defaultLocale;
   let defaultFallback = ENV.defaultFallback;
   if (defaultFallback && defaultLocale && defaultLocale !== id) {
-    let defaultFactory = owner.factoryFor(`locale:${defaultLocale}/translations`);
-    let defaultTranslations = defaultFactory && defaultFactory.class;
+    let defaultFactory = window.require(`${applicationName}/src/locales/${defaultLocale}/translations`);
+    let defaultTranslations = defaultFactory && defaultFactory.default;
     assign(result, withFlattenedKeys(defaultTranslations || {}));
   }
 
-  let factory = owner.factoryFor(`locale:${id}/translations`);
-  let translations = factory && factory.class;
+  let factory = window.require(`${applicationName}/src/locales/${id}/translations`);
+  let translations = factory && factory.default;
   assign(result, withFlattenedKeys(translations || {}));
 
   return result;
@@ -144,12 +146,16 @@ function getFlattenedTranslations(id, owner) {
 
 // Walk up confiugration objects from most specific to least.
 function walkConfigs(id, owner, fn) {
-  let maybeAppConfig = owner.factoryFor(`locale:${id}/config`);
-  let appConfig = maybeAppConfig && maybeAppConfig.class;
-  if (appConfig) { fn(appConfig); }
+  const userDefinedConfigPath = `${owner.application.modulePrefix}/src/locales/${id}/config`;
 
-  let maybeAddonConfig = owner.factoryFor(`ember-i18n@config:${id}`);
-  let addonConfig = maybeAddonConfig && maybeAddonConfig.class;
+  if (window.requirejs.entries[userDefinedConfigPath]) {
+    let maybeAppConfig = window.require(`${owner.application.modulePrefix}/src/locales/${id}/config`);
+    let appConfig = maybeAppConfig && maybeAppConfig.default;
+    if (appConfig) { fn(appConfig); }
+  }
+
+  let maybeAddonConfig = window.require(`ember-i18n/config/${id}`);
+  let addonConfig = maybeAddonConfig && maybeAddonConfig.default;
   if (addonConfig) { fn(addonConfig); }
 
   const parentId = parentLocale(id);
