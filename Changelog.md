@@ -16,7 +16,7 @@
 
 ## 4.5.0
 
- * `{{t}}` helper supports a context object as a second ordered argument;
+ * `{{translate}}` helper supports a context object as a second ordered argument;
    named (hash) arguments override context object ones when interpolating
 
 ## 4.4.0
@@ -123,7 +123,7 @@
  * Stop auto-injecting `service:i18n` into Components, Controllers, and Routes.
    Clients should instead use `i18n: Ember.inject.service()` as needed.
  * Fix Spanish spelling.
- * Fix `{{t}}` helper with dynamic keys.
+ * Fix `{{translate}}` helper with dynamic keys.
  * Add `locale` blueprint
  * Use `Ember.Helper` if available (Ember >= 1.13)
  * Use `Ember.Service` if available (Ember >= 1.13)
@@ -163,7 +163,7 @@
  * Drop built-in support for Handlebars template compilation. Ember-I18n ships with support for very basic Handlebars-style templates like `"Hello, {{person.name}}"`. The template compilation method is part of the public API and can be overridden.
  * Built-in translation compiler is more friendly to whitespace within interpolations.
  * Drop support for the external `CLDR.js` definition of pluralization rules. These rules are now included as `i18n-plurals.js`
- * `{{t}}` helper uses `registerBoundHelper`. This makes the code smaller and faster. The helper no longer supports passing `tagName`. The helper no longer obeys the `I18N_TRANSLATE_HELPER_SPAN` environment flag.
+ * `{{translate}}` helper uses `registerBoundHelper`. This makes the code smaller and faster. The helper no longer supports passing `tagName`. The helper no longer obeys the `I18N_TRANSLATE_HELPER_SPAN` environment flag.
  * `eachTranslatedAttribute` gracefully handles `null` translation keys
  * Drop support for `{{translateAttr}}`. This helper was unbound. Instead use a sub-expression: `<img title="{{unbound (t 'my.img.title')}}>"`.
  * Interpolations are always escaped by default. (This was the intended behavior before, but there were bugs that caused some interpolations to come through unescaped.) Use `Ember.Handlebars.SafeString` or triple-stache notation to avoid over-escaping.
@@ -180,7 +180,7 @@
 
  * Ember-I18n 2.9+ is not compatible with Ember 1.9+
  * Use `Ember.$.isFunction` instead of `jQuery.isFunction`
- * Deprecate use of `tagName` in the `{{t}}` helper
+ * Deprecate use of `tagName` in the `{{translate}}` helper
  * Implement pluralization logic in this project and remove
    dependency on CLDR.js
  * Expose `I18n.missingMessage` for customising the
@@ -201,11 +201,11 @@
 ## 2.2.1 2014-08-17
 
  * Fixed overeager warnings related to I18N_COMPILE_WITHOUT_HANDLEBARS
-   and unquoted key arguments to the `{{t}}` helper.
+   and unquoted key arguments to the `{{translate}}` helper.
 
 ## 2.2.0 2014-08-16
 
- * The `{{t}}` helper now warns if passed an unquoted key argument.
+ * The `{{translate}}` helper now warns if passed an unquoted key argument.
    It still uses unquoted arguments as string literals, but this
    behavior will change in the next major release.
  * Removed deprecation warning for those who've opt-in to
@@ -226,8 +226,8 @@
  * Use `Ember.uuid` to generate unique IDs
  * Add a Handlebars-less compiler; enable with
    `Ember.ENV.I18N_COMPILE_WITHOUT_HANDLEBARS = true;`
- * `{{t}}` helper uses Metamorph tags.
- * `{{t}}` helper: allow turning off the default `<span>`
+ * `{{translate}}` helper uses Metamorph tags.
+ * `{{translate}}` helper: allow turning off the default `<span>`
    tag; enable with
    `Ember.FEATURES.I18N_TRANSLATE_HELPER_SPAN = false;`
 
