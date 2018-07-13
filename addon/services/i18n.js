@@ -20,7 +20,7 @@ export default Parent.extend(Evented, {
   //
   // Returns the translation `key` interpolated with `data`
   // in the current `locale`.
-  t(key, data = {}) {
+  translate(key, data = {}) {
     Ember.deprecate('locale is a reserved attribute', data['locale'] === undefined, {
       id: 'ember-i18n.reserve-locale',
       until: '5.0.0'

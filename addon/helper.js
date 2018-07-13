@@ -18,7 +18,7 @@ export default Helper.extend({
     const mergedInterpolations = mergedContext(contextObject, interpolations);
 
     const i18n = get(this, 'i18n');
-    return i18n.t(key, mergedInterpolations);
+    return i18n.translate(key, mergedInterpolations);
   },
 
   _recomputeOnLocaleChange: observer('i18n.locale', function() {

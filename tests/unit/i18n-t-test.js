@@ -14,35 +14,35 @@ moduleFor('service:i18n', 'I18nService#t', {
 test('falls back to parent locale', function(assert) {
   const i18n = this.subject({ locale: 'en-ps' });
 
-  assert.equal('' + i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
-  assert.equal(i18n.t('with.interpolations', { clicks: 8 }), 'Clicks: 8');
+  assert.equal('' + i18n.translate('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
+  assert.equal(i18n.translate('with.interpolations', { clicks: 8 }), 'Clicks: 8');
 });
 
 test('allows number values in translations', function(assert) {
   const i18n = this.subject({ locale: 'en' });
 
-  assert.equal(i18n.t('with.number'), "3");
+  assert.equal(i18n.translate('with.number'), "3");
 });
 
 test('supports changing locales', function(assert) {
   const i18n = this.subject({ locale: 'en' });
-  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
+  assert.equal('' + i18n.translate('no.interpolations'), 'text with no interpolations');
 
   run(i18n, 'set', 'locale', 'en-ps');
-  assert.equal('' + i18n.t('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
+  assert.equal('' + i18n.translate('no.interpolations'), 'téxt wîth nö ìntérpølåtíôns');
 
   run(i18n, 'set', 'locale', 'en');
-  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
+  assert.equal('' + i18n.translate('no.interpolations'), 'text with no interpolations');
 
   run(i18n, 'set', 'locale', 'es');
-  assert.equal('' + i18n.t('no.interpolations'), 'texto sin interpolaciones');
+  assert.equal('' + i18n.translate('no.interpolations'), 'texto sin interpolaciones');
 
   run(i18n, 'set', 'locale', 'en');
-  assert.equal('' + i18n.t('no.interpolations'), 'text with no interpolations');
+  assert.equal('' + i18n.translate('no.interpolations'), 'text with no interpolations');
 });
 
 test('returns "missing translation" translations', function(assert) {
-  const result = this.subject({ locale: 'en' }).t('not.yet.translated', {});
+  const result = this.subject({ locale: 'en' }).translate('not.yet.translated', {});
   assert.equal('Missing translation: not.yet.translated', result);
 });
 
@@ -60,14 +60,14 @@ test('warns on the presence of htmlSafe and locale', function(assert) {
     }
   };
 
-  service.t('not.yet.translated', { htmlSafe: true });
+  service.translate('not.yet.translated', { htmlSafe: true });
   assert.equal(deprecations, 1);
 
-  service.t('not.yet.translated', { locale: true });
+  service.translate('not.yet.translated', { locale: true });
   assert.equal(deprecations, 2);
 
-  service.t('not.yet.translated');
-  service.t('not.yet.translated', { some: 'other key' });
+  service.translate('not.yet.translated');
+  service.translate('not.yet.translated', { some: 'other key' });
   assert.equal(deprecations, 2);
 });
 
@@ -77,7 +77,7 @@ test('emits "missing" events', function(assert) {
   function spy() { calls.push(arguments); }
   i18n.on('missing', spy);
 
-  i18n.t('not.yet.translated', { some: 'data' });
+  i18n.translate('not.yet.translated', { some: 'data' });
 
   assert.equal(calls.length, 1);
   assert.equal(calls[0].length, 3);
@@ -88,7 +88,7 @@ test('emits "missing" events', function(assert) {
 
 test('adds RTL markers if the locale calls for it', function(assert) {
   this.subject({ locale: 'en-bw' });
-  const result = this.subject().t('no.interpolations');
+  const result = this.subject().translate('no.interpolations');
 
   assert.equal(result, '\u202Bsnoitalopretni on htiw txet\u202C');
 });
@@ -96,17 +96,17 @@ test('adds RTL markers if the locale calls for it', function(assert) {
 test("applies pluralization rules from the locale", function(assert) {
   const i18n = this.subject({ locale: 'en' });
 
-  assert.equal(i18n.t('pluralized.translation', { count: 0 }), '0 Clicks');
-  assert.equal(i18n.t('pluralized.translation', { count: '1' }), 'One Click');
-  assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.translate('pluralized.translation', { count: 0 }), '0 Clicks');
+  assert.equal(i18n.translate('pluralized.translation', { count: '1' }), 'One Click');
+  assert.equal(i18n.translate('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
 test("applies custom pluralization rules", function(assert) {
   const i18n = this.subject({ locale: 'en-wz' });
 
-  assert.equal(i18n.t('pluralized.translation', { count: '0' }), 'Zero Clicks');
-  assert.equal(i18n.t('pluralized.translation', { count: 1 }), 'One Click');
-  assert.equal(i18n.t('pluralized.translation', { count: 2 }), '2 Clicks');
+  assert.equal(i18n.translate('pluralized.translation', { count: '0' }), 'Zero Clicks');
+  assert.equal(i18n.translate('pluralized.translation', { count: 1 }), 'One Click');
+  assert.equal(i18n.translate('pluralized.translation', { count: 2 }), '2 Clicks');
 });
 
 test("applies provided default translation in cascade when main one is not found", function(assert) {
@@ -115,15 +115,15 @@ test("applies provided default translation in cascade when main one is not found
   const calls = [];
   function spy() { calls.push(arguments); }
   i18n.on('missing', spy);
-  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: defaultsChain }), 'Clicks: 8', 'default can be an array');
-  assert.equal(i18n.t('with.great-interpolations', { clicks: 8, default: 'with.interpolations' }), 'Clicks: 8', 'default can be an string');
+  assert.equal(i18n.translate('with.great-interpolations', { clicks: 8, default: defaultsChain }), 'Clicks: 8', 'default can be an array');
+  assert.equal(i18n.translate('with.great-interpolations', { clicks: 8, default: 'with.interpolations' }), 'Clicks: 8', 'default can be an string');
   assert.equal(calls.length, 0, 'The missing event is not fired when a fallback translation is found');
-  assert.equal(i18n.t('not.yet.translated', { clicks: 8, default: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
+  assert.equal(i18n.translate('not.yet.translated', { clicks: 8, default: ['not.translated.either'] }), 'Missing translation: not.yet.translated');
   assert.equal(calls[0][1], 'not.yet.translated', 'When the "missing" event is fired, it\'s fired with the provided key');
 });
 
 test("check unknown locale", function(assert) {
-  const result = this.subject({ locale: 'uy' }).t('not.yet.translated', {count: 2});
+  const result = this.subject({ locale: 'uy' }).translate('not.yet.translated', {count: 2});
   assert.equal('Missing translation: not.yet.translated', result);
 });
 
@@ -135,7 +135,7 @@ test('provided default translation works as expected when locale is default', fu
     }
   });
   const i18n = this.subject({ locale: 'en' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Default 2 value');
 });
 
 test('falls back to default translation when label not found for locale', function(assert) {
@@ -146,7 +146,7 @@ test('falls back to default translation when label not found for locale', functi
     }
   });
   const i18n = this.subject({ locale: 'es' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Default 2 value');
 });
 
 test('falls back to default translation when label not found and locale not found', function(assert) {
@@ -157,7 +157,7 @@ test('falls back to default translation when label not found and locale not foun
     }
   });
   const i18n = this.subject({ locale: 'foobz' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Default 2 value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Default 2 value');
 });
 
 test('does not fall back to default translation when configuration true but defaultLocale falsy', function(assert) {
@@ -168,7 +168,7 @@ test('does not fall back to default translation when configuration true but defa
     }
   });
   const i18n = this.subject({ locale: 'es' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
 });
 
 test('does not fall back to default translation when configuration false', function(assert) {
@@ -179,7 +179,7 @@ test('does not fall back to default translation when configuration false', funct
     }
   });
   const i18n = this.subject({ locale: 'es' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
 });
 
 test('does not fall back to default translation when configuration null', function(assert) {
@@ -190,7 +190,7 @@ test('does not fall back to default translation when configuration null', functi
     }
   });
   const i18n = this.subject({ locale: 'es' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
 });
 
 test('does not fall back to default translation when configuration undefined', function(assert) {
@@ -201,5 +201,5 @@ test('does not fall back to default translation when configuration undefined', f
     }
   });
   const i18n = this.subject({ locale: 'es' });
-  assert.equal('' + i18n.t('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
+  assert.equal('' + i18n.translate('defined.in.default.value', { count: 2 }), 'Missing translation: defined.in.default.value');
 });

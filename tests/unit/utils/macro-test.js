@@ -1,6 +1,6 @@
 import Ember from 'ember';
 import { moduleFor, test } from 'ember-qunit';
-import { translationMacro as t } from 'ember-i18n';
+import { translationMacro as translate } from 'ember-i18n';
 
 moduleFor('service:i18n', 'translationMacro', {
   integration: true,
@@ -13,9 +13,9 @@ moduleFor('service:i18n', 'translationMacro', {
 
       numberClicks: 9,
 
-      tMacroProperty1: t('no.interpolations'),
+      tMacroProperty1: translate('no.interpolations'),
 
-      tMacroProperty2: t('with.interpolations', { clicks: 'numberClicks' }),
+      tMacroProperty2: translate('with.interpolations', { clicks: 'numberClicks' }),
     }).create();
   }
 });
