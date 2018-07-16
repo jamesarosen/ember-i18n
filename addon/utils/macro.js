@@ -10,7 +10,7 @@ export default function createTranslatedComputedProperty(key, interpolations = {
   return Ember.computed(...dependencies, function() {
     const i18n = get(this, 'i18n');
     Ember.assert(`Cannot translate ${key}. ${this} does not have an i18n.`, i18n);
-    return i18n.t(key, mapPropertiesByHash(this, interpolations));
+    return i18n.translate(key, mapPropertiesByHash(this, interpolations));
   });
 }
 

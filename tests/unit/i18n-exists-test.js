@@ -38,6 +38,6 @@ test('non-existing translations when checked twice do not exist', function (asse
   const i18n = this.subject({ locale: 'en' });
 
   assert.equal(i18n.exists('not.existing'), false);
-  assert.equal(i18n.t('not.existing'), 'Missing translation: not.existing');
+  assert.equal(i18n.translate('not.existing'), 'Missing translation: not.existing');
   assert.equal(i18n.exists('not.existing'), false);
 });

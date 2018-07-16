@@ -3,7 +3,7 @@ import hbs from 'htmlbars-inline-precompile';
 import { moduleForComponent, test } from 'ember-qunit';
 const { run } = Ember;
 
-moduleForComponent('no-such-component', 't helper', {
+moduleForComponent('no-such-component', 'translate helper', {
   integration: true,
 
   beforeEach() {
@@ -28,14 +28,14 @@ moduleForComponent('no-such-component', 't helper', {
 test('simple text, static key', function(assert) {
   this.addTranslations('en', { 'foo.bar': 'Foo Bar' });
 
-  this.render(hbs`{{t 'foo.bar'}}`);
+  this.render(hbs`{{translate 'foo.bar'}}`);
   assert.equal(this.$().text(), 'Foo Bar');
 });
 
 test('text with HTML, static key', function(assert) {
   this.addTranslations('en', { name: '<em>Name</em>:' });
 
-  this.render(hbs`{{t 'name'}}`);
+  this.render(hbs`{{translate 'name'}}`);
   assert.equal(this.$().html(), '<em>Name</em>:');
 });
 
@@ -43,7 +43,7 @@ test('dynamic key', function(assert) {
   this.addTranslations('en', { foo: 'Foo', bar: 'Bar' });
   this.set('someKey', 'foo');
 
-  this.render(hbs`{{t someKey}}`);
+  this.render(hbs`{{translate someKey}}`);
   assert.equal(this.$().text(), 'Foo');
 
   run(this, 'set', 'someKey', 'bar');
@@ -54,7 +54,7 @@ test('interpolations', function(assert) {
   this.addTranslations('en', { 'bowl of soup': 'A bowl of {{soup}}' });
   this.set('soup', 'bisque');
 
-  this.render(hbs`{{t 'bowl of soup' soup=soup}}`);
+  this.render(hbs`{{translate 'bowl of soup' soup=soup}}`);
   assert.equal(this.$().text(), 'A bowl of bisque');
 
   run(this, 'set', 'soup', 'clam chowder');
@@ -71,7 +71,7 @@ test('interpolations with passed context', function(assert) {
     };
   }));
 
-  this.render(hbs`{{t 'bowl of soup' contextObject}}`);
+  this.render(hbs`{{translate 'bowl of soup' contextObject}}`);
   assert.equal(this.$().text(), 'A bowl of bisque');
 
   run(this, 'set', 'soup', 'clam chowder');
@@ -89,7 +89,7 @@ test('interpolations with passed context and a hash', function(assert) {
     };
   }));
 
-  this.render(hbs`{{t 'bowl of soup' contextObject salad=salad}}`);
+  this.render(hbs`{{translate 'bowl of soup' contextObject salad=salad}}`);
   assert.equal(this.$().text(), 'A bowl of bisque or mixed greens');
 
   run(this, 'set', 'soup', 'clam chowder');
@@ -108,7 +108,7 @@ test('interpolations with passed context and a hash - hash overrides context', f
     };
   }));
 
-  this.render(hbs`{{t 'A delicious entree' contextObject entree=entreeFromHash}}`);
+  this.render(hbs`{{translate 'A delicious entree' contextObject entree=entreeFromHash}}`);
   assert.equal(this.$().text(), 'A delicious pasta');
 
   run(this, 'set', 'entreeFromContext', 'burger');
@@ -120,7 +120,7 @@ test('locale change', function(assert) {
   this.addTranslations('en', { soup: 'Soup' });
   this.addTranslations('zh', { soup: '湯' });
 
-  this.render(hbs`{{t 'soup'}}`);
+  this.render(hbs`{{translate 'soup'}}`);
   assert.equal(this.$().text(), 'Soup');
 
   run(this.i18n, 'set', 'locale', 'zh');
@@ -136,7 +136,7 @@ test('pluralization', function(assert) {
   });
   run(this, 'set', 'numberOfBowls', 0);
 
-  this.render(hbs`{{t 'bowls' count=numberOfBowls}}`);
+  this.render(hbs`{{translate 'bowls' count=numberOfBowls}}`);
   assert.equal(this.$().text(), '0 bowls');
 
   run(this, 'set', 'numberOfBowls', 1);

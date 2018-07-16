@@ -1,14 +1,15 @@
 import { test } from 'qunit';
 import moduleForAcceptance from '../../tests/helpers/module-for-acceptance';
 
-moduleForAcceptance('Acceptance | {{t}} Helper', {
+moduleForAcceptance('Acceptance | {{translate}} Helper', {
   beforeEach() {
     visit('/');
   }
 });
 
-test("t test helper", function(assert) {
-  assert.equal(t("pluralized.translation", { count: 1 }), "One Click", "test-helpers t returns translation");
+test("translate test helper", function(assert) {
+  assert.equal(translate("pluralized.translation", { count: 1 }), "One Click",
+  "test-helpers translate returns translation");
 });
 
 test("expectTranslation test helper", function() {

@@ -11,35 +11,35 @@ moduleFor('service:i18n', 'I18nService#addTranslations', {
 test('adds translations to the current locale', function(assert) {
   const i18n = this.subject({ locale: 'en' });
 
-  const before = i18n.t('defined.at.runtime.one');
+  const before = i18n.translate('defined.at.runtime.one');
   assert.equal(before, 'Missing translation: defined.at.runtime.one');
 
   Ember.run(i18n, 'addTranslations', 'en', {
     'defined.at.runtime': { one: 'Defined at Runtime' }
   });
 
-  const after = i18n.t('defined.at.runtime.one');
+  const after = i18n.translate('defined.at.runtime.one');
   assert.equal(after, 'Defined at Runtime');
 });
 
 test('adds translations to a parent locale', function(assert) {
   const i18n = this.subject({ locale: 'en-ps' });
 
-  const before = i18n.t('defined.at.runtime.two');
+  const before = i18n.translate('defined.at.runtime.two');
   assert.equal(before, 'Missing translation: defined.at.runtime.two');
 
   Ember.run(i18n, 'addTranslations', 'en', {
     'defined.at.runtime.two': 'Defined at Runtime'
   });
 
-  const after = i18n.t('defined.at.runtime.two');
+  const after = i18n.translate('defined.at.runtime.two');
   assert.equal(after, 'Defined at Runtime');
 });
 
 test('adds translations to an unrelated locale', function(assert) {
   const i18n = this.subject({ locale: 'es' });
 
-  const before = i18n.t('defined.at.runtime.three');
+  const before = i18n.translate('defined.at.runtime.three');
   assert.equal(before, 'Missing translation: defined.at.runtime.three');
 
   Ember.run(i18n, 'addTranslations', 'en', {
@@ -48,7 +48,7 @@ test('adds translations to an unrelated locale', function(assert) {
 
   Ember.run(i18n, 'set', 'locale', 'en');
 
-  const after = i18n.t('defined.at.runtime.three');
+  const after = i18n.translate('defined.at.runtime.three');
   assert.equal(after, 'Defined at Runtime');
 });
 
@@ -61,6 +61,6 @@ test('adds translations to a locale that has not yet been defined', function(ass
 
   Ember.run(i18n, 'set', 'locale', 'en-xyz');
 
-  const after = i18n.t('defined.at.runtime.four');
+  const after = i18n.translate('defined.at.runtime.four');
   assert.equal(after, 'Defined at Runtime');
 });

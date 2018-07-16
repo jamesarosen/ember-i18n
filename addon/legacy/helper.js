@@ -4,7 +4,7 @@ import Ember from 'ember';
 
 const assign = Ember.assign || Ember.merge;
 
-export default function tHelper([i18nKey, contextObject = { value: () => {} }], hash, options, env) {
+export default function translateHelper([i18nKey, contextObject = { value: () => {} }], hash, options, env) {
   const i18n = env.data.view.container.lookup('service:i18n');
 
 
@@ -17,7 +17,7 @@ export default function tHelper([i18nKey, contextObject = { value: () => {} }], 
     assign(mergedHash, contextObjectValue);
     assign(mergedHash, hash);
 
-    return value === undefined ? '' : i18n.t(value, readHash(mergedHash));
+    return value === undefined ? '' : i18n.translate(value, readHash(mergedHash));
   });
 
   // Once the view is destroyed destroy the steam as well
