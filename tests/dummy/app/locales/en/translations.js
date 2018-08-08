@@ -13,5 +13,8 @@ export default {
   'pluralized.translation': {
     one: 'One Click',
     other: '{{count}} Clicks'
-  }
+  },
+
+  'custom pluralized.tranclation - one': 'One Custom Click',
+  'custom pluralized.tranclation - other': 'Many Custom Clicks',
 };

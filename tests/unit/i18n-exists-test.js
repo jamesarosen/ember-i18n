@@ -41,3 +41,32 @@ test('non-existing translations when checked twice do not exist', function (asse
   assert.equal(i18n.t('not.existing'), 'Missing translation: not.existing');
   assert.equal(i18n.exists('not.existing'), false);
 });
+
+test('allow override getPluralKey for locale', function(assert) {
+  const i18n =this.factory().extend({
+    buildLocale(id) {
+      const locale = this._super(id);
+      locale.getPluralKey = function(key, count) {
+        const inflection = this.pluralForm(+count);
+        return `${key} - ${inflection}`;
+      };
+      return locale;
+    }
+  }).create({ locale: 'en' });
+
+  assert.equal(i18n.exists('custom pluralized.tranclation', { count: 2 }), true);
+  assert.equal(i18n.exists('custom pluralized.tranclation', { count: 1 }), true);
+});
+
+test('allow override findTranslation for locale', function(assert) {
+  const i18n = this.factory().extend({
+    buildLocale(id) {
+      const locale = this._super(id);
+      locale.findTranslation = () => ({ result: `All keys will be resolved be this one`});
+      return locale;
+    }
+  }).create({ locale: 'en' });
+
+  assert.equal(i18n.exists('some strange translation', { count: 2 }), true);
+  assert.equal(i18n.exists('some strange translation', { count: 1 }), true);
+});
