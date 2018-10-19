@@ -1,3 +1,5 @@
+This library has been deprecated in favor of [ember-intl][https://github.com/ember-intl/ember-intl]
+
 ## 5.2.0
  * Added support for default locale fallback with a new configuration named `defaultFallback`
 ## 5.1.0
