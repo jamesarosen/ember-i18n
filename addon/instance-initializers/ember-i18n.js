@@ -6,6 +6,6 @@
 export default {
   name: 'ember-i18n',
   initialize() {
-    // No-op.
+    console.log('ember-i18n has been deprecated in favor of ember-intl'); // eslint-disable-line no-console
   }
 };
