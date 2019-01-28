@@ -13,7 +13,7 @@ module.exports = {
     var checker = new VersionChecker(this);
     var dep = checker.forEmber();
     this.hasEmberHelper = !dep.lt('1.13.0');
-    console.log('ember-i18n has been deprecated in favor of ember-intl'); // eslint-disable-line no-console
+    this.ui.writeDeprecateLine('ember-i18n has been deprecated in favor of ember-intl');
   },
 
   treeFor(name) {
