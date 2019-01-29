@@ -1,7 +1,15 @@
+## 5.3.1
+ * use ember-cli's support for deprecation messages
+
+## 5.3.0
+ * Emit deprecation message
+
 ## 5.2.0
  * Added support for default locale fallback with a new configuration named `defaultFallback`
+
 ## 5.1.0
  * Expose test helpers in `addon-test-support/`, which is now standard for Ember addons
+
 ## 5.0.2
  * Add Danish language config.
 
